@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================
+   BRAND COLOR TOKENS (RGB)
+   =============================== */
+:root {
+  /* Primary – Maroon */
+  --color-primary: 122 30 45;        /* refined maroon */
+
+  /* Accent – Soft maroon-beige (NOT gold) */
+  --color-accent: 242 230 232;       
+
+  /* Backgrounds – Beige */
+  --color-background: 248 241 234;
+  --color-surface: 255 255 255;
+
+  /* Text */
+  --color-dark: 31 31 31;
+  --color-muted: 107 94 87;
+
+  /* Gradient (very subtle, optional) */
+  --gradient-start: rgb(122 30 45);
+  --gradient-mid: rgb(143 48 74);
+  --gradient-end: rgb(242 230 232);
+}
+
+
+
+
+/* ===============================
+   BASE STYLES
+   =============================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body bg-background text-dark antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+
+  p {
+    @apply text-muted leading-relaxed;
+  }
+}
+
+/* ===============================
+   COMPONENTS
+   =============================== */
+@layer components {
+  /* Navigation */
+  .nav-link {
+    @apply text-dark transition-colors duration-300 hover:text-primary;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center
+           rounded-full px-6 py-3
+           text-sm font-medium
+           transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white
+           hover:scale-105 hover:shadow-hover
+           focus-visible:outline-none
+           focus-visible:ring-2
+           focus-visible:ring-primary/40;
+  }
+
+  .btn-secondary {
+    @apply border border-primary/40 text-primary
+           hover:bg-primary/5
+           focus-visible:outline-none
+           focus-visible:ring-2
+           focus-visible:ring-primary/30;
+  }
+
+  /* Cards */
+ .card {
+  @apply bg-transparent p-0 shadow-none rounded-none;
+}
+
+
+  /* Sections */
+  .section {
+    @apply py-24 px-6;
+  }
+
+  .section-title {
+    @apply font-heading text-4xl md:text-5xl text-dark mb-4;
+  }
+
+  .section-text {
+    @apply max-w-xl mx-auto text-center text-muted;
+  }
+}

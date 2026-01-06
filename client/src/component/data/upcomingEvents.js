@@ -1,0 +1,33 @@
+export const upcomingEvents = [
+  {
+    id: 1,
+    title: "Clarity Accelerator – Live Workshop",
+    type: "Workshop",
+    date: "2026-01-20",
+    location: "Nagpur",
+    format: "In-Person",
+    duration: "3 Days",
+    cta: "Register",
+    status: "open",
+  },
+  {
+    id: 2,
+    title: "Mentorship Circles – Cohort 02",
+    type: "Mentorship",
+    date: "2026-02-08",
+    location: "Online",
+    duration: "6 Weeks",
+    cta: "Apply",
+    status: "limited",
+  },
+  {
+    id: 3,
+    title: "Stage & Media – Panel Talk",
+    type: "Talk",
+    date: "2026-03-15",
+    location: "Mumbai",
+    format: "Conference",
+    cta: "Notify Me",
+    status: "upcoming",
+  },
+];
