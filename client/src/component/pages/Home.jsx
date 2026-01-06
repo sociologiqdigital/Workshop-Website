@@ -458,217 +458,68 @@ export default function Home() {
         </div>
       </section>
       {/* Current Situation */}
-      <section className="py-20 px-20 max-w-[1440px] mx-auto">
-        <div className="grid grid-cols-12 gap-0 rounded-3xl overflow-hidden shadow-2xl">
-          {/* Left Panel - Wine colored */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="col-span-4 bg-[#7B1E3A] p-16 flex flex-col justify-center relative overflow-hidden"
-          >
-            {/* Decorative background elements */}
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.1, 0.15, 0.1],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute top-10 right-10 w-64 h-64 rounded-full bg-white/10 blur-3xl"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div
-                className="text-[#F6F1EB]/70 tracking-[0.3em] uppercase mb-6"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                }}
-              >
-                Currently
-              </div>
-
-              <div className="h-px w-12 bg-[#C9A24D] mb-8" />
-
-              <h2
-                className="text-[#FAFAF8] leading-tight"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "2.75rem",
-                  fontWeight: 600,
-                  lineHeight: 1.2,
-                }}
-              >
-                Where I'm currently showing up
+      <section className="py-20 px-6 md:px-12 bg-[#F6F1EB]">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[0.55fr_0.45fr] rounded-3xl overflow-hidden shadow-2xl bg-white">
+          {/* Left Panel */}
+          <div className="relative bg-gradient-to-br from-[#7B1E3A] via-[#8e2a48] to-[#6a182f] text-white">
+            <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.12), transparent 26%)" }} />
+            <div className="relative px-10 py-16 md:px-14 md:py-20 space-y-6 max-w-xl">
+              <p className="text-xs tracking-[0.35em] uppercase opacity-80">Currently</p>
+              <h2 className="font-heading text-4xl leading-tight">
+                Where I'm currently
+                <br />
+                showing up
               </h2>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-[#F6F1EB]/80 mt-8 leading-relaxed"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "1rem",
-                }}
-              >
+              <p className="text-white/85 leading-relaxed max-w-md">
                 The spaces where my energy, leadership, and focus are actively
                 shaping meaningful work right now.
-              </motion.p>
-            </motion.div>
+              </p>
+              <div className="mt-10 space-y-2">
+                <div className="h-px w-24 bg-white/40" />
+                <div className="h-px w-16 bg-white/20" />
+              </div>
+            </div>
+          </div>
 
-            {/* Decorative accent */}
-            <motion.div
-              animate={{
-                rotate: [0, 5, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute bottom-10 left-10 w-24 h-24 border-2 border-[#C9A24D]/30 rounded-full"
-            />
-          </motion.div>
-
-          {/* Right Panel - Content */}
-          <div className="col-span-8 bg-[#FAFAF8] p-16">
-            <div className="space-y-16">
-              {roles.map((role, index) => {
-                const IconComponent = role.icon;
-
-                return (
-                  <motion.div
-                    key={role.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: index * 0.2 }}
-                    className="relative"
-                  >
-                    {/* Decorative line */}
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: index * 0.2 + 0.3 }}
-                      className="h-px w-12 bg-[#7B1E3A] mb-8"
-                      style={{ transformOrigin: "left" }}
-                    />
-
-                    {/* Icon */}
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] mb-6 shadow-lg"
-                    >
-                      <IconComponent className="w-7 h-7 text-[#FAFAF8]" />
-                    </motion.div>
-
-                    {/* Role title */}
-                    <h3
-                      className="text-[#2A2A2A] mb-2"
-                      style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: "2rem",
-                        fontWeight: 600,
-                      }}
-                    >
+          {/* Right Panel */}
+          <div className="relative bg-[#FBF5EF] px-8 md:px-12 py-12 flex items-center lg:-ml-16 lg:z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+              {roles.map((role, index) => (
+                <motion.div
+                  key={role.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.1 }}
+                  className="rounded-2xl bg-white border border-[#E4D7CE] p-6 shadow-[0_10px_28px_rgba(0,0,0,0.05)] flex flex-col gap-4 h-full"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] flex items-center justify-center text-white shadow-md">
+                    <role.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-xl text-dark mb-1">
                       {role.title}
                     </h3>
-
-                    {/* Organization */}
-                    <div
-                      className="text-[#7B1E3A] mb-6"
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "1.125rem",
-                        fontWeight: 600,
-                      }}
-                    >
+                    <p className="text-sm text-[#7B1E3A] font-semibold">
                       {role.organization}
-                    </div>
-
-                    {/* Description */}
-                    <p
-                      className="text-[#6B6B6B] leading-relaxed mb-8 max-w-2xl"
-                      // style={{
-                      //   fontFamily: "'Inter', sans-serif",
-                      //   fontSize: "1rem",
-                      //   lineHeight: 1.7,
-                      // }}
-                    >
-                      {role.description}
                     </p>
-
-                    {/* Social icons */}
-                    <div className="flex gap-3">
-                      {role.socials.map((social, socialIndex) => {
-                        const SocialIcon = social.icon;
-
-                        return (
-                          <motion.a
-                            key={social.name}
-                            href={social.url}
-                            initial={{ opacity: 0, scale: 0 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{
-                              duration: 0.4,
-                              delay: index * 0.2 + 0.5 + socialIndex * 0.1,
-                              type: "spring",
-                              stiffness: 200,
-                            }}
-                            whileHover={{
-                              scale: 1.12,
-                              y: -3,
-                              backgroundColor: "#7B1E3A",
-                              transition: {
-                                type: "spring",
-                                stiffness: 520,
-                                damping: 24,
-                                duration: 0.12,
-                              },
-                            }}
-                            whileTap={{
-                              scale: 0.97,
-                              transition: { duration: 0.08 },
-                            }}
-                            className="w-10 h-10 rounded-full bg-[#F6F1EB] border border-[#C9A24D]/30 flex items-center justify-center transition-all duration-150 group"
-                            aria-label={social.name}
-                          >
-                            <SocialIcon className="w-4 h-4 text-[#7B1E3A] group-hover:text-[#FAFAF8] transition-colors duration-150" />
-                          </motion.a>
-                        );
-                      })}
-                    </div>
-
-                    {/* Divider between roles */}
-                    {index < roles.length - 1 && (
-                      <motion.div
-                        initial={{ scaleX: 0, opacity: 0 }}
-                        whileInView={{ scaleX: 1, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: index * 0.2 + 0.6 }}
-                        className="h-px bg-gradient-to-r from-[#C9A24D]/20 via-[#C9A24D]/40 to-transparent mt-16"
-                        style={{ transformOrigin: "left" }}
-                      />
-                    )}
-                  </motion.div>
-                );
-              })}
+                  </div>
+                  <p className="text-[#4F4F4F] leading-relaxed text-sm flex-1">
+                    {role.description}
+                  </p>
+                  <div className="flex flex-wrap gap-3 text-[13px] underline underline-offset-4">
+                    {role.socials.map((social) => (
+                      <a
+                        key={social.name}
+                        href={social.url}
+                        className="text-[#7B1E3A] hover:text-[#9B2E4A] transition-colors"
+                      >
+                        {social.name}
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
@@ -812,11 +663,14 @@ export default function Home() {
                   {/* POLAROID */}
                   <motion.div
                     whileHover={{
-                      rotate: 0,
-                      y: -12,
-                      scale: 1.04,
+                      rotate: [0, 5, 0],
+                      y: [0, -20, 0],
                     }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="bg-white p-4 pb-8 shadow-[0_30px_60px_rgba(0,0,0,0.18)] mb-8 cursor-pointer"
                     style={{
                       transform: `rotate(${milestone.rotate}deg)`,
@@ -887,90 +741,100 @@ export default function Home() {
         {/* Staggered masonry-style grid */}
         <div className="relative">
           <div className="grid grid-cols-3 gap-8">
-            {galleryItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`${index === 1 || index === 4 ? "mt-12" : ""} ${
-                  index === 2 || index === 5 ? "mt-24" : ""
-                }`}
-              >
+            {galleryItems.map((item, index) => {
+              const baseTilt = item.rotate || 0;
+              const hoverTilt = baseTilt + (baseTilt >= 0 ? 3 : -3);
+
+              return (
                 <motion.div
-                  whileHover={{
-                    scale: 1.05,
-                    rotate: 0,
-                    y: -10,
-                    zIndex: 10,
-                  }}
-                  onHoverStart={() => setHoveredId(item.id)}
-                  onHoverEnd={() => setHoveredId(null)}
-                  transition={{ duration: 0.4 }}
-                  className="relative cursor-pointer group"
-                  style={{
-                    transform: `rotate(${item.rotate}deg)`,
-                    transformOrigin: "center",
-                  }}
+                  key={item.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  className={`${index === 1 || index === 4 ? "mt-12" : ""} ${
+                    index === 2 || index === 5 ? "mt-24" : ""
+                  }`}
                 >
-                  {/* Image container with organic shadow */}
-                  <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                    <ImageWithFallback
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-
-                    {/* Gradient overlay */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: hoveredId === item.id ? 1 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 bg-gradient-to-t from-[#7B1E3A]/90 via-[#7B1E3A]/50 to-transparent flex flex-col justify-end p-6"
-                    >
-                      <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{
-                          y: hoveredId === item.id ? 0 : 20,
-                          opacity: hoveredId === item.id ? 1 : 0,
-                        }}
-                        transition={{ duration: 0.3, delay: 0.1 }}
-                      >
-                        <h3
-                          className="text-white mb-2"
-                          style={{
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: "1.5rem",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {item.title}
-                        </h3>
-                        <p
-                          className="text-white/90"
-                          // style={{ fontFamily: "'Inter', sans-serif" }}
-                        >
-                          {item.location}
-                        </p>
-                      </motion.div>
-                    </motion.div>
-                  </div>
-
-                  {/* Subtle paper texture effect */}
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      boxShadow:
-                        hoveredId === item.id
-                          ? "0 25px 50px -12px rgba(123, 30, 58, 0.3)"
-                          : "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                      transition: "box-shadow 0.4s ease",
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      rotate: hoverTilt,
+                      y: -12,
+                      zIndex: 10,
                     }}
-                  />
+                    onHoverStart={() => setHoveredId(item.id)}
+                    onHoverEnd={() => setHoveredId(null)}
+                    transition={{
+                      type: "spring",
+                      stiffness: 180,
+                      damping: 18,
+                      mass: 0.8,
+                    }}
+                    className="relative cursor-pointer group"
+                    style={{
+                      rotate: baseTilt,
+                      transformOrigin: "center",
+                    }}
+                  >
+                    {/* Image container with organic shadow */}
+                    <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                      <ImageWithFallback
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+
+                      {/* Gradient overlay */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: hoveredId === item.id ? 1 : 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 bg-gradient-to-t from-[#7B1E3A]/90 via-[#7B1E3A]/50 to-transparent flex flex-col justify-end p-6"
+                      >
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{
+                            y: hoveredId === item.id ? 0 : 20,
+                            opacity: hoveredId === item.id ? 1 : 0,
+                          }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                        >
+                          <h3
+                            className="text-white mb-2"
+                            style={{
+                              fontFamily: "'Playfair Display', serif",
+                              fontSize: "1.5rem",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {item.title}
+                          </h3>
+                          <p
+                            className="text-white/90"
+                            // style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {item.location}
+                          </p>
+                        </motion.div>
+                      </motion.div>
+                    </div>
+
+                    {/* Subtle paper texture effect */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        boxShadow:
+                          hoveredId === item.id
+                            ? "0 25px 50px -12px rgba(123, 30, 58, 0.3)"
+                            : "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+                        transition: "box-shadow 0.4s ease",
+                      }}
+                    />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -1364,3 +1228,5 @@ export default function Home() {
     </>
   );
 }
+
+
