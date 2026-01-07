@@ -18,10 +18,9 @@ export const Testimonial = () => {
   const activeTestimonial = testimonialsData[activeIndex];
 
   return (
-    <section className=" py-24 bg-background "id="testimonial">
+    <section className=" py-24 bg-background " id="testimonial">
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-         
           {/* LEFT — SLIDER */}
           <div className="relative min-h-[260px]">
             <AnimatePresence mode="wait">
@@ -31,7 +30,7 @@ export const Testimonial = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-white rounded-2xl p-8 shadow-soft relative max-w-md"
+                className="bg-white rounded-2xl p-8 shadow-soft relative max-w-md "
               >
                 <span className="absolute -top-6 -left-9 text-8xl font-heading text-primary/20">
                   “
@@ -43,7 +42,7 @@ export const Testimonial = () => {
                   <p className="font-medium text-dark">
                     {activeTestimonial.name}
                   </p>
-                  <p className="text-sm text-textMuted">
+                  <p className="text-sm text-muted">
                     {activeTestimonial.role} · {activeTestimonial.location}
                   </p>
                 </div>
@@ -80,7 +79,7 @@ export const Testimonial = () => {
               sustainable growth.
             </p>
 
-            <button className="btn btn-secondary">Read More Reviews</button>
+            {/* <button className="btn btn-secondary">Read More Reviews</button> */}
           </div>
         </div>
       </div>

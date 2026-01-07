@@ -38,7 +38,7 @@ import {
   Instagram,
   Facebook,
   Twitter,
-  Briefcase
+  Briefcase,
 } from "lucide-react";
 import { galleryItems } from "../data/galleryItem";
 const socialContainer = {
@@ -234,73 +234,73 @@ export default function Home() {
 
     return text;
   }
- function AnimatedStat({ value, label }) {
-   const ref = useRef(null);
+  function AnimatedStat({ value, label }) {
+    const ref = useRef(null);
 
-   // session-persistent lock (module-level)
-   const alreadyAnimated = animatedStatLabels.has(label);
+    // session-persistent lock (module-level)
+    const alreadyAnimated = animatedStatLabels.has(label);
 
-   const inView = useInView(ref, {
-     margin: "-80px",
-   });
+    const inView = useInView(ref, {
+      margin: "-80px",
+    });
 
-   const count = useMotionValue(alreadyAnimated ? value : 0);
-   const rounded = useTransform(count, (latest) =>
-     Math.round(latest).toLocaleString()
-   );
+    const count = useMotionValue(alreadyAnimated ? value : 0);
+    const rounded = useTransform(count, (latest) =>
+      Math.round(latest).toLocaleString()
+    );
 
-   useEffect(() => {
-     // If already animated earlier → lock value and exit
-     if (alreadyAnimated) {
-       count.set(value);
-       return;
-     }
+    useEffect(() => {
+      // If already animated earlier → lock value and exit
+      if (alreadyAnimated) {
+        count.set(value);
+        return;
+      }
 
-     if (!inView) return;
+      if (!inView) return;
 
-     animatedStatLabels.add(label);
+      animatedStatLabels.add(label);
 
-     const controls = animate(count, value, {
-       duration: 1.4,
-       ease: [0.25, 0.8, 0.25, 1],
-     });
+      const controls = animate(count, value, {
+        duration: 1.4,
+        ease: [0.25, 0.8, 0.25, 1],
+      });
 
-     return () => controls.stop();
-   }, [alreadyAnimated, inView, value, label, count]);
+      return () => controls.stop();
+    }, [alreadyAnimated, inView, value, label, count]);
 
-   return (
-     <motion.div
-       ref={ref}
-       initial={{ opacity: 0, y: 10 }}
-       whileInView={{ opacity: 1, y: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6, ease: "easeOut" }}
-       className="flex flex-col items-center text-center"
-     >
-       <div className="flex items-baseline gap-1">
-         <motion.span className="font-heading text-[30px] md:text-[34px] text-dark tracking-tight leading-none">
-           {rounded}
-         </motion.span>
-         <span className="text-primary text-lg font-medium">+</span>
-       </div>
+    return (
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="flex flex-col items-center text-center"
+      >
+        <div className="flex items-baseline gap-1">
+          <motion.span className="font-heading text-[30px] md:text-[34px] text-dark tracking-tight leading-none">
+            {rounded}
+          </motion.span>
+          <span className="text-primary text-lg font-medium">+</span>
+        </div>
 
-       <p className="mt-1 text-[13px] md:text-[14px] italic text-muted">
-         {label}
-       </p>
-     </motion.div>
-   );
- }
+        <p className="mt-1 text-[13px] md:text-[14px] italic text-muted">
+          {label}
+        </p>
+      </motion.div>
+    );
+  }
 
   return (
     <>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background pt-[120px] pb-20 sm:pt-[140px] sm:pb-24 md:pt-[180px] md:pb-32 grid-bg">
+      <section className="relative overflow-hidden bg-background pt-[120px] pb-24 sm:pt-[140px] sm:pb-24 md:pt-[180px] md:pb-32 grid-bg">
         {/* Soft editorial background accents */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl" />
         <div className="pointer-events-none absolute top-40 right-[-160px] hidden md:block w-[320px] h-[320px] bg-primary/8 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-24 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start md:items-center">
             {/* LEFT CONTENT */}
             <motion.div
               className="
@@ -319,16 +319,20 @@ export default function Home() {
               }}
             >
               {/* Greeting */}
-              <motion.p
+              <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex justify-center md:justify-start items-center gap-2 text-[13px] md:text-[15px] text-muted mb-3"
+                className="flex justify-center md:justify-start items-center gap-2 text-[13px] md:text-[15px] text-muted mb-4"
               >
-                <span className="font-medium text-dark">Hello</span>
-                <span className="font-medium text-dark">, I’am</span>
-              </motion.p>
+                <div className="flex justify-center md:justify-start items-center gap-2">
+                  <span className="hello-brand">hello</span>
+                  <span className="text-[13px] md:text-[15px] text-muted font-medium">
+                    , I’m
+                  </span>
+                </div>
+              </motion.div>
 
               {/* Name */}
               <motion.h1
@@ -358,7 +362,6 @@ export default function Home() {
                 }}
                 className="text-primary text-4xl sm:text-5xl md:text-5xl font-medium tracking-wide mb-7"
               >
-                {" "}
                 <span className="relative">
                   {typedWord}
                   <span className="inline-block ml-[2px] type-cursor"></span>
@@ -458,134 +461,136 @@ export default function Home() {
         </div>
       </section>
       {/* Current Situation */}
-      <section className="py-20 px-6 md:px-12 bg-[#F6F1EB]">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[0.55fr_0.45fr] rounded-3xl overflow-hidden shadow-2xl bg-white">
-          {/* Left Panel */}
-          <div className="relative bg-gradient-to-br from-[#7B1E3A] via-[#8e2a48] to-[#6a182f] text-white">
-            <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.12), transparent 26%)" }} />
-            <div className="relative px-10 py-16 md:px-14 md:py-20 space-y-6 max-w-xl">
-              <p className="text-xs tracking-[0.35em] uppercase opacity-80">Currently</p>
-              <h2 className="font-heading text-4xl leading-tight">
-                Where I'm currently
-                <br />
-                showing up
-              </h2>
-              <p className="text-white/85 leading-relaxed max-w-md">
-                The spaces where my energy, leadership, and focus are actively
-                shaping meaningful work right now.
-              </p>
-              <div className="mt-10 space-y-2">
-                <div className="h-px w-24 bg-white/40" />
-                <div className="h-px w-16 bg-white/20" />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Panel */}
-          <div className="relative bg-[#FBF5EF] px-8 md:px-12 py-12 flex items-center lg:-ml-16 lg:z-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
-              {roles.map((role, index) => (
+      <section className="relative py-20 lg:py-28 overflow-hidden bg-[#FAFAF8]">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+          <div className="relative min-h-[520px]">
+            {/* MAROON GRADIENT SLAB */}
+            <motion.div
+              initial={{ opacity: 0, x: -80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative lg:absolute left-0 top-0 w-full lg:w-[42%] rounded-[2.5rem] lg:rounded-r-none overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(165deg, #7B1E3A 0%, #9B3E5A 50%, #B8859E 100%)",
+                minHeight: "clamp(420px, 60vh, 520px)",
+              }}
+            >
+              <div className="relative z-10 px-10 lg:px-16 py-16 lg:py-20 h-full flex flex-col justify-center">
+                {/* Label */}
                 <motion.div
-                  key={role.title}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: index * 0.1 }}
-                  className="rounded-2xl bg-white border border-[#E4D7CE] p-6 shadow-[0_10px_28px_rgba(0,0,0,0.05)] flex flex-col gap-4 h-full"
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="text-[#F6F1EB]/60 uppercase mb-10"
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.3em",
+                  }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] flex items-center justify-center text-white shadow-md">
-                    <role.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-xl text-dark mb-1">
-                      {role.title}
-                    </h3>
-                    <p className="text-sm text-[#7B1E3A] font-semibold">
-                      {role.organization}
-                    </p>
-                  </div>
-                  <p className="text-[#4F4F4F] leading-relaxed text-sm flex-1">
-                    {role.description}
-                  </p>
-                  <div className="flex flex-wrap gap-3 text-[13px] underline underline-offset-4">
-                    {role.socials.map((social) => (
-                      <a
-                        key={social.name}
-                        href={social.url}
-                        className="text-[#7B1E3A] hover:text-[#9B2E4A] transition-colors"
-                      >
-                        {social.name}
-                      </a>
-                    ))}
-                  </div>
+                  Currently
                 </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* What's new section */}
-      <section className="relative bg-background py-28 overflow-hidden">
-        {/* soft ambient glow */}
-        <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-[520px] h-[520px] bg-primary/10 blur-3xl rounded-full" />
 
-        <div className="relative max-w-6xl mx-auto px-6">
-          {/* Header */}
-          <div className="text-center max-w-xl mx-auto mb-20">
-            <p className="text-xs uppercase tracking-[0.35em] text-primary mb-4">
-              Upcoming
-            </p>
-            <h2 className="font-heading text-4xl md:text-5xl text-dark leading-tight">
-              Events & Workshops
-            </h2>
-            <p className="mt-4 text-muted">
-              Carefully curated spaces to learn, reflect, and grow.
-            </p>
-          </div>
+                {/* Heading */}
+                <motion.h2
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                  className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.15]"
+                >
+                  Where I'm currently
+                  <br />
+                  showing up
+                </motion.h2>
 
-          {/* Timeline */}
-          <div className="relative pl-8">
-            {/* vertical line */}
-            <span className="absolute left-0 top-0 bottom-0 w-px bg-primary/30" />
+                {/* Divider */}
+                <motion.div
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  whileInView={{ scaleX: 1, opacity: 0.4 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.8 }}
+                  className="h-[1px] w-24 bg-[#F6F1EB]"
+                  style={{ transformOrigin: "left" }}
+                />
+              </div>
 
-            <div className="space-y-16">
-              {upcomingEvents.map((event) => (
-                <div key={event.id} className="relative">
-                  {/* Date badge */}
-                  <div className="absolute -left-[42px] top-1">
-                    <span className="text-sm font-medium text-primary">
-                      {new Date(event.date).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                      })}
-                    </span>
-                  </div>
+              {/* Texture */}
+              <div
+                className="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+                }}
+              />
+            </motion.div>
 
-                  {/* Content */}
-                  <div className="group">
-                    <p className="text-xs uppercase tracking-[0.25em] text-primary mb-2">
-                      {event.type}
-                    </p>
+            {/* RIGHT CARDS — PERFECTLY CENTERED */}
+            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20">
+              <div className="flex flex-col lg:flex-row gap-4">
+                {roles.map((role, index) => {
+                  const IconComponent = role.icon;
 
-                    <h3 className="font-heading text-2xl md:text-3xl text-dark mb-3">
-                      {event.title}
-                    </h3>
+                  return (
+                    <motion.div
+                      key={role.title}
+                      initial={{ opacity: 0, y: 40, x: 40 }}
+                      whileInView={{ opacity: 1, y: 0, x: 0 }}
+                      whileHover={{ y: -6 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.9,
+                        delay: 0.4 + index * 0.12,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className={`relative bg-white rounded-3xl border border-[#E4D7CE]
+shadow-[0_16px_40px_rgba(0,0,0,0.10)]
+px-6 py-6 w-[360px] backdrop-blur-[2px]
+${index === 0 ? "z-30" : "z-20"}`}
+                    >
+                      {/* Header */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] flex items-center justify-center text-white shadow-md">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="font-heading text-[1.5rem] text-[#2A2A2A] leading-tight">
+                            {role.title}
+                          </h3>
+                          <p className="text-sm text-[#7B1E3A] font-semibold">
+                            {role.organization}
+                          </p>
+                        </div>
+                      </div>
 
-                    <p className="text-muted mb-5">
-                      {event.location} · {event.format || "Online"} ·{" "}
-                      {event.duration}
-                    </p>
+                      {/* Description */}
+                      <p className="text-[#6B6B6B] mb-5 text-[0.95rem] leading-relaxed">
+                        {role.description}
+                      </p>
 
-                    {/* CTA */}
-                    <button className="inline-flex items-center text-sm font-medium text-primary group-hover:underline underline-offset-4">
-                      {event.cta}
-                      <span className="ml-1 transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              ))}
+                      {/* Socials */}
+                      <div className="flex flex-wrap gap-2">
+                        {role.socials.map((social) => (
+                          <a
+                            key={social.name}
+                            href={social.url}
+                            aria-label={social.name}
+                            className="inline-flex items-center justify-center w-9 h-9 rounded-full
+                      bg-[#F6F1EB] border border-[#E4D7CE] text-[#7B1E3A]
+                      hover:bg-[#7B1E3A] hover:text-white hover:border-[#7B1E3A]
+                      transition-colors"
+                          >
+                            <social.icon className="w-4 h-4" />
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

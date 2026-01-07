@@ -278,3 +278,75 @@
     opacity: 0.7;
   }
 }
+.shine-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* edge thickness */
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent 22%,
+    rgba(255, 255, 255, 0.9),
+    rgba(201, 162, 77, 0.65),
+    transparent 78%
+  );
+  background-size: 220% 220%;
+  filter: blur(6px);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+
+  /* show only the border area */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  pointer-events: none;
+  animation: cardShine 3.6s linear infinite;
+}
+
+@keyframes cardShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+.hello-brand {
+  font-family: "Pacifico", cursive; /* handwritten feel */
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+
+  /* Brand gradient */
+  background: linear-gradient(
+    90deg,
+    #7B1E3A 0%,
+    #9B2E4A 30%,
+    #C45A6F 55%,
+    #C9A24D 85%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  /* Soft richness */
+  text-shadow: 0 3px 14px rgba(123, 30, 58, 0.25);
+}
+
+/* Responsive tuning */
+@media (min-width: 768px) {
+  .hello-brand {
+    font-size: 40px;
+  }
+}

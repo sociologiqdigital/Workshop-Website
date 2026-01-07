@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import {featuredBlog, secondaryBlogs} from "../data/blog";
 import BlogImg from "../styles/images/BlogImg.jpg"
 const allBlogs = [featuredBlog, ...secondaryBlogs];
@@ -151,12 +152,16 @@ export default function BlogDetail() {
           {/* BACK CTA */}
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-primary font-medium pt-6 border-t border-primary/10"
+            className="group inline-flex items-center gap-2 text-primary font-medium pt-6 border-t border-primary/10 transition-colors duration-300 hover:text-primary/80"
           >
-            ← View all writing
+            <ChevronLeft className="h-4 w-4 opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+            <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
+              View all writing
+            </span>
           </Link>
         </aside>
       </div>
     </section>
   );
 }
+
