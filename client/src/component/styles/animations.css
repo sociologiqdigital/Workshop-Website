@@ -1,0 +1,26 @@
+@keyframes blobMorph {
+  0% {
+    transform: translate(40%, -25%) scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70% / 100% 85% 92% 74%;
+  }
+  50% {
+    transform: translate(0%, 13%) scale(1.15) rotate(41deg);
+    border-radius: 20% 71% 47% 70% / 81% 15% 22% 54%;
+  }
+  100% {
+    transform: translate(-45%, 39%) scale(1.05) rotate(-60deg);
+    border-radius: 100% 75% 92% 74% / 60% 80% 30% 70%;
+  }
+}
+
+.blob {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: 380px;
+  opacity: 0.4;
+  filter: blur(48px);
+  animation: blobMorph 12s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+    infinite alternate;
+  pointer-events: none;
+  will-change: transform, border-radius;
+}

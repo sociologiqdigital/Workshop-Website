@@ -22,7 +22,7 @@ export const Testimonial = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* LEFT — SLIDER */}
-          <div className="relative min-h-[260px]">
+          <div className="relative h-[240px] md:h-[280px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTestimonial.id}
@@ -30,15 +30,19 @@ export const Testimonial = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-white rounded-2xl p-8 shadow-soft relative max-w-md "
+                className="bg-white p-8 shadow-soft relative max-w-md h-full overflow-y-auto"
+                style={{
+                  borderTopLeftRadius: "1.5rem",
+                  borderBottomRightRadius: "1.5rem",
+                  borderTopRightRadius: 0,
+                  borderBottomLeftRadius: 0,
+                }}
               >
-                <span className="absolute -top-6 -left-9 text-8xl font-heading text-primary/20">
-                  “
-                </span>
+                <span className="absolute top-2 left-2 text-7xl font-heading text-primary/30">&ldquo;</span>
                 <p className="font-heading text-xl text-dark leading-relaxed mb-6">
                   {activeTestimonial.quote}
                 </p>
-                <div>
+                <div className="text-right">
                   <p className="font-medium text-dark">
                     {activeTestimonial.name}
                   </p>
@@ -86,3 +90,4 @@ export const Testimonial = () => {
     </section>
   );
 };
+

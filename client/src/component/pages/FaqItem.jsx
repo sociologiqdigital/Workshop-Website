@@ -34,16 +34,17 @@ export default function FAQItem({ index, question, answer, isOpen, onToggle }) {
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="overflow-hidden"
-        >
-          <div className="px-7 md:px-10 py-6 bg-[#E9E4DD] text-muted rounded-b-2xl">
-            <p className="max-w-5xl leading-relaxed">{answer}</p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-7 md:px-10 py-6 bg-[#E9E4DD] text-muted rounded-b-3xl">
+              <div className="mb-4 h-[4px] bg-primary/5" />
+              <p className="max-w-5xl leading-relaxed">{answer}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

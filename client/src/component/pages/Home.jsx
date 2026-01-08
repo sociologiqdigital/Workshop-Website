@@ -86,12 +86,12 @@ export default function Home() {
   const [error, setError] = useState({});
   const navigate = useNavigate();
   const words = [
-    "Founder",
+    "FOUNDER",
+    "COACH",
+    "MENTOR",
+    "STRATEGIST",
+    "TRAINER",
     "CEO",
-    "Coach",
-    "Mentor",
-    "Strategist",
-    "Trainer",
     "IPP",
   ];
   const typedWord = useTypewriter(words);
@@ -203,34 +203,46 @@ export default function Home() {
     }
   };
 
-  function useTypewriter(words, speed = 350, pause = 1500) {
+  function useTypewriter(words, speed = 140, pause = 1400) {
     const [index, setIndex] = useState(0);
     const [text, setText] = useState("");
-    const [deleting, setDeleting] = useState(false);
+    const [phase, setPhase] = useState("typing");
+    const timeoutRef = useRef(null);
 
     useEffect(() => {
       const currentWord = words[index % words.length];
+      const lengthFactor = Math.max(1, 7 / currentWord.length);
+      const typingSpeed = speed * lengthFactor;
+      const deletingSpeed = speed * 0.6 * lengthFactor;
+      const restartDelay = phase === "typing" && text === "" ? 180 : 0;
 
-      const timeout = setTimeout(
-        () => {
-          if (!deleting) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      if (phase === "typing") {
+        if (text === currentWord) {
+          timeoutRef.current = setTimeout(() => setPhase("pause"), pause);
+        } else {
+          timeoutRef.current = setTimeout(() => {
             setText(currentWord.slice(0, text.length + 1));
-            if (text === currentWord) {
-              setTimeout(() => setDeleting(true), pause);
-            }
-          } else {
+          }, typingSpeed + restartDelay);
+        }
+      } else if (phase === "pause") {
+        timeoutRef.current = setTimeout(() => setPhase("deleting"), 120);
+      } else {
+        if (text === "") {
+          setPhase("typing");
+          setIndex((prev) => prev + 1);
+        } else {
+          timeoutRef.current = setTimeout(() => {
             setText(currentWord.slice(0, text.length - 1));
-            if (text === "") {
-              setDeleting(false);
-              setIndex((prev) => prev + 1);
-            }
-          }
-        },
-        deleting ? speed / 2 : speed
-      );
+          }, deletingSpeed + 40);
+        }
+      }
 
-      return () => clearTimeout(timeout);
-    }, [text, deleting, index, speed, pause, words]);
+      return () => clearTimeout(timeoutRef.current);
+    }, [text, phase, index, speed, pause, words]);
 
     return text;
   }
@@ -294,9 +306,9 @@ export default function Home() {
   return (
     <>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background pt-[120px] pb-24 sm:pt-[140px] sm:pb-24 md:pt-[180px] md:pb-32 grid-bg">
+      <section className="relative overflow-hidden bg-background pt-[100px] pb-20 sm:pt-[120px] sm:pb-20 md:pt-[150px] md:pb-24 grid-bg">
         {/* Soft editorial background accents */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl" />
+        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl " />
         <div className="pointer-events-none absolute top-40 right-[-160px] hidden md:block w-[320px] h-[320px] bg-primary/8 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -306,10 +318,8 @@ export default function Home() {
               className="
           relative
           max-w-[560px]
-          mx-auto
-          md:mx-0
-          text-center
-          md:text-left
+          mx-0
+          text-left
         "
               initial="hidden"
               animate="visible"
@@ -324,14 +334,14 @@ export default function Home() {
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex justify-center md:justify-start items-center gap-2 text-[13px] md:text-[15px] text-muted mb-4"
+                className="flex flex-col items-start gap-1.5 text-[15px] md:text-[18px] text-muted mb-2"
               >
-                <div className="flex justify-center md:justify-start items-center gap-2">
+                <div className="flex items-center gap-2">
                   <span className="hello-brand">hello</span>
-                  <span className="text-[13px] md:text-[15px] text-muted font-medium">
-                    , I’m
-                  </span>
                 </div>
+                <span className="text-[15px] md:text-[18px] text-muted font-medium">
+                  I'm
+                </span>
               </motion.div>
 
               {/* Name */}
@@ -340,19 +350,10 @@ export default function Home() {
                   hidden: { opacity: 0, y: 14 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="font-heading text-[40px] sm:text-[44px] md:text-[64px] text-dark leading-[1.1] mb-6"
+                className="font-heading text-[40px] sm:text-[44px] md:text-[64px] text-dark leading-[1.1] mb-5"
               >
                 Ruchi <span className="text-primary">Dorlikar</span>
               </motion.h1>
-
-              {/* Editorial divider */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, width: 0 },
-                  visible: { opacity: 1, width: "56px" },
-                }}
-                className="h-[2px] bg-primary/60 mb-7 mx-auto md:mx-0"
-              />
 
               {/* Typewriter line */}
               <motion.h1
@@ -360,9 +361,9 @@ export default function Home() {
                   hidden: { opacity: 0, y: 12 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="text-primary text-4xl sm:text-5xl md:text-5xl font-medium tracking-wide mb-7"
+                className="text-primary text-4xl sm:text-5xl md:text-5xl font-medium tracking-wide mb-6"
               >
-                <span className="relative">
+                <span className="relative text-3xl">
                   {typedWord}
                   <span className="inline-block ml-[2px] type-cursor"></span>
                 </span>
@@ -378,10 +379,9 @@ export default function Home() {
             text-[16px] sm:text-[17px] md:text-[18px]
             text-muted
             leading-[1.75]
-            mb-12
+            mb-10
             max-w-[520px]
-            mx-auto
-            md:mx-0
+            mx-0
           "
               >
                 Creating digital paths with clarity,{" "}
@@ -400,6 +400,14 @@ export default function Home() {
                   <ArrowRight className="ml-1 w-3 h-3" />
                 </Link>
               </motion.p>
+              {/* Editorial divider */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, width: 0 },
+                  visible: { opacity: 1, width: "56px" },
+                }}
+                className="h-[2px] bg-primary/60 mb-7 mx-auto md:mx-0"
+              />
             </motion.div>
             {/* RIGHT IMAGE */}
             <motion.div
@@ -412,7 +420,7 @@ export default function Home() {
               <ImageWithFallback
                 src={HeroImg}
                 alt="Ruchi Dorlikar"
-                className="relative z-10 w-[360px] h-[460px] object-cover rounded-[32px]"
+                className="relative z-10 w-[420px] h-[540px] lg:w-[460px] lg:h-[580px] object-cover rounded-[36px]"
               />
 
               {/* floating badge - top left */}
@@ -420,7 +428,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9, y: -12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
-                className="absolute top-6 left-32 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
+                className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
               >
                 <Compass className="w-4 h-4 text-primary" />
                 <span className="text-xs font-semibold text-dark tracking-wide">
@@ -433,7 +441,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.4 }}
-                className="absolute bottom-6 left-32 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
+                className="absolute bottom-8 left-6 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
               >
                 <TrendingUp className="w-4 h-4 text-primary" />
                 <span className="text-xs font-medium text-dark">
@@ -446,7 +454,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 0.4 }}
-                className="absolute bottom-4 -right-4 z-20 flex items-center gap-3 bg-white px-4 py-3 rounded-2xl shadow-md"
+                className="absolute bottom-6 right-4 z-20 flex items-center gap-3 bg-white px-4 py-3 rounded-2xl shadow-md"
               >
                 <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <Layers size={16} />
@@ -485,12 +493,6 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="text-[#F6F1EB]/60 uppercase mb-10"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "0.75rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.3em",
-                  }}
                 >
                   Currently
                 </motion.div>
@@ -503,9 +505,7 @@ export default function Home() {
                   transition={{ duration: 1, delay: 0.4 }}
                   className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.15]"
                 >
-                  Where I'm currently
-                  <br />
-                  showing up
+                  Where I'm currently showing up
                 </motion.h2>
 
                 {/* Divider */}
@@ -529,7 +529,7 @@ export default function Home() {
             </motion.div>
 
             {/* RIGHT CARDS — PERFECTLY CENTERED */}
-            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20">
+            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20 top-24 ">
               <div className="flex flex-col lg:flex-row gap-4">
                 {roles.map((role, index) => {
                   const IconComponent = role.icon;
@@ -671,11 +671,11 @@ ${index === 0 ? "z-30" : "z-20"}`}
                       rotate: [0, 5, 0],
                       y: [0, -20, 0],
                     }}
-                    transition={{
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    // transition={{
+                    //   duration: 8,
+                    //   repeat: Infinity,
+                    //   ease: "easeInOut",
+                    // }}
                     className="bg-white p-4 pb-8 shadow-[0_30px_60px_rgba(0,0,0,0.18)] mb-8 cursor-pointer"
                     style={{
                       transform: `rotate(${milestone.rotate}deg)`,
@@ -726,7 +726,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
           className="text-center mb-20"
         >
           <div
-            className="text-dark tracking-[0.3em] uppercase mb-4"
+            className="text-[#C9A24D] tracking-[0.3em] uppercase mb-4"
             // style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Events & Moments
@@ -851,14 +851,14 @@ ${index === 0 ? "z-30" : "z-20"}`}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-16"
         >
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
             className="text-[#7B1E3A] border-2 border-[#7B1E3A] px-8 py-4 rounded-full transition-all duration-300 hover:bg-[#7B1E3A] hover:text-white"
             // style={{ fontFamily: "'Inter', sans-serif" }}
           >
             View All Events
-          </motion.button>
+          </motion.button> */}
         </motion.div>
       </section>
       {/* Great Achievements */}
@@ -870,7 +870,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Header */}
           <div className="max-w-2xl mx-auto text-center mb-24">
-            <p className="text-xs uppercase tracking-[0.4em] text-primary mb-5">
+            <p className="text-xs uppercase tracking-[0.4em] text-[#C9A24D] mb-5">
               Great Achievements
             </p>
             <h2 className="font-heading text-4xl md:text-5xl text-dark leading-tight">
@@ -1014,7 +1014,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
               transition={{ duration: 0.6 }}
               className="max-w-lg"
             >
-              <p className="text-primary text-sm font-medium mb-4">
+              <p className="text-[#C9A24D] text-sm font-medium mb-4">
                 From the Journal
               </p>
 
@@ -1045,7 +1045,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group block max-w-md"
                 >
-                  <p className="text-xs uppercase tracking-wide text-muted mb-2">
+                  <p className="text-xs uppercase tracking-wide  mb-2 text-[#C9A24D]">
                     {blog.category}
                   </p>
 
@@ -1066,40 +1066,39 @@ ${index === 0 ? "z-30" : "z-20"}`}
           </div>
         </div>
       </section>
-      {/* Closing CTA – Free Flow */}
-      <section className="relative bg-background py-28 md:py-36 overflow-hidden">
-        {/* subtle motion highlight */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-primary/10 rounded-full blur-3xl" />
+      {/* Let's work together section */}
+      <section className="relative bg-background py-24 md:py-32 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto px-6">
+          <div className="cta-panel">
+            <div className="cta-rings" aria-hidden="true">
+              <span className="cta-ring cta-ring-1" />
+              <span className="cta-ring cta-ring-2" />
+              <span className="cta-ring cta-ring-3" />
+              <span className="cta-ring cta-ring-4" />
+            </div>
 
-        <div className="relative max-w-3xl mx-auto px-6 text-center">
-          {/* micro label */}
-          <p className="text-xs uppercase tracking-[0.35em] text-primary mb-8">
-            A gentle next step
-          </p>
+            <div className="cta-content">
+              <p className="cta-eyebrow">A gentle next step</p>
 
-          {/* main statement */}
-          <h2 className="font-heading text-4xl md:text-5xl text-dark leading-[1.2] mb-10">
-            Ready to transform your journey?
-          </h2>
+              <h2 className="cta-title">Let's Work together.</h2>
 
-          {/* divider */}
-          <div className="mx-auto h-[2px] w-14 bg-primary/60 mb-10" />
+              <p className="cta-sub">
+                Join women who are building clarity, confidence, and sustainable
+                businesses without burnout or noise.
+              </p>
 
-          {/* supporting text */}
-          <p className="text-[17px] md:text-[18px] leading-[1.75] text-muted max-w-2xl mx-auto mb-14">
-            Join women who are building clarity, confidence, and sustainable
-            businesses — without burnout or noise.
-          </p>
+              <div className="cta-actions">
+                <a href="/register" className="cta-pill cta-pill-primary">
+                  Register Now
+                  <ArrowRight className="cta-pill-icon" />
+                </a>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="/register" className="btn btn-primary shine-button group">
-              Register Now
-            </a>
-
-            <a href="/contact" className="btn btn-secondary">
-              Contact Us
-            </a>
+                <a href="/contact" className="cta-pill cta-pill-secondary">
+                  Contact Us
+                  <ArrowRight className="cta-pill-icon" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1233,5 +1232,6 @@ ${index === 0 ? "z-30" : "z-20"}`}
     </>
   );
 }
+
 
 

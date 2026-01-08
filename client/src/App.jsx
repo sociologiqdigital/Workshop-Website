@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./component/layout/Header";
 import Footer from "./component/layout/Footer";
+
+
 // Pages
 import Home from "./component/pages/Home";
 import About from "./component/pages/About";
