@@ -188,7 +188,6 @@ export default function WorkshopDetails() {
           </div>
         </div>
       </section>
-
       <FAQSection />
     </section>
   );

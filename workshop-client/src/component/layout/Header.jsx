@@ -40,8 +40,8 @@ export default function Header() {
           <Link to="/" className="nav-link">
             Home
           </Link>
-          <Link to="/about" className="nav-link">
-            About
+          <Link to="/#bonuses" className="nav-link">
+            Bonuses
           </Link>
           <div className="relative group">
             <button type="button" className="nav-link flex items-center gap-2">
@@ -70,10 +70,10 @@ export default function Header() {
         {/* CTA */}
         <div className="hidden md:block">
           <Link
-            to="/register"
+            to="/#program"
             className="btn btn-primary shadow-soft hover:shadow-hover"
           >
-            Register
+            Book a Slot
           </Link>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import TestimonialSection from "./Testimonial";
+import MarqueeNotice from "../common/MarqueeNotice";
 import { useState, useEffect } from "react";
+import BenefitImg from "../styles/images/BenefitImg.svg"
 import {
   motion,
   useScroll,
@@ -28,6 +30,9 @@ import {
   CreditCard,
   Smartphone,
   ShieldCheck,
+  ArrowRight,
+
+  Landmark,
 } from "lucide-react";
 import { weeks } from "../data/Carriculum";
 import { curriculum } from "../data/learn";
@@ -83,32 +88,25 @@ const Home = () => {
   };
 
   
-  // side-cannon confetti effect
+  // Confetti burst from center, reduced particles
   const triggerConfettiBurst = () => {
     setIsOpen(true);
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 45, spread: 70, ticks: 100, zIndex: 50 };
+    const defaults = { startVelocity: 30, spread: 55, ticks: 80, zIndex: 50 };
 
     const interval = setInterval(function () {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
 
-      const particleCount = 60 * (timeLeft / duration);
+      const particleCount = 24 * (timeLeft / duration);
 
-      // Fire from left side
+      // Fire from center
       confetti({
         ...defaults,
         particleCount,
-        origin: { x: 0, y: 0.6 },
-        angle: 60,
-      });
-      // Fire from right side
-      confetti({
-        ...defaults,
-        particleCount,
-        origin: { x: 1, y: 0.6 },
-        angle: 120,
+        origin: { x: 0.5, y: 0.6 },
+        angle: 90,
       });
     }, 250);
   };
@@ -327,6 +325,101 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Program Details Section */}
+      <section
+        className="py-16 sm:py-24 lg:py-32 bg-background overflow-hidden"
+        id="program"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="mb-16 lg:mb-24"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-block text-wine tracking-[0.3em] uppercase text-xs font-semibold mb-4">
+              Program Overview
+            </span>
+            <h2 className="text-4xl sm:text-5xl lg:text-7xl text-primary font-light tracking-tight">
+              The Essentials.
+            </h2>
+          </motion.div>
+
+          {/* Subtle Program Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {programs.map((program, index) => (
+              <motion.article
+                key={program.id}
+                className="group relative flex h-full flex-col rounded-3xl border border-slate-100 bg-white/80 p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="text-[11px] uppercase tracking-[0.25em] text-muted">
+                    {program.label}
+                  </div>
+                  <span
+                    className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${
+                      programStatusStyles[program.status]
+                    }`}
+                  >
+                    {program.statusLabel}
+                  </span>
+                </div>
+
+                <h3 className="mt-4 font-heading text-2xl text-dark">
+                  {program.title}
+                </h3>
+                <p className="mt-3 text-muted leading-relaxed">
+                  {program.description}
+                </p>
+
+                <ul className="mt-5 space-y-2 text-sm text-muted">
+                  {program.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary/60 shrink-0" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-7">
+                  {program.status === "active" && (
+                    <Link
+                      to={`/programs/${program.slug}`}
+                      className="inline-flex rounded-full bg-primary px-6 py-2 text-xs font-semibold text-white transition hover:opacity-90"
+                    >
+                      Apply Now
+                    </Link>
+                  )}
+
+                  {program.status === "soon" && (
+                    <Link
+                      to={`/programs/${program.slug}`}
+                      className="inline-flex rounded-full border border-primary px-6 py-2 text-xs font-semibold text-primary transition hover:bg-primary/10"
+                    >
+                      Join Waitlist
+                    </Link>
+                  )}
+
+                  {program.status === "closed" && (
+                    <Link
+                      to={`/programs/${program.slug}`}
+                      className="inline-flex rounded-full border border-gray-200 px-6 py-2 text-xs font-semibold text-gray-500 transition hover:border-gray-300"
+                    >
+                      Get Updates
+                    </Link>
+                  )}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* Who benefits section */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -336,7 +429,7 @@ const Home = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative order-2 lg:order-1"
+              className="relative order-1 lg:order-2"
             >
               <div className="bg-[#FAEFE6] rounded-[2rem] p-8 md:p-12 relative overflow-hidden">
                 <motion.div
@@ -350,7 +443,7 @@ const Home = () => {
                 >
                   {/* Using a placeholder SVG illustration common for "Digital Growth" */}
                   <img
-                    src="https://illustrations.popsy.co/pink/digital-nomad.svg"
+                    src={BenefitImg}
                     alt="Who benefits"
                     className="w-full max-w-md"
                   />
@@ -362,7 +455,7 @@ const Home = () => {
             </motion.div>
 
             {/* Content Side */}
-            <div className="order-1 lg:order-2">
+            <div className="order-2 lg:order-1">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -373,7 +466,7 @@ const Home = () => {
                   For Future Entrepreneurs
                 </span>
                 <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-dark leading-tight">
-                  Who Will <span className="text-primary italic">Benefit?</span>
+                  Who Will <span className="text-primary">Benefit?</span>
                 </h2>
               </motion.div>
 
@@ -406,8 +499,9 @@ const Home = () => {
           <span className="w-3 h-3 rounded-full bg-primary/20" />
         </div>
       </section>
+
       {/* Carriculum section */}
-      <section className="py-16 sm:py-20 lg:py-32 bg-gradient-to-b from-white to-[#FDECEA]">
+      <section className="py-16 sm:py-20 lg:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12 sm:mb-16 lg:mb-20"
@@ -493,98 +587,10 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      {/* Program Details Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-background overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="mb-16 lg:mb-24"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="inline-block text-wine tracking-[0.3em] uppercase text-xs font-semibold mb-4">
-              Program Overview
-            </span>
-            <h2 className="text-4xl sm:text-5xl lg:text-7xl text-primary font-light tracking-tight">
-              The Essentials.
-            </h2>
-          </motion.div>
 
-          {/* Subtle Program Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {programs.map((program, index) => (
-              <motion.article
-                key={program.id}
-                className="group relative flex h-full flex-col rounded-3xl border border-slate-100 bg-white/80 p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="text-[11px] uppercase tracking-[0.25em] text-muted">
-                    {program.label}
-                  </div>
-                  <span
-                    className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${programStatusStyles[program.status]}`}
-                  >
-                    {program.statusLabel}
-                  </span>
-                </div>
-
-                <h3 className="mt-4 font-heading text-2xl text-dark">
-                  {program.title}
-                </h3>
-                <p className="mt-3 text-muted leading-relaxed">
-                  {program.description}
-                </p>
-
-                <ul className="mt-5 space-y-2 text-sm text-muted">
-                  {program.points.map((point) => (
-                    <li key={point} className="flex items-start gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary/60 shrink-0" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-7">
-                  {program.status === "active" && (
-                    <Link
-                      to={`/programs/${program.slug}`}
-                      className="inline-flex rounded-full bg-primary px-6 py-2 text-xs font-semibold text-white transition hover:opacity-90"
-                    >
-                      Apply Now
-                    </Link>
-                  )}
-
-                  {program.status === "soon" && (
-                    <Link
-                      to={`/programs/${program.slug}`}
-                      className="inline-flex rounded-full border border-primary px-6 py-2 text-xs font-semibold text-primary transition hover:bg-primary/10"
-                    >
-                      Join Waitlist
-                    </Link>
-                  )}
-
-                  {program.status === "closed" && (
-                    <Link
-                      to={`/programs/${program.slug}`}
-                      className="inline-flex rounded-full border border-gray-200 px-6 py-2 text-xs font-semibold text-gray-500 transition hover:border-gray-300"
-                    >
-                      Get Updates
-                    </Link>
-                  )}
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
       {/* Bonuses Section */}
       <section
+        id="bonuses"
         ref={bonusSectionRef}
         className="py-32 bg-white overflow-hidden relative"
       >
@@ -691,6 +697,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       {/* Offer section */}
       <section className="py-24 bg-gradient-to-b from-[#FFF7F2] to-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6">
@@ -701,7 +708,7 @@ const Home = () => {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-6xl font-heading text-dark mb-4">
-              Limited Time <span className="text-primary italic">Offer!</span>
+              Limited Time <span className="text-primary ">Offer!</span>
             </h2>
             <div className="w-24 h-1 bg-primary/20 mx-auto rounded-full" />
           </motion.div>
@@ -746,7 +753,7 @@ const Home = () => {
                     {["UPI", "Card", "NetBanking"].map((m) => (
                       <span
                         key={m}
-                        className="px-4 py-2 bg-gray-50 rounded-xl text-xs font-semibold text-muted border border-gray-100 italic"
+                        className="px-4 py-2 bg-gray-50 rounded-xl text-xs font-semibold text-muted border border-gray-100"
                       >
                         {m}
                       </span>
@@ -813,6 +820,7 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+      <MarqueeNotice />
       <TestimonialSection />
       <FAQSection />
       <CTASection />

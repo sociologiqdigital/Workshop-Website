@@ -206,7 +206,7 @@ export default function RegistrationForm() {
             !isFormValid ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          Register for Workshop
+          Pay & Register
         </button>
       </form>
 

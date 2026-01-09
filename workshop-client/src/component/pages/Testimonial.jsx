@@ -84,7 +84,7 @@ const TestimonialColumn = ({ list, delay = 0, reverse = false }) => (
 const TestimonialSection = () => {
   return (
     // Background matches your --color-background peach tone
-    <section className="bg-[rgb(var(--color-background))] py-24 overflow-hidden relative">
+    <section className="bg-background py-24 overflow-hidden relative">
       {/* Soft Decorative Blobs using your CSS class for consistency */}
       <div className="blob w-[400px] h-[400px] top-0 right-0 -translate-y-1/2 translate-x-1/4" />
       <div className="blob w-[300px] h-[300px] bottom-0 left-0 translate-y-1/2 -translate-x-1/4" />
