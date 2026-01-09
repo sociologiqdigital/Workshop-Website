@@ -1,5 +1,5 @@
 {
-  "name": "workshop-client",
+  "name": "digital-biz-workshop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,12 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@studio-freight/lenis": "^1.0.42",
+    "axios": "^1.13.2",
+    "canvas-confetti": "^1.9.4",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.562.0",
+    "react": "^18.2.0",
+    "react-day-picker": "^9.13.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.11.0",
+    "react-simple-typewriter": "^5.0.1",
+    "swiper": "^12.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -25,7 +36,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^3.4.19",
     "vite": "^7.2.4"
   }
 }

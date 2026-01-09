@@ -128,10 +128,22 @@ export default function Home() {
         "Leading SociologiQ as a digital solutions and strategy agency focused on building clarity-led systems for modern businesses.",
       icon: Briefcase,
       socials: [
-        { name: "LinkedIn", icon: Linkedin, url: "#" },
-        { name: "Instagram", icon: Instagram, url: "#" },
+        {
+          name: "LinkedIn",
+          icon: Linkedin,
+          url: "https://www.linkedin.com/in/sociologiq/",
+        },
+        {
+          name: "Instagram",
+          icon: Instagram,
+          url: "https://www.instagram.com/thinkdigitalwithruchi/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#",
+        },
         { name: "Twitter", icon: Twitter, url: "#" },
-        { name: "Facebook", icon: Facebook, url: "#" },
+        {
+          name: "Facebook",
+          icon: Facebook,
+          url: "https://www.facebook.com/ruchi.shegaonkar.7/",
+        },
       ],
     },
     {
@@ -1102,133 +1114,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
           </div>
         </div>
       </section>
-      {/* Contact Section */}
-      {/* <section className="bg-[#F6F1EB] py-20  grid-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-         
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-semibold text-[#6B1F2B]">
-              Get in Touch
-            </h2>
-            <p className="mt-4 text-[#7A6A6D]">
-              Have questions about workshops or mentorship? We’d love to hear
-              from you.
-            </p>
-          </div>
-
-        
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 rounded-[32px] bg-[#EFE6DC] p-8 sm:p-10 md:p-14 shadow-sm">
-            <div>
-              <h3 className="text-xl font-semibold text-[#6B1F2B] mb-6">
-                Contact Information
-              </h3>
-
-              <div className="space-y-6 text-sm text-[#7A6A6D]">
-                <div className="flex gap-4">
-                  <MapPin className="text-[#6B1F2B]" size={20} />
-                  <span>
-                    Uday Nagar, Nagpur, <br />
-                    Maharashtra, India
-                  </span>
-                </div>
-
-                <div className="flex gap-4">
-                  <Phone className="text-[#6B1F2B]" size={20} />
-                  <a href="tel:+91123456789" className="hover:underline">
-                    +91 123456789
-                  </a>
-                </div>
-
-                <div className="flex gap-4">
-                  <Mail className="text-[#6B1F2B]" size={20} />
-                  <a
-                    href="mailto:sociologiqdigitalsolutions@gmail.com"
-                    className="hover:underline"
-                  >
-                    sociologiqdigitalsolutions@gmail.com
-                  </a>
-                </div>
-              </div>
-              <p className="mt-8 text-xs text-[#7A6A6D]">
-                We usually respond within 24–48 hours.
-              </p>
-            </div>
-
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label className="block text-sm text-[#6B1F2B] mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={handleChange}
-                  className={`w-full rounded-lg border px-4 py-3 text-sm bg-transparent focus:outline-none focus:ring-2
-        ${
-          error.name
-            ? "border-red-500 focus:ring-red-500"
-            : "border-[#D8CFC5] focus:ring-[#6B1F2B]"
-        }`}
-                />
-                {error.name && (
-                  <p className="text-xs text-red-600 mt-1">{error.name}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm text-[#6B1F2B] mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  className={`w-full rounded-lg border px-4 py-3 text-sm bg-transparent focus:outline-none focus:ring-2
-        ${
-          error.email
-            ? "border-red-500 focus:ring-red-500"
-            : "border-[#D8CFC5] focus:ring-[#6B1F2B]"
-        }`}
-                />
-                {error.email && (
-                  <p className="text-xs text-red-600 mt-1">{error.email}</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm text-[#6B1F2B] mb-1">
-                  Message
-                </label>
-                <textarea
-                  rows="4"
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder="Tell us how we can help"
-                  className={`w-full rounded-lg border px-4 py-3 text-sm bg-transparent focus:outline-none focus:ring-2
-        ${
-          error.message
-            ? "border-red-500 focus:ring-red-500"
-            : "border-[#D8CFC5] focus:ring-[#6B1F2B]"
-        }`}
-                />
-                {error.message && (
-                  <p className="text-xs text-red-600 mt-1">{error.message}</p>
-                )}
-              </div>
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-[#6B1F2B] px-8 py-3 text-sm font-medium text-[#F6F1EB] hover:bg-[#5A1823] transition"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
-        </div>
-      </section> */}
+      
     </>
   );
 }
