@@ -349,7 +349,7 @@ export default function Home() {
                 className="flex flex-col items-start gap-1.5 text-[15px] md:text-[18px] text-muted mb-2"
               >
                 <div className="flex items-center gap-2">
-                  <span className="hello-brand">hello</span>
+                  <span className="hello-brand">Hello</span>
                 </div>
                 <span className="text-[15px] md:text-[18px] text-muted font-medium">
                   I'm

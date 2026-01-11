@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+
 /* ---------- Arrow Component ---------- */
 const Arrow = ({ onClick, direction }) => {
   const Icon = direction === "left" ? ChevronLeft : ChevronRight;

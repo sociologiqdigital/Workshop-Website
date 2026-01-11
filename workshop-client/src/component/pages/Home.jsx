@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import TestimonialSection from "./Testimonial";
 import MarqueeNotice from "../common/MarqueeNotice";
 import { useState, useEffect } from "react";
-import BenefitImg from "../styles/images/BenefitImg.svg"
+import BenefitImg from "../styles/images/BenefitImg.png";
 import {
   motion,
   useScroll,
@@ -31,7 +31,6 @@ import {
   Smartphone,
   ShieldCheck,
   ArrowRight,
-
   Landmark,
 } from "lucide-react";
 import { weeks } from "../data/Carriculum";

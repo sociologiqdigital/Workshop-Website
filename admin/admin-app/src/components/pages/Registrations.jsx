@@ -9,7 +9,7 @@ import {
   ChevronDown,
   Loader2,
 } from "lucide-react";
-import axios from "axios";
+import axios from "../../utilites/axios";
 
 export default function Registrations() {
   const [registrations, setRegistrations] = useState([]);

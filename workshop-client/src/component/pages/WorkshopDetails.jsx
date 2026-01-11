@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { programs } from "../data/Workshop";
 import FAQSection from "./FAQ";
+import WorkshopIllustration from "../styles/images/registration-illustration.svg";
 
 export default function WorkshopDetails() {
   const { slug } = useParams();
@@ -45,6 +46,16 @@ export default function WorkshopDetails() {
               >
                 {program.statusLabel}
               </span>
+
+              <div className="flex justify-center sm:justify-start">
+                <div className="w-32 sm:w-36 md:w-40 rounded-2xl bg-white/80 border border-primary/10 p-3 shadow-soft">
+                  <img
+                    src={WorkshopIllustration}
+                    alt={`${program.title} illustration`}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
 
               <h1 className="font-heading text-4xl md:text-5xl leading-tight text-dark">
                 {program.title}

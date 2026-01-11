@@ -12,7 +12,7 @@ export default function MarqueeNotice() {
   const duplicatedMessages = [...messages, ...messages];
 
   return (
-    <section className="relative overflow-hidden bg-[rgb(var(--color-primary))] py-3 border-y border-white/10">
+    <section className="relative overflow-hidden bg-[rgb(var(--color-primary))] py-4 border-y border-white/10">
       <div className="flex items-center whitespace-nowrap">
         <motion.div
           className="flex items-center w-max"
@@ -27,7 +27,7 @@ export default function MarqueeNotice() {
         >
           {duplicatedMessages.map((text, idx) => (
             <div key={idx} className="flex items-center">
-              <span className="mx-8 text-sm md:text-base font-bold uppercase tracking-widest text-white/90">
+              <span className="mx-8 text-base md:text-lg font-bold uppercase tracking-widest text-white/90">
                 {text}
               </span>
               {/* Decorative Separator */}

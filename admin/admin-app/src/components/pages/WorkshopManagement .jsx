@@ -9,7 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios from "../../utilites/axios";
 
 export default function WorkshopManagement() {
   const token = localStorage.getItem("adminToken");
