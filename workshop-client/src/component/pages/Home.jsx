@@ -156,7 +156,7 @@ const Home = () => {
         ref={heroRef}
         className="hero-landing relative overflow-hidden bg-background"
       >
-        <div className="max-w-7xl mx-auto px-6 pt-36 pb-28 text-center">
+        <div className="max-w-7xl mx-auto px-6 pt-24 sm:pt-32 lg:pt-36 pb-20 sm:pb-24 lg:pb-28 text-center">
           {/* Eyebrow */}
           <motion.span
             initial={{ opacity: 0, y: 10 }}
@@ -210,7 +210,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="relative mt-20 max-w-5xl mx-auto"
+            className="relative mt-14 sm:mt-20 max-w-5xl mx-auto"
             style={{ y: heroMediaY, scale: heroMediaScale }}
           >
             <div className="hero-window">
@@ -252,8 +252,8 @@ const Home = () => {
         </div>
       </section>
       {/* Welcome section */}
-      <section className="bg-gradient-to-b from-white to-[#FFF7F2] py-28 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+      <section className="bg-gradient-to-b from-white to-[#FFF7F2] py-20 sm:py-24 lg:py-28 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT — IMAGE */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -262,7 +262,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="relative flex justify-center"
           >
-            <div className="relative w-[320px] md:w-[380px] h-[420px] rounded-tr-[48px] rounded-bl-[48px] rounded-tl-none rounded-br-none bg-accent overflow-hidden shadow-soft">
+            <div className="relative w-[280px] sm:w-[320px] md:w-[380px] h-[420px] rounded-tr-[48px] rounded-bl-[48px] rounded-tl-none rounded-br-none bg-accent overflow-hidden shadow-soft">
               <img
                 src="/images/ruchi.jpg" // replace with actual image
                 alt="Ruchi Dorlikar"
@@ -298,7 +298,7 @@ const Home = () => {
             {/* Body */}
             <p className="text-muted leading-relaxed max-w-xl mb-6">
               Hi, I'm Ruchi Dorlikar, CEO & Founder of{" "}
-              <a href="https://sociologiq.in/ " target="blank">
+              <a href="https://sociologiq.in/" target="_blank" rel="noreferrer">
                 SociologiQ Digital Solution Pvt. Ltd.
               </a>{" "}
               Here you'll learn how to confidently launch your personal brand
@@ -420,9 +420,9 @@ const Home = () => {
         </div>
       </section>
       {/* Who benefits section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Visual Side */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -498,7 +498,7 @@ const Home = () => {
           <span className="w-3 h-3 rounded-full bg-primary/20" />
         </div>
       </section>
-
+      <MarqueeNotice />
       {/* Carriculum section */}
       <section className="py-16 sm:py-20 lg:py-32 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -591,11 +591,11 @@ const Home = () => {
       <section
         id="bonuses"
         ref={bonusSectionRef}
-        className="py-32 bg-white overflow-hidden relative"
+        className="py-20 sm:py-28 lg:py-32 bg-white overflow-hidden relative"
       >
         <div className="max-w-7xl mx-auto px-6">
           {/* Header with Auto-Opening Gift Box */}
-          <div className="text-center mb-20 relative">
+          <div className="text-center mb-14 sm:mb-20 relative">
             <div className="inline-block mb-6 relative group">
               {/* The Lid: Pops off upward */}
               <motion.div
@@ -698,7 +698,7 @@ const Home = () => {
       </section>
 
       {/* Offer section */}
-      <section className="py-24 bg-gradient-to-b from-[#FFF7F2] to-white relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-gradient-to-b from-[#FFF7F2] to-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6">
           {/* Header Section */}
           <motion.div
@@ -819,7 +819,6 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
-      <MarqueeNotice />
       <TestimonialSection />
       <FAQSection />
       <CTASection />

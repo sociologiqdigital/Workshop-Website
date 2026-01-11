@@ -701,7 +701,7 @@ p {
 
 @media (max-width: 600px) {
   .hero-landing {
-    padding: 6rem 1.25rem 5.5rem;
+    padding: 0;
   }
 
   .hero-actions {
