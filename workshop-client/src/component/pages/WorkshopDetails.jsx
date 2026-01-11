@@ -12,7 +12,7 @@ export default function WorkshopDetails() {
 
   if (!program) {
     return (
-      <section className="min-h-screen bg-background py-24 md:py-20">
+      <section className="min-h-screen bg-background py-20 sm:py-24 lg:py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="text-3xl font-heading mb-4">Program not found</h1>
           <p className="text-muted mb-6">
@@ -30,7 +30,7 @@ export default function WorkshopDetails() {
     <section className="relative bg-background overflow-hidden">
       <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
 
-      <div className="relative max-w-6xl xl:max-w-7xl mx-auto px-6 pt-20 pb-16 lg:pt-24 lg:pb-24">
+      <div className="relative max-w-6xl xl:max-w-7xl mx-auto px-6 pt-20 sm:pt-24 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="grid lg:grid-cols-[1.25fr_0.85fr] gap-12 lg:gap-16 items-start">
           {/* LEFT CONTENT */}
           <div className="space-y-10">
@@ -123,7 +123,7 @@ export default function WorkshopDetails() {
         </div>
       </div>
 
-      <section className="relative py-20 lg:py-24 bg-background overflow-hidden">
+      <section className="relative py-20 sm:py-24 lg:py-28 bg-background overflow-hidden">
         <div className="absolute inset-0 flex justify-center -z-10">
           <div className="w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl" />
         </div>

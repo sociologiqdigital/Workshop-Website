@@ -33,7 +33,7 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-20 w-full z-10">
+      <div className="relative max-w-7xl mx-auto px-6 py-20 sm:py-24 lg:py-28 w-full z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* LEFT — FORM CARD 
               Polished with Glassmorphism and better typography

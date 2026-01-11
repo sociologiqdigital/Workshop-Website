@@ -33,7 +33,7 @@ export default function RegisterLayout() {
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-24 z-10">
+      <div className="relative max-w-7xl mx-auto px-6 py-20 sm:py-24 lg:py-28 z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* LEFT COLUMN — CONTENT & FORM */}
           <motion.div

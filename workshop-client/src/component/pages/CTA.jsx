@@ -19,7 +19,7 @@ const CTASection = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-[rgb(var(--color-background))]">
+    <section className="py-20 sm:py-24 lg:py-28 px-6 bg-[rgb(var(--color-background))]">
       <motion.div
         variants={containerVariants}
         initial="hidden"

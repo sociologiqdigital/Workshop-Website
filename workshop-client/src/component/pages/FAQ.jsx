@@ -64,11 +64,11 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-20 sm:py-24 lg:py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header with Navigation */}
 
-        <div className="flex flex-col lg:flex-row justify-between items-start mb-16 gap-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start mb-12 sm:mb-16 gap-8">
           <div className="max-w-xl min-w-0">
             <h2 className="text-5xl md:text-7xl font-bold text-primary leading-tight">
               Frequently <br />
