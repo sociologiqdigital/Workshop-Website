@@ -6,7 +6,7 @@ export default function Blog() {
   return (
     <section className="bg-background">
       {/* HERO */}
-      <div className="max-w-6xl mx-auto px-6 pt-32 pb-20">
+      <div className="max-w-6xl mx-auto px-6 pt-24 pb-16">
         <p className="uppercase tracking-widest text-primary text-sm mb-3">
           From the journal
         </p>
@@ -25,7 +25,7 @@ export default function Blog() {
       <div className="max-w-6xl mx-auto px-6">
         <Link
           to={featuredBlog.slug}
-          className="group block relative overflow-hidden rounded-3xl mb-24"
+          className="group block relative overflow-hidden rounded-3xl mb-16"
         >
           {/* Background image */}
           <img
@@ -62,7 +62,7 @@ export default function Blog() {
       </div>
 
       {/* OTHER ARTICLES */}
-      <div className="max-w-6xl mx-auto px-6 pb-32">
+      <div className="max-w-6xl mx-auto px-6 pb-24">
         <div className="grid md:grid-cols-2 gap-12">
           {secondaryBlogs.map((post, index) => (
             <Link

@@ -15,6 +15,7 @@ import MarqueeNotice from "./MarqueeNotice";
 import { programs, programStatusStyles } from "../data/courses";
 import { milestones } from "../data/Journey";
 import { upcomingEvents } from "../data/upcomingEvents";
+import AnimatedCounter from "../pages/AnimatedCounter";
 import { ImageWithFallback } from "../common/ImageWithFallback";
 // Images and Illustration imports
 import BenefitImage from "../styles/images/whoBenefitImg.jpg";
@@ -318,7 +319,7 @@ export default function Home() {
   return (
     <>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background pt-[100px] pb-20 sm:pt-[120px] sm:pb-20 md:pt-[150px] md:pb-24 grid-bg">
+      <section className="relative overflow-hidden bg-background pt-[80px] pb-16 sm:pt-[96px] sm:pb-16 md:pt-[120px] md:pb-20 grid-bg">
         {/* Soft editorial background accents */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl " />
         <div className="pointer-events-none absolute top-40 right-[-160px] hidden md:block w-[320px] h-[320px] bg-primary/8 rounded-full blur-3xl" />
@@ -481,7 +482,7 @@ export default function Home() {
         </div>
       </section>
       {/* Current Situation */}
-      <section className="relative py-20 lg:py-28 overflow-hidden bg-[#FAFAF8]">
+      <section className="relative py-16 lg:py-20 overflow-hidden bg-[#FAFAF8]">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <div className="relative min-h-[520px]">
             {/* MAROON GRADIENT SLAB */}
@@ -541,8 +542,8 @@ export default function Home() {
             </motion.div>
 
             {/* RIGHT CARDS — PERFECTLY CENTERED */}
-            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20 top-24 ">
-              <div className="flex flex-col lg:flex-row gap-4">
+            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20 top-16 sm:top-24">
+              <div className="flex flex-col lg:flex-row gap-4 items-center lg:items-stretch">
                 {roles.map((role, index) => {
                   const IconComponent = role.icon;
 
@@ -559,9 +560,9 @@ export default function Home() {
                         ease: [0.22, 1, 0.36, 1],
                       }}
                       className={`relative bg-white rounded-3xl border border-[#E4D7CE]
-shadow-[0_16px_40px_rgba(0,0,0,0.10)]
-px-6 py-6 w-[360px] backdrop-blur-[2px]
-${index === 0 ? "z-30" : "z-20"}`}
+ shadow-[0_16px_40px_rgba(0,0,0,0.10)]
+ px-6 py-6 w-full max-w-[360px] backdrop-blur-[2px]
+ ${index === 0 ? "z-30" : "z-20"}`}
                     >
                       {/* Header */}
                       <div className="flex items-center gap-3 mb-4">
@@ -609,7 +610,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
       </section>
 
       {/* Journey section */}
-      <section className="py-32 px-6 lg:px-20 max-w-[1440px] mx-auto overflow-hidden grid-bg">
+      <section className="py-24 md:py-28 px-6 lg:px-20 max-w-[1440px] mx-auto overflow-hidden grid-bg">
         {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -729,7 +730,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
       </section>
 
       {/* Gallery section */}
-      <section className="py-32 px-20 max-w-[1440px] mx-auto bg-[#FAFAF8]">
+      <section className="py-20 sm:py-24 md:py-28 px-6 sm:px-10 lg:px-20 max-w-[1440px] mx-auto bg-[#FAFAF8]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -744,10 +745,9 @@ ${index === 0 ? "z-30" : "z-20"}`}
             Events & Moments
           </div>
           <h2
-            className="text-[#2A2A2A]"
+            className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]"
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: "3.5rem",
               fontWeight: 600,
             }}
           >
@@ -757,7 +757,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
 
         {/* Staggered masonry-style grid */}
         <div className="relative">
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {galleryItems.map((item, index) => {
               const baseTilt = item.rotate || 0;
               const hoverTilt = baseTilt + (baseTilt >= 0 ? 3 : -3);
@@ -874,7 +874,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
         </motion.div>
       </section>
       {/* Great Achievements */}
-      <section className="relative bg-background py-28 md:py-36 overflow-hidden">
+      <section className="relative bg-background py-20 md:py-28 overflow-hidden">
         {/* ambient flow accents */}
         <div className="pointer-events-none absolute top-20 -left-20 w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 right-[-120px] w-[520px] h-[520px] rounded-full bg-primary/5 blur-3xl" />
@@ -979,14 +979,11 @@ ${index === 0 ? "z-30" : "z-20"}`}
       </section>
 
       {/* Refined Stats Section */}
-      <section className="relative bg-background pt-16 md:pt-20 pb-20 md:pb-24 overflow-hidden">
+      <section className="relative bg-background pt-12 md:pt-16 pb-16 md:pb-20 overflow-hidden">
         {/* soft ambient wash */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/8 blur-3xl rounded-full" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" />
 
         <div className="relative max-w-7xl mx-auto px-6">
-          {/* subtle baseline */}
-          {/* <div className="hidden md:block absolute left-0 right-0 top-1/2 h-px bg-primary/20" /> */}
-
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-14 md:gap-y-0">
             {stats.map((stat, index) => (
               <div
@@ -998,14 +995,14 @@ ${index === 0 ? "z-30" : "z-20"}`}
                   <span className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 h-10 w-px bg-primary/25" />
                 )}
 
-                {/* number */}
-                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none">
-                  {stat.value}
+                {/* number container */}
+                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center">
+                  <AnimatedCounter value={stat.value} />
                   <span className="text-primary ml-1">+</span>
                 </div>
 
                 {/* label */}
-                <p className="mt-2 text-[13px] md:text-[14px] italic text-muted max-w-[160px]">
+                <p className="mt-2 text-[13px] md:text-[14px] italic text-muted-foreground max-w-[160px]">
                   {stat.label}
                 </p>
               </div>
@@ -1079,7 +1076,7 @@ ${index === 0 ? "z-30" : "z-20"}`}
         </div>
       </section>
       {/* Let's work together section */}
-      <section className="relative bg-background py-24 md:py-32 overflow-hidden">
+      <section className="relative bg-background py-16 md:py-24 overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6">
           <div className="cta-panel">
             <div className="cta-rings" aria-hidden="true">
@@ -1114,7 +1111,6 @@ ${index === 0 ? "z-30" : "z-20"}`}
           </div>
         </div>
       </section>
-      
     </>
   );
 }

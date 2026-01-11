@@ -11,7 +11,7 @@ export default function BlogDetail() {
 
   if (!blog) {
     return (
-      <section className="py-24 text-center">
+      <section className="py-16 md:py-20 text-center">
         <h2 className="text-2xl">Article not found</h2>
         <Link to="/blog" className="text-primary mt-4 inline-block">
           Back to blog
@@ -23,7 +23,7 @@ export default function BlogDetail() {
   return (
     <section className="bg-background">
       {/* HERO */}
-      <div className="relative overflow-hidden pt-32 md:pt-36 min-h-[70vh] lg:min-h-[85vh]">
+      <div className="relative overflow-hidden pt-24 md:pt-28 min-h-[70vh] lg:min-h-[85vh]">
         {/* RIGHT SIDE IMAGE */}
         <div className="absolute top-0 right-0 w-[55%] hidden md:block rounded-3xl">
           <img
@@ -80,7 +80,7 @@ export default function BlogDetail() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="max-w-6xl mx-auto px-6 py-24 grid lg:grid-cols-3 gap-16">
+      <div className="max-w-6xl mx-auto px-6 py-16 md:py-20 grid lg:grid-cols-3 gap-16">
         {/* ARTICLE BODY */}
         <article
           className="

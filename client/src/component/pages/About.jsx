@@ -5,171 +5,191 @@ import AboutImg from "../styles/images/AboutImg.jpg";
 import { Link } from "react-router-dom";
 import PremiumCarousel from "./PremiumCarousel";
 
-
 export default function About() {
+  const journey = [
+    {
+      year: "2018",
+      title: "Tech Mahindra",
+      text: "Database Administrator, gaining hands-on experience in systems and infrastructure.",
+    },
+    {
+      year: "2019",
+      title: "Capgemini",
+      text: "Technical Support Head, sharpening leadership and problem-solving.",
+    },
+    {
+      year: "The Shift",
+      title: "Entrepreneurship",
+      text: "A conscious choice to build something meaningful and own her journey.",
+    },
+    {
+      year: "Upskilling",
+      title: "Digital Strategy",
+      text: "8-9 months of mastery in digital marketing and performance growth.",
+    },
+    {
+      year: "June 2019",
+      title: "First Milestone",
+      text: "KIMS Hospital project marked the transition from freelancer to agency owner.",
+    },
+    {
+      year: "2020",
+      title: "SociologiQ",
+      text: "Registered the agency and established the Nagpur headquarters.",
+    },
+  ];
+
   return (
-    <>
+    <div className="bg-background selection:bg-primary/20">
       <PremiumCarousel />
 
-      <section className="bg-background py-16 md:py-20">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* LEFT CONTENT */}
-          <div className="max-w-xl">
-            {/* <h2 className="text-sm tracking-widest text-primary uppercase mb-4">
-              About the Founder
-            </h2> */}
+      <section className="relative pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden">
+        {/* Ambient background wash - removing whitespace via depth */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-30 pointer-events-none grid-bg" />
 
-            <h2 className="font-heading text-2xl md:text-5xl text-dark leading-tight mb-8">
-              About <span className="text-primary">The Founder</span>
-            </h2>
+        <div className="max-w-7xl mx-auto px-6 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            {/* TEXT CONTENT: STAGGERED & BOX-FREE */}
+            <div className="lg:col-span-6 space-y-10">
+              <header className="space-y-4">
+                <motion.span
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  className="text-xs font-bold tracking-[0.4em] uppercase text-primary/60 block"
+                >
+                  The Visionary
+                </motion.span>
+                <h2 className="font-heading text-5xl md:text-7xl text-dark leading-[1.1]">
+                  About <br />
+                  <span className="text-primary italic">The Founder</span>
+                </h2>
+              </header>
 
-            <div className="space-y-5 md:space-y-6 text-muted leading-relaxed text-justify">
-              <p>
-                Ruchi Dorlikar is a tech-driven digital strategist who
-                transitioned from the corporate IT world into entrepreneurship
-                with a clear intention to build something meaningful, impactful,
-                and her own.
-              </p>
+              <div className="space-y-6 text-lg md:text-xl text-muted/90 max-w-lg">
+                <p className="leading-relaxed">
+                  Ruchi Dorlikar is a{" "}
+                  <span className="text-dark font-semibold">
+                    tech-driven digital strategist
+                  </span>{" "}
+                  who transitioned from corporate IT into entrepreneurship with
+                  a bold creative leap.
+                </p>
+                <p className="text-base leading-relaxed opacity-80">
+                  Her journey connects deep technical roots with human insight,
+                  building a brand that thrives on data-led strategy and
+                  purpose.
+                </p>
+              </div>
 
-              <p>
-                Her journey blends deep technical roots with a bold creative
-                leap - building a brand that connects human insight with
-                data-led strategy.
-              </p>
+              <div className="pt-6">
+                <button className="btn-primary px-10 py-5 text-base shadow-xl hover:shadow-primary/20 transition-all flex items-center gap-3">
+                  Book 1 to 1 call
+                  <span className="w-6 h-[1px] bg-white/50" />
+                </button>
+              </div>
             </div>
 
-            <div className="mt-8 md:mt-10">
-              <p className="font-semibold text-dark mb-4">
-                Her journey at a glance
-              </p>
-              <ul className="space-y-3 text-muted">
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>2018 | Tech Mahindra, Pune:</strong> Began as a
-                    Database Administrator, gaining hands-on experience in
-                    systems, networks, and infrastructure.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>2019 | Capgemini:</strong> Stepped into a Technical
-                    Support Head role, sharpening leadership and problem-solving
-                    skills.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>A conscious shift:</strong> After marriage, she
-                    stepped away from corporate life to invest in herself and
-                    build something of her own.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>8-9 months of upskilling:</strong> Focused on
-                    digital marketing, content strategy, and performance-driven
-                    growth.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>June 2019 | Freelance journey begins:</strong> A
-                    first project building a full digital presence for a local
-                    doctor led to a milestone client:{" "}
-                    <strong>KIMS Hospital, Pune</strong>.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>From freelancer to founder:</strong> Collaboration
-                    with skilled freelancers grew into her first agency unit,
-                    SocialBuzz.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span aria-hidden="true">🎯</span>
-                  <span>
-                    <strong>
-                      March 2020 | SociologiQ Digital Solutions Pvt. Ltd.:
-                    </strong>{" "}
-                    Registered the agency and later relocated to{" "}
-                    <strong>Nagpur</strong> to establish the first physical
-                    office. Learn more at{" "}
-                    <Link to="https://sociologiq.in/" target="blank">
-                      <strong>SociologiQ</strong>
-                    </Link>
-                    .
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="mt-8 md:mt-10">
-              <button className="btn btn-secondary">Book 1 to 1 call</button>
+            {/* IMAGE: ASYMMETRIC MASK */}
+            <div className="lg:col-span-6 relative">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="relative z-10 aspect-[4/5] overflow-hidden group shadow-2xl"
+                style={{ borderRadius: "100px 30px 100px 30px" }}
+              >
+                <img
+                  src={AboutImg}
+                  alt="Ruchi Dorlikar"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-[inherit]" />
+              </motion.div>
+              {/* Soft decorative accent */}
+              <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
           </div>
 
-          {/* RIGHT IMAGE */}
-          <div className="relative w-full flex justify-center items-center pt-4 md:pt-0 translate-y-4 md:translate-y-6">
-            <img
-              src={AboutImg}
-              alt="Ruchi Dorlikar"
-              className="rounded-2xl object-cover w-80 sm:w-96 md:w-[420px] h-96 sm:h-[520px]"
-            />
+          {/* TIMELINE: BOX-FREE HORIZONTAL SCROLL / WRAP */}
+          <div className="mt-32">
+            <h3 className="font-heading text-3xl text-dark mb-16 text-center lg:text-left">
+              Her journey <span className="text-primary">at a glance</span>
+            </h3>
 
-            {/* Soft accent */}
-            <div className="absolute -bottom-8 -left-8 w-32 sm:w-40 h-32 sm:h-40 bg-primary/10 rounded-full -z-10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
+              {journey.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="relative pl-10 border-l border-primary/10 group"
+                >
+                  <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary ring-4 ring-background group-hover:scale-150 transition-transform" />
+                  <span className="text-sm font-bold text-primary tracking-tighter mb-2 block">
+                    {item.year}
+                  </span>
+                  <h4 className="font-heading text-xl text-dark mb-3">
+                    {item.title}
+                  </h4>
+                  <p className="text-sm leading-relaxed text-muted group-hover:text-dark transition-colors">
+                    {item.text}
+                  </p>
+                </motion.div>
+              ))}
+              <div className="flex items-center">
+                <Link
+                  to="https://sociologiq.in/"
+                  target="blank"
+                  className="text-primary font-bold hover:underline underline-offset-8 flex items-center gap-2"
+                >
+                  Explore SociologiQ →
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <FAQSection />
+      <FAQSection className="bg-background pt-6 md:pt-8 pb-16" />
 
-      {/* NOTE SECTION */}
-      <section className="relative bg-gradient-to-b from-background via-primary/5 to-background py-20 overflow-hidden">
+      {/* NOTE SECTION: REFINED WITH BLOB */}
+      <section className="relative py-20 md:py-24 overflow-hidden flex items-center justify-center">
+        {/* Same blob animation preserved as per instruction */}
         <div
           aria-hidden="true"
-          className="note-blob -top-24 right-[-6rem]"
+          className="note-blob opacity-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />
-        <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <div className="relative pl-6 overflow-hidden">
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <div className="inline-block relative px-10">
+            {/* Same vertical line animation preserved */}
             <motion.span
               animate={{ scaleY: [0.85, 1, 0.85] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-0 top-0 h-full w-[2px] bg-primary/40 origin-top"
+              className="absolute left-0 top-0 h-full w-[3px] bg-primary/30 origin-top rounded-full"
             />
 
-            <p className="text-sm tracking-widest uppercase text-primary mb-4">
+            <p className="text-xs font-bold tracking-[0.5em] uppercase text-primary mb-10">
               A Note from the Founder
             </p>
 
-            <p className="font-heading text-2xl md:text-3xl text-dark leading-snug mb-6">
-              Building a brand isn’t just about likes or logos — it’s about
-              understanding people, solving real problems, and staying
-              consistent with purpose.
-            </p>
+            <blockquote className="font-heading text-3xl md:text-5xl text-dark leading-[1.2] mb-12">
+              “Building a brand isn’t just about likes or logos — it’s about
+              <span className="text-primary italic"> understanding people</span>
+              , solving real problems, and staying consistent.”
+            </blockquote>
 
-            <p className="text-muted max-w-2xl leading-relaxed">
-              At SociologiQ, we don’t just run campaigns — we craft journeys
-              that connect, convert, and create long-term value.
-            </p>
-
-            <p className="mt-6 text-sm text-muted italic">
-              — Ruchi Dorlikar, Founder & CEO
-            </p>
+            <div className="space-y-2">
+              <p className="text-dark font-bold text-lg">Ruchi Dorlikar</p>
+              <p className="text-primary text-sm tracking-widest uppercase">
+                Founder & CEO
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <Testimonial />
-    </>
+    </div>
   );
 }
-
-

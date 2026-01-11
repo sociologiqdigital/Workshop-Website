@@ -18,11 +18,11 @@ export const Testimonial = () => {
   const activeTestimonial = testimonialsData[activeIndex];
 
   return (
-    <section className=" py-24 bg-background " id="testimonial">
+    <section className="py-16 md:py-20 bg-background" id="testimonial">
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* LEFT — SLIDER */}
-          <div className="relative h-[240px] md:h-[280px]">
+          <div className="relative min-h-[240px] md:min-h-[280px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTestimonial.id}
@@ -30,7 +30,7 @@ export const Testimonial = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-white p-8 shadow-soft relative max-w-md h-full overflow-y-auto"
+                className="bg-white p-8 shadow-soft relative max-w-md min-h-[220px] md:min-h-[260px] max-h-[320px] md:max-h-[360px] overflow-y-auto"
                 style={{
                   borderTopLeftRadius: "1.5rem",
                   borderBottomRightRadius: "1.5rem",
