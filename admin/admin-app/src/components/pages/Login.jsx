@@ -1,70 +1,76 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../../utilites/axios";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    // Simple check for development
-    if (email === "admin@example.com" && password === "admin123") {
-      // In a real app, you would save the JWT token here
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("role", "ADMIN");
+    try {
+      const res = await axios.post("/admin/login", {
+        username,
+        password,
+      });
+
+      // Expected backend response:
+      // { token, user: { role: "ADMIN", username } }
+
+      localStorage.setItem("adminToken", res.data.token);
+      localStorage.setItem("role", res.data.user?.role || "ADMIN");
 
       navigate("/admin/dashboard");
-    } else {
-      alert("Invalid credentials! Use admin@example.com / admin123");
+    } catch (err) {
+      setError("Invalid username or password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-slate-800">Welcome Back</h2>
-          <p className="text-slate-500 mt-2">
-            Enter admin credentials to manage workshops
-          </p>
-        </div>
+        <h2 className="text-3xl font-bold text-slate-800 mb-2">Admin Login</h2>
+        <p className="text-slate-500 mb-6">Sign in to manage workshops</p>
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@example.com"
-              className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              required
-            />
+        {error && (
+          <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4">
+            {error}
           </div>
+        )}
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              required
-            />
-          </div>
+        <form onSubmit={handleLogin} className="space-y-5">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transform active:scale-[0.98] transition-all shadow-lg shadow-blue-200"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-60"
           >
-            Sign In
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-// src/components/StatCard.jsx
+
 const StatCard = ({ title, value, icon, colorClass }) => {
   return (
     <div

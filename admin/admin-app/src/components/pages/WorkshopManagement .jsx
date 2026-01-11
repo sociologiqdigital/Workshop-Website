@@ -1,144 +1,239 @@
-import { useState } from "react";
-import { Plus, Edit2, Trash2, Eye, EyeOff, X, Calendar } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  X,
+  Calendar,
+  IndianRupee,
+  Users,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function WorkshopManagement() {
-  const [workshops, setWorkshops] = useState([
+  const token = localStorage.getItem("adminToken");
+
+  /* ---------------- WORKSHOPS ---------------- */
+  const [workshops, setWorkshops] = useState([]);
+  const [selectedWorkshopId, setSelectedWorkshopId] = useState("all");
+
+  /* ---------------- REGISTRATIONS (TEMP / API LATER) ---------------- */
+  const [registrations] = useState([
     {
       id: 1,
-      title: "React Pro Masterclass",
-      price: 49,
-      date: "2024-06-15",
-      status: "Active",
+      name: "Chaitanya Khotele",
+      email: "ckhotele01@gmail.com",
+      workshopId: 1,
+      amount: 1000,
+      status: "Success",
     },
     {
       id: 2,
-      title: "Tailwind CSS UI Design",
-      price: 29,
-      date: "2024-06-20",
-      status: "Inactive",
+      name: "Umang Kolhe",
+      email: "umangkolhe@gmail.com",
+      workshopId: 1,
+      amount: 200,
+      status: "Success",
     },
   ]);
 
+  /* ---------------- MODAL ---------------- */
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingWorkshop, setEditingWorkshop] = useState(null);
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
+  /* ---------------- FETCH WORKSHOPS ---------------- */
+  useEffect(() => {
+    fetchWorkshops();
+  }, []);
+
+  const fetchWorkshops = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/admin/workshops", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setWorkshops(res.data);
+    } catch (err) {
+      console.error("Failed to load workshops");
+    }
+  };
+
+  /* ---------------- OPEN MODAL ---------------- */
   const openModal = (workshop = null) => {
     if (workshop) {
       setEditingWorkshop(workshop);
-      Object.keys(workshop).forEach((key) => setValue(key, workshop[key]));
+      setValue("title", workshop.title);
+      setValue("price", workshop.price);
+      setValue("date1", workshop.availableDates?.[0]?.split("T")[0]);
+      setValue("date2", workshop.availableDates?.[1]?.split("T")[0]);
+      setValue("status", workshop.status);
     } else {
       setEditingWorkshop(null);
       reset({
         title: "",
         price: "",
-        date: new Date().toISOString().split("T")[0],
+        date1: "",
+        date2: "",
         status: "Active",
       });
     }
     setIsModalOpen(true);
   };
 
-  const onSubmit = (data) => {
-    if (editingWorkshop) {
-      setWorkshops(
-        workshops.map((w) =>
-          w.id === editingWorkshop.id ? { ...data, id: w.id } : w
-        )
-      );
-    } else {
-      setWorkshops([...workshops, { ...data, id: Date.now() }]);
+  /* ---------------- SUBMIT (CREATE / UPDATE) ---------------- */
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("price", data.price);
+    formData.append("availableDates", JSON.stringify([data.date1, data.date2]));
+    formData.append("status", data.status);
+    if (data.image?.[0]) formData.append("image", data.image[0]);
+
+    try {
+      if (editingWorkshop) {
+        await axios.put(
+          `http://localhost:5000/api/admin/workshops/${editingWorkshop._id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        await axios.post(
+          "http://localhost:5000/api/admin/workshops",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
+
+      setIsModalOpen(false);
+      fetchWorkshops();
+    } catch {
+      alert("Workshop save failed");
     }
-    setIsModalOpen(false);
   };
 
-  const deleteWorkshop = (id) => {
-    if (window.confirm("Are you sure you want to delete this workshop?")) {
-      setWorkshops(workshops.filter((w) => w.id !== id));
+  /* ---------------- DELETE ---------------- */
+  const deleteWorkshop = async (id) => {
+    if (!window.confirm("Delete this workshop?")) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/workshops/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchWorkshops();
+    } catch {
+      alert("Delete failed");
     }
   };
+
+  /* ---------------- FILTER REGISTRATIONS ---------------- */
+  const filteredRegistrations = useMemo(() => {
+    if (selectedWorkshopId === "all") return registrations;
+    return registrations.filter(
+      (r) => r.workshopId === Number(selectedWorkshopId)
+    );
+  }, [selectedWorkshopId, registrations]);
+
+  /* ---------------- REVENUE ---------------- */
+  const totalRevenue = useMemo(
+    () =>
+      filteredRegistrations
+        .filter((r) => r.status === "Success")
+        .reduce((sum, r) => sum + r.amount, 0),
+    [filteredRegistrations]
+  );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* HEADER */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">Workshops</h2>
+          <h2 className="text-2xl font-bold">Workshop Management</h2>
           <p className="text-slate-500 text-sm">
-            Manage scheduling and pricing.
+            Manage workshops and track revenue
           </p>
         </div>
         <button
           onClick={() => openModal()}
-          className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg active:scale-95"
+          className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl"
         >
-          <Plus size={20} /> Add Workshop
+          <Plus size={18} /> Add Workshop
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-slate-50 border-b border-slate-200">
+      {/* SELECT + METRICS */}
+      <div className="flex items-center gap-4">
+        <select
+          value={selectedWorkshopId}
+          onChange={(e) => setSelectedWorkshopId(e.target.value)}
+          className="px-4 py-2 border rounded-xl"
+        >
+          <option value="all">All Workshops</option>
+          {workshops.map((w) => (
+            <option key={w._id} value={w.id}>
+              {w.title}
+            </option>
+          ))}
+        </select>
+
+        <RevenueCard
+          icon={<IndianRupee size={18} />}
+          label="Total Revenue"
+          value={`₹${totalRevenue}`}
+        />
+        <RevenueCard
+          icon={<Users size={18} />}
+          label="Registrations"
+          value={filteredRegistrations.length}
+        />
+      </div>
+
+      {/* WORKSHOPS TABLE */}
+      <div className="bg-white border rounded-xl overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-slate-50 border-b">
             <tr>
-              <th className="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">
-                Workshop
-              </th>
-              <th className="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">
-                Price
-              </th>
-              <th className="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">
-                Date
-              </th>
-              <th className="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">
-                Status
-              </th>
-              <th className="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500 text-right">
-                Actions
-              </th>
+              <th className="px-6 py-4">Workshop</th>
+              <th className="px-6 py-4">Price</th>
+              <th className="px-6 py-4">Dates</th>
+              <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y">
             {workshops.map((w) => (
-              <tr key={w.id} className="hover:bg-slate-50/50 transition-colors">
-                <td className="px-6 py-4 font-semibold text-slate-800">
-                  {w.title}
-                </td>
-                <td className="px-6 py-4 text-slate-600 font-medium">
-                  ₹{w.price}
-                </td>
-                <td className="px-6 py-4 text-slate-600">
-                  <div className="flex items-center gap-2">
-                    <Calendar size={14} className="text-slate-400" />
-                    {w.date}
-                  </div>
-                </td>
+              <tr key={w._id}>
+                <td className="px-6 py-4 font-semibold">{w.title}</td>
+                <td className="px-6 py-4">₹{w.price}</td>
                 <td className="px-6 py-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-bold ₹{
-                      w.status === "Active"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-slate-100 text-slate-500"
-                    }`}
+                  {w.availableDates
+                    ?.map((d) => new Date(d).toLocaleDateString())
+                    .join(" & ")}
+                </td>
+                <td className="px-6 py-4">{w.status}</td>
+                <td className="px-6 py-4 text-right">
+                  <button
+                    onClick={() => openModal(w)}
+                    className="p-2 text-blue-600"
                   >
-                    {w.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex justify-end gap-2">
-                    <button
-                      onClick={() => openModal(w)}
-                      className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
-                    >
-                      <Edit2 size={18} />
-                    </button>
-                    <button
-                      onClick={() => deleteWorkshop(w.id)}
-                      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
+                    <Edit2 size={18} />
+                  </button>
+                  <button
+                    onClick={() => deleteWorkshop(w._id)}
+                    className="p-2 text-red-600"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -146,92 +241,77 @@ export default function WorkshopManagement() {
         </table>
       </div>
 
-      {/* Modal */}
+      {/* MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-              <h3 className="text-xl font-bold text-slate-800">
-                {editingWorkshop ? "Edit Workshop" : "New Workshop"}
-              </h3>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1 hover:bg-slate-200 rounded-full transition"
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <input
+                {...register("title")}
+                placeholder="Title"
+                className="w-full p-2 border rounded"
+              />
+              <input
+                type="number"
+                {...register("price")}
+                placeholder="Price"
+                className="w-full p-2 border rounded"
+              />
+              <input
+                type="date"
+                {...register("date1")}
+                className="w-full p-2 border rounded"
+              />
+              <input
+                type="date"
+                {...register("date2")}
+                className="w-full p-2 border rounded"
+              />
+              <label className="block text-sm font-semibold text-slate-700">
+                Workshop Image
+              </label>
+              <input type="file" {...register("image")} />
+              <select
+                {...register("status")}
+                className="w-full p-2 border rounded"
               >
-                <X size={20} />
-              </button>
-            </div>
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                  Workshop Title
-                </label>
-                <input
-                  {...register("title")}
-                  required
-                  placeholder="e.g. Master React in 30 Days"
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                    Price (₹)
-                  </label>
-                  <input
-                    type="number"
-                    {...register("price")}
-                    required
-                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                    Initial Status
-                  </label>
-                  <select
-                    {...register("status")}
-                    className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                  Workshop Date
-                </label>
-                <input
-                  type="date"
-                  {...register("date")}
-                  required
-                  className="w-full p-2.5 border border-slate-300 rounded-xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
-                />
-              </div>
-
-              <div className="pt-2 flex gap-3">
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition"
+                  className="flex-1 border rounded p-2"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95"
+                  className="flex-1 bg-blue-600 text-white rounded p-2"
                 >
-                  {editingWorkshop ? "Save Changes" : "Create Workshop"}
+                  Save
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ---------------- SMALL COMPONENT ---------------- */
+
+function RevenueCard({ icon, label, value }) {
+  return (
+    <div className="flex items-center gap-3 bg-white border rounded-xl px-4 py-3">
+      <div className="text-blue-600">{icon}</div>
+      <div>
+        <p className="text-xs text-slate-500 font-semibold">{label}</p>
+        <p className="text-lg font-bold">{value}</p>
+      </div>
     </div>
   );
 }

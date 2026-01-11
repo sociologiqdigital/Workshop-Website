@@ -8,8 +8,9 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./components/pages/Login";
 import DashboardOverview from "./components/pages/DashboardOverview";
 import WorkshopManagement from "./components/pages/WorkshopManagement ";
-import Registrations from "./components/pages/Registrations";
 import ContentManagement from "./components/pages/ContentManagement ";
+import Registrations from "./components/pages/Registrations";
+
 
 export default function App() {
   return (

@@ -1,42 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      /* ===============================
-         BRAND COLORS (CSS VARIABLE DRIVEN)
-         =============================== */
       colors: {
-        primary: "rgb(var(--color-primary) / <alpha-value>)", // Maroon
-        accent: "rgb(var(--color-accent) / <alpha-value>)", // Soft gold
-        background: "rgb(var(--color-background) / <alpha-value>)", // Beige
-        surface: "rgb(var(--color-surface) / <alpha-value>)", // White
-        dark: "rgb(var(--color-dark) / <alpha-value>)", // Headings
-        muted: "rgb(var(--color-muted) / <alpha-value>)", // Body text
+        // Deep background colors
+        brand: {
+          dark: "#0f172a", // Slate 900
+          card: "rgba(255, 255, 255, 0.7)",
+          border: "rgba(255, 255, 255, 0.3)",
+        },
+        // Modern Accent Palette
+        accent: {
+          primary: "#6366f1", // Indigo 500
+          success: "#10b981", // Emerald 500
+          warning: "#f59e0b", // Amber 500
+          danger: "#ef4444", // Red 500
+          info: "#3b82f6", // Blue 500
+        },
       },
-      /* ===============================
-         BRAND GRADIENT
-         =============================== */
-      backgroundImage: {
-        brandGradient:
-          "linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end))",
-      },
-
-      /* Typography */
-      fontFamily: {
-        heading: ["Playfair Display", "serif"],
-        body: ["Inter", "sans-serif"],
-      },
-
-      /* Subtle UI Enhancements */
-      boxShadow: {
-        soft: "0 10px 30px rgba(0,0,0,0.08)",
-        hover: "0 15px 40px rgba(0,0,0,0.12)",
-      },
-
-      borderRadius: {
-        xl: "1rem",
-        "2xl": "1.5rem",
+      backdropBlur: {
+        xs: "2px",
       },
     },
   },

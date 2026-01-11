@@ -1,11 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  // Check if user is logged in via localStorage
-  const auth = localStorage.getItem("isAuthenticated");
+  const token = localStorage.getItem("adminToken");
   const role = localStorage.getItem("role");
 
-  if (auth !== "true" || role !== "ADMIN") {
+  // Basic frontend gate (real security happens on backend)
+  if (!token || role !== "ADMIN") {
     return <Navigate to="/login" replace />;
   }
 

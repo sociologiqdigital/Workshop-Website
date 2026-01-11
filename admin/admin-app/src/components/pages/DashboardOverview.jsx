@@ -68,20 +68,6 @@ export default function DashboardOverview() {
             ))}
           </div>
         </div>
-
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl text-white shadow-lg relative overflow-hidden">
-          <div className="relative z-10">
-            <h3 className="text-lg font-semibold opacity-90">Quick Tip</h3>
-            <p className="mt-2 text-blue-100">
-              You have 3 workshops starting this week. Don't forget to send the
-              reminder emails to your participants!
-            </p>
-            <button className="mt-4 bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-50 transition">
-              Send Reminders
-            </button>
-          </div>
-          <TrendingUp className="absolute -right-4 -bottom-4 w-32 h-32 opacity-10 rotate-12" />
-        </div>
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+
 // src/components/MediaLibrary.jsx
 export default function MediaLibrary({ onSelect, isPickerMode = false }) {
   const [mediaFiles, setMediaFiles] = useState([
