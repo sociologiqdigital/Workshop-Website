@@ -88,43 +88,7 @@ export default function Navbar() {
                       {link.label}
                       <span className="absolute left-0 -bottom-1 h-[1px] w-full bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </span>
-                    <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                   </button>
-
-                  {/* DROPDOWN */}
-                  <div
-                    className="
-                      absolute left-1/2 -translate-x-1/2 top-full mt-5
-                      min-w-[260px] max-w-[420px]
-                      rounded-2xl
-                      bg-primary/8
-                      backdrop-blur-xl
-                      border border-primary/15
-                      shadow-[0_18px_40px_rgba(122,30,45,0.2)]
-                      p-3
-                      opacity-0 invisible translate-y-3
-                      group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-                      transition-all duration-200
-                      z-50
-                    "
-                  >
-                    <ul
-                      className={`grid gap-1 ${
-                        programs.length > 6 ? "grid-cols-2" : "grid-cols-1"
-                      } max-h-[320px] overflow-y-auto`}
-                    >
-                      {programs.map((program) => (
-                        <li key={program.id}>
-                          <Link
-                            to={`/programs/${program.slug}`}
-                            className="block rounded-lg px-3 py-2 text-sm text-dark hover:bg-primary/10 transition"
-                          >
-                            {program.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </div>
               );
             }

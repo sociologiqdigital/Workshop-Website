@@ -64,7 +64,6 @@ export default function About() {
                   <span className="text-primary italic">The Founder</span>
                 </h2>
               </header>
-
               <div className="space-y-6 text-lg md:text-xl text-muted/90 max-w-lg">
                 <p className="leading-relaxed">
                   Ruchi Dorlikar is a{" "}
@@ -82,10 +81,12 @@ export default function About() {
               </div>
 
               <div className="pt-6">
-                <button className="btn-primary px-10 py-5 text-base shadow-xl hover:shadow-primary/20 transition-all flex items-center gap-3">
-                  Book 1 to 1 call
-                  <span className="w-6 h-[1px] bg-white/50" />
-                </button>
+                <Link to={"/book-session"}>
+                  <button className="btn-primary px-10 py-5 text-base shadow-xl hover:shadow-primary/20 transition-all flex items-center gap-3">
+                    Book 1 to 1 call
+                    <span className="w-6 h-[1px] bg-white/50" />
+                  </button>
+                </Link>
               </div>
             </div>
 

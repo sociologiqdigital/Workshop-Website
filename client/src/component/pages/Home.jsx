@@ -10,8 +10,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { featuredBlog, secondaryBlogs } from "../data/blog";
-import { bonusesData } from "../data/bonusesData";
-import MarqueeNotice from "./MarqueeNotice";
 import { programs, programStatusStyles } from "../data/courses";
 import { milestones } from "../data/Journey";
 import { upcomingEvents } from "../data/upcomingEvents";
@@ -95,6 +93,7 @@ export default function Home() {
     "CEO",
     "IPP",
   ];
+  const MotionLink = motion(Link);
   const typedWord = useTypewriter(words);
   const [active, setActive] = useState(0);
   const [hoveredId, setHoveredId] = useState(null);
@@ -149,12 +148,16 @@ export default function Home() {
     },
     {
       title: "IPP",
-      organization: "JCI Nagpur",
+      organization: "JCI Nagpur Nakshatra",
       description:
         "Actively contributing as an IPP at JCI Nagpur, supporting leadership, community development, and youth-driven initiatives.",
       icon: Users,
       socials: [
-        { name: "Instagram", icon: Instagram, url: "#" },
+        {
+          name: "Instagram",
+          icon: Instagram,
+          url: "https://www.instagram.com/jcinagpurnakshatra/",
+        },
         { name: "LinkedIn", icon: Linkedin, url: "#" },
       ],
     },
@@ -347,38 +350,38 @@ export default function Home() {
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex flex-col items-start gap-1.5 text-[15px] md:text-[18px] text-muted mb-2"
+                className="flex flex-col items-start gap-1 text-[13px] sm:text-[14px] md:text-[15px] text-muted mb-2"
               >
                 <div className="flex items-center gap-2">
-                  <span className="hello-brand">Hello</span>
+                  <span className="hello-brand">Hello, I'am</span>
                 </div>
-                <span className="text-[15px] md:text-[18px] text-muted font-medium">
-                  I'm
-                </span>
               </motion.div>
-
-              {/* Name */}
               <motion.h1
                 variants={{
                   hidden: { opacity: 0, y: 14 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="font-heading text-[40px] sm:text-[44px] md:text-[64px] text-dark leading-[1.1] mb-5"
+                className="font-heading text-[26px] sm:text-[32px] md:text-[52px] text-dark leading-[1.08] mb-1"
               >
-                Ruchi <span className="text-primary">Dorlikar</span>
+                <span>
+                  Ruchi <span className="text-primary">Dorlikar</span>
+                </span>
               </motion.h1>
 
-              {/* Typewriter line */}
+              {/* And I am + typewriter */}
               <motion.h1
                 variants={{
                   hidden: { opacity: 0, y: 12 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="text-primary text-4xl sm:text-5xl md:text-5xl font-medium tracking-wide mb-6"
+                className="flex flex-wrap items-baseline gap-2 text-[14px] sm:text-[16px] md:text-[18px] text-muted mb-4"
               >
-                <span className="relative text-3xl">
-                  {typedWord}
-                  <span className="inline-block ml-[2px] type-cursor"></span>
+                <span>And I am</span>
+                <span className="text-primary text-[22px] sm:text-[28px] md:text-[36px] font-medium tracking-wide whitespace-nowrap">
+                  <span className="relative">
+                    {typedWord}
+                    <span className="inline-block ml-[2px] type-cursor"></span>
+                  </span>
                 </span>
               </motion.h1>
 
@@ -392,7 +395,7 @@ export default function Home() {
             text-[16px] sm:text-[17px] md:text-[18px]
             text-muted
             leading-[1.75]
-            mb-10
+            mb-7
             max-w-[520px]
             mx-0
           "
@@ -481,31 +484,33 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
       {/* Current Situation */}
-      <section className="relative py-16 lg:py-20 overflow-hidden bg-[#FAFAF8]">
+      <section className="relative py-20 lg:py-32 overflow-hidden bg-[#FAFAF8]">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
-          <div className="relative min-h-[520px]">
+          {/* Container with a defined height to anchor absolute children */}
+          <div className="relative flex flex-col lg:block min-h-[500px]">
             {/* MAROON GRADIENT SLAB */}
             <motion.div
               initial={{ opacity: 0, x: -80 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="relative lg:absolute left-0 top-0 w-full lg:w-[42%] rounded-[2.5rem] lg:rounded-r-none overflow-hidden"
+              className="relative lg:absolute left-0 top-0 w-full lg:w-[45%] rounded-[2.5rem] lg:rounded-r-none overflow-hidden z-10"
               style={{
                 background:
                   "linear-gradient(165deg, #7B1E3A 0%, #9B3E5A 50%, #B8859E 100%)",
-                minHeight: "clamp(420px, 60vh, 520px)",
+                minHeight: "480px", // Fixed minimum height for better alignment
               }}
             >
-              <div className="relative z-10 px-10 lg:px-16 py-16 lg:py-20 h-full flex flex-col justify-center">
+              <div className="relative z-10 px-10 lg:px-16 py-16 h-full flex flex-col justify-center min-h-[480px]">
                 {/* Label */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="text-[#F6F1EB]/60 uppercase mb-10"
+                  className="text-[#F6F1EB]/60 uppercase tracking-[0.2em] text-xs font-bold mb-8"
                 >
                   Currently
                 </motion.div>
@@ -516,9 +521,9 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.4 }}
-                  className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.8rem)] leading-[1.15]"
+                  className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.5rem)] leading-[1.1]"
                 >
-                  Where I'm currently showing up
+                  Where I'm showing up right now
                 </motion.h2>
 
                 {/* Divider */}
@@ -532,7 +537,7 @@ export default function Home() {
                 />
               </div>
 
-              {/* Texture */}
+              {/* Texture Overlay */}
               <div
                 className="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none"
                 style={{
@@ -541,62 +546,60 @@ export default function Home() {
               />
             </motion.div>
 
-            {/* RIGHT CARDS — PERFECTLY CENTERED */}
-            <div className="relative lg:absolute lg:top-1/2 lg:left-[38%] lg:-translate-y-1/2 z-20 top-16 sm:top-24">
-              <div className="flex flex-col lg:flex-row gap-4 items-center lg:items-stretch">
+            {/* RIGHT CARDS — Aligned to the vertical center of the slab */}
+            <div className="relative lg:absolute lg:top-1/2 lg:left-[40%] lg:-translate-y-1/2 z-20 mt-[-40px] lg:mt-0">
+              <div className="flex flex-col lg:flex-row gap-6 items-center lg:items-stretch px-4 lg:px-0">
                 {roles.map((role, index) => {
                   const IconComponent = role.icon;
 
                   return (
                     <motion.div
                       key={role.title}
-                      initial={{ opacity: 0, y: 40, x: 40 }}
+                      initial={{ opacity: 0, y: 40, x: 20 }}
                       whileInView={{ opacity: 1, y: 0, x: 0 }}
-                      whileHover={{ y: -6 }}
+                      whileHover={{ y: -10 }}
                       viewport={{ once: true }}
                       transition={{
                         duration: 0.9,
                         delay: 0.4 + index * 0.12,
                         ease: [0.22, 1, 0.36, 1],
                       }}
-                      className={`relative bg-white rounded-3xl border border-[#E4D7CE]
- shadow-[0_16px_40px_rgba(0,0,0,0.10)]
- px-6 py-6 w-full max-w-[360px] backdrop-blur-[2px]
- ${index === 0 ? "z-30" : "z-20"}`}
+                      className={`relative bg-white rounded-[2rem] border border-[#E4D7CE] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-8 py-8 w-full max-w-[380px] flex flex-col justify-between ${
+                        index === 0 ? "z-30" : "z-20"
+                      }`}
                     >
-                      {/* Header */}
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] flex items-center justify-center text-white shadow-md">
-                          <IconComponent className="w-5 h-5" />
+                      <div>
+                        {/* Header */}
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7B1E3A] to-[#9B2E4A] flex items-center justify-center text-white shadow-lg">
+                            <IconComponent className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h3 className="font-heading text-[1.4rem] text-[#2A2A2A] leading-tight">
+                              {role.title}
+                            </h3>
+                            <p className="text-sm text-[#7B1E3A] font-bold tracking-wide">
+                              {role.organization}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-heading text-[1.5rem] text-[#2A2A2A] leading-tight">
-                            {role.title}
-                          </h3>
-                          <p className="text-sm text-[#7B1E3A] font-semibold">
-                            {role.organization}
-                          </p>
-                        </div>
+
+                        {/* Description */}
+                        <p className="text-[#6B6B6B] mb-8 text-[1rem] leading-relaxed">
+                          {role.description}
+                        </p>
                       </div>
 
-                      {/* Description */}
-                      <p className="text-[#6B6B6B] mb-5 text-[0.95rem] leading-relaxed">
-                        {role.description}
-                      </p>
-
                       {/* Socials */}
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-3">
                         {role.socials.map((social) => (
                           <a
                             key={social.name}
                             href={social.url}
                             aria-label={social.name}
-                            className="inline-flex items-center justify-center w-9 h-9 rounded-full
-                      bg-[#F6F1EB] border border-[#E4D7CE] text-[#7B1E3A]
-                      hover:bg-[#7B1E3A] hover:text-white hover:border-[#7B1E3A]
-                      transition-colors"
+                            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F6F1EB] border border-[#E4D7CE] text-[#7B1E3A] hover:bg-[#7B1E3A] hover:text-white hover:border-[#7B1E3A] transition-transform duration-200 ease-out hover:-translate-y-2.5"
                           >
-                            <social.icon className="w-4 h-4" />
+                            <social.icon className="w-4.5 h-4.5" />
                           </a>
                         ))}
                       </div>
@@ -684,11 +687,6 @@ export default function Home() {
                       rotate: [0, 5, 0],
                       y: [0, -20, 0],
                     }}
-                    // transition={{
-                    //   duration: 8,
-                    //   repeat: Infinity,
-                    //   ease: "easeInOut",
-                    // }}
                     className="bg-white p-4 pb-8 shadow-[0_30px_60px_rgba(0,0,0,0.18)] mb-8 cursor-pointer"
                     style={{
                       transform: `rotate(${milestone.rotate}deg)`,
@@ -714,11 +712,19 @@ export default function Home() {
                       isLeft ? "md:text-right" : "md:text-left"
                     }`}
                   >
-                    <h3 className="font-playfair text-[#7B1E3A] text-3xl font-semibold mb-3">
+                    <h3
+                      className={`text-primary text-3xl font-semibold mb-3 text-center ${
+                        isLeft ? "md:text-right" : "md:text-left"
+                      }`}
+                    >
                       {milestone.title}
                     </h3>
 
-                    <p className="text-[#6B6B6B] leading-relaxed font-inter">
+                    <p
+                      className={`text-muted leading-relaxed text-center ${
+                        isLeft ? "md:text-right" : "md:text-left"
+                      }`}
+                    >
                       {milestone.description}
                     </p>
                   </div>
@@ -1045,9 +1051,9 @@ export default function Home() {
             {/* RIGHT — SUPPORTING THOUGHTS */}
             <div className="space-y-12">
               {secondaryBlogs.map((blog, index) => (
-                <motion.a
+                <MotionLink
                   key={blog.slug}
-                  href={blog.slug}
+                  to={`/blog/${blog.slug}`}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -1061,7 +1067,7 @@ export default function Home() {
                   <h3 className="font-heading text-xl md:text-2xl text-dark leading-snug group-hover:text-primary transition-colors">
                     {blog.title}
                   </h3>
-                </motion.a>
+                </MotionLink>
               ))}
 
               <Link
@@ -1097,15 +1103,15 @@ export default function Home() {
               </p>
 
               <div className="cta-actions">
-                <a href="/register" className="cta-pill cta-pill-primary">
+                <Link to="/register" className="cta-pill cta-pill-primary">
                   Register Now
                   <ArrowRight className="cta-pill-icon" />
-                </a>
+                </Link>
 
-                <a href="/contact" className="cta-pill cta-pill-secondary">
+                <Link to="/contact" className="cta-pill cta-pill-secondary">
                   Contact Us
                   <ArrowRight className="cta-pill-icon" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

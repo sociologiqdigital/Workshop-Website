@@ -15,61 +15,95 @@ export default function PremiumCarousel() {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <section className="relative w-full bg-background pt-8 pb-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 relative flex flex-col items-center">
-        {/* Unique Organic Shape Container */}
-        <div className="relative w-full max-w-[900px] aspect-[16/9] md:aspect-[21/9]">
+    <section className="relative w-full bg-background pt-4 pb-20 overflow-visible">
+      {/* 3D Perspective Wrapper */}
+      <div
+        className="w-full relative px-0 sm:px-6 md:px-10"
+        style={{ perspective: "1200px" }}
+      >
+        <div className="relative w-full h-[400px] md:h-[600px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 1.1, rotate: 2 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full h-full relative"
-              style={{
-                // Custom Leaf-like Shape Mask
-                clipPath: "polygon(10% 0, 100% 0%, 90% 100%, 0% 100%)",
+              initial={{
+                opacity: 0,
+                rotateY: 45,
+                z: -200,
+                x: 100,
               }}
+              animate={{
+                opacity: 1,
+                rotateY: 0,
+                z: 0,
+                x: 0,
+              }}
+              exit={{
+                opacity: 0,
+                rotateY: -45,
+                z: -200,
+                x: -100,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="w-full h-full relative preserve-3d"
             >
-              <img
-                src={images[currentIndex]}
-                className="w-full h-full object-cover"
-                alt="Portfolio"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent" />
+              {/* The "Shield" Shape: Non-rectangular 3D Panel */}
+              <div
+                className="w-full h-full overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500"
+                style={{
+                  clipPath: "polygon(0 0, 100% 5%, 100% 95%, 0% 100%)",
+                }}
+              >
+                <motion.img
+                  src={images[currentIndex]}
+                  className="w-full h-full object-cover scale-110"
+                  alt="Founder Portfolio"
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.5 }}
+                />
+
+                {/* 3D Light Reflection Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-white/10 pointer-events-none" />
+              </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Floating Minimal Controls */}
-          <div className="absolute -bottom-6 right-10 flex gap-4">
+          {/* Floating High-Tech Controls */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex items-center gap-8 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full shadow-2xl">
             <button
               onClick={prev}
-              className="w-14 h-14 rounded-full border border-primary/20 bg-background flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-soft"
+              className="text-white hover:text-primary transition-colors p-2"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={28} strokeWidth={1.5} />
             </button>
+
+            {/* Pagination Indicators inside the bar */}
+            <div className="flex gap-2">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className={`h-1 transition-all duration-300 rounded-full ${
+                    i === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/40"
+                  }`}
+                />
+              ))}
+            </div>
+
             <button
               onClick={next}
-              className="w-14 h-14 rounded-full border border-primary/20 bg-background flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-soft"
+              className="text-white hover:text-primary transition-colors p-2"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={28} strokeWidth={1.5} />
             </button>
           </div>
         </div>
-
-        {/* Dynamic Pagination Nodes */}
-        <div className="mt-12 flex gap-3">
-          {images.map((_, i) => (
-            <div
-              key={i}
-              className={`h-1.5 transition-all duration-500 rounded-full ${
-                i === currentIndex ? "w-12 bg-primary" : "w-2 bg-primary/20"
-              }`}
-            />
-          ))}
-        </div>
       </div>
+
+      {/* Background Decorative "Shadow" to emphasize 3D space */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[80%] h-20 bg-dark/20 blur-[100px] -z-10" />
     </section>
   );
 }
