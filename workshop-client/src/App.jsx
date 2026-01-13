@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Header from "./component/layout/Header";
+// import Header from "./component/layout/Header";
 import Footer from "./component/layout/Footer";
 // Pages
 import Home from "./component/pages/Home";
@@ -30,16 +30,17 @@ export default function App() {
     <BrowserRouter>
       <ScrollToHash />
       <div className="min-h-screen overflow-x-hidden bg-background">
-        <Header />
+        {/* <Header /> */}
         <SocialProofToast />
-        <main className="pt-[96px] ">
+        
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterLayout />} />
+            <Route path="/waitlist" element={<RegisterLayout variant="waitlist" />} />
             <Route path="/contact" element={<ContactLayout />} />
             <Route path="/programs/:slug" element={<WorkshopDetails />} />
           </Routes>
-        </main>
+       
         <Footer />
       </div>
     </BrowserRouter>

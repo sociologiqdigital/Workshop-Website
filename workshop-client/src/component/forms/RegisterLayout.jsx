@@ -3,7 +3,8 @@ import { CheckCircle2 } from "lucide-react";
 import RegistrationForm from "../forms/RegistrationForm";
 import RegistrationImage from "../styles/images/registration-illustration.svg";
 
-export default function RegisterLayout() {
+export default function RegisterLayout({ variant = "register" }) {
+  const isWaitlist = variant === "waitlist";
   // Animation variants
   const fadeInRight = {
     hidden: { opacity: 0, x: 40 },
@@ -75,7 +76,9 @@ export default function RegisterLayout() {
             <motion.div variants={fadeInRight} className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[rgb(var(--color-primary))]/20 to-[rgb(var(--color-accent))]/20 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000" />
               <div className="relative bg-white/80 backdrop-blur-xl rounded-[2rem] border border-white shadow-2xl shadow-gray-200/50 p-8 md:p-12">
-                <RegistrationForm />
+                <RegistrationForm
+                  submitLabel={isWaitlist ? "Join Waitlist" : "Pay & Register"}
+                />
               </div>
             </motion.div>
 

@@ -12,8 +12,8 @@ export default function MarqueeNotice() {
   const duplicatedMessages = [...messages, ...messages];
 
   return (
-    <section className="relative overflow-hidden bg-[rgb(var(--color-primary))] py-4 border-y border-white/10">
-      <div className="flex items-center whitespace-nowrap">
+    <section className="relative overflow-hidden bg-[rgb(var(--color-primary))] py-3 border-y-2 border-white/20">
+      <div className="flex items-center justify-center whitespace-nowrap">
         <motion.div
           className="flex items-center w-max"
           animate={{

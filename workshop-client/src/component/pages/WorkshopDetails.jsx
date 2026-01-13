@@ -1,25 +1,36 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { programs } from "../data/Workshop";
 import FAQSection from "./FAQ";
-import WorkshopIllustration from "../styles/images/registration-illustration.svg";
+import MarqueeNotice from "../common/MarqueeNotice";
+import {
+  CheckCircle2,
+  Play,
+  Users,
+  Clock,
+  ShieldCheck,
+  ArrowRight,
+  Zap,
+} from "lucide-react";
 
 export default function WorkshopDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
-
   const program = programs.find((p) => p.slug === slug);
 
   if (!program) {
     return (
-      <section className="min-h-screen bg-background py-20 sm:py-24 lg:py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-3xl font-heading mb-4">Program not found</h1>
-          <p className="text-muted mb-6">
-            The program you're looking for doesn't exist.
-          </p>
-          <button onClick={() => navigate("/")} className="btn btn-primary">
-            Go back home
+      <section className="min-h-screen flex items-center justify-center bg-[#FDFCFE]">
+        <div className="text-center">
+          <h1 className="text-4xl font-heading text-dark mb-4">
+            Program not found
+          </h1>
+          <button
+            onClick={() => navigate("/")}
+            className="text-[#9667E0] font-bold flex items-center gap-2 mx-auto"
+          >
+            <ArrowRight className="rotate-180" /> Back to Workshops
           </button>
         </div>
       </section>
@@ -27,179 +38,177 @@ export default function WorkshopDetails() {
   }
 
   return (
-    <section className="relative bg-background overflow-hidden">
-      <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
-
-      <div className="relative max-w-6xl xl:max-w-7xl mx-auto px-6 pt-20 sm:pt-24 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
-        <div className="grid lg:grid-cols-[1.25fr_0.85fr] gap-12 lg:gap-16 items-start">
-          {/* LEFT CONTENT */}
-          <div className="space-y-10">
-            <div className="space-y-6 max-w-3xl">
-              <span
-                className={`inline-flex items-center rounded-full px-4 py-1 text-sm border ${
-                  program.status === "active"
-                    ? "bg-primary/10 text-primary border-primary/30"
-                    : program.status === "soon"
-                    ? "bg-amber-100 text-amber-700 border-amber-300"
-                    : "bg-gray-100 text-gray-500 border-gray-300"
-                }`}
+    <div className="bg-[#FDFCFE] min-h-screen">
+      {/* --- HERO SECTION: TEXT LEFT | VIDEO RIGHT --- */}
+      <section className="relative pt-8 pb-12 overflow-hidden bg-gradient-to-b from-[#F9F7FF] to-white">
+        <MarqueeNotice />
+        <div className="max-w-6xl mx-auto px-6 mt-8">
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-10 items-center">
+            {/* LEFT: TEXT CONTENT */}
+            <div className="space-y-6 text-left">
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="inline-block px-4 py-1.5 rounded-full bg-[#9667E0]/10 text-[#9667E0] text-xs font-bold uppercase tracking-widest border border-[#9667E0]/20"
               >
                 {program.statusLabel}
-              </span>
-
-              <div className="flex justify-center sm:justify-start">
-                <div className="w-32 sm:w-36 md:w-40 rounded-2xl bg-white/80 border border-primary/10 p-3 shadow-soft">
-                  <img
-                    src={WorkshopIllustration}
-                    alt={`${program.title} illustration`}
-                    className="w-full h-auto"
-                  />
-                </div>
-              </div>
-
-              <h1 className="font-heading text-4xl md:text-5xl leading-tight text-dark">
+              </motion.span>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-3xl md:text-4xl lg:text-5xl font-heading text-dark leading-tight"
+              >
                 {program.title}
-              </h1>
-
-              <p className="text-lg text-muted leading-relaxed">
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-muted/80 text-lg leading-relaxed max-w-xl"
+              >
                 {program.description}
-              </p>
-
-              <div className="w-16 h-[2px] bg-primary/40" />
+              </motion.p>
             </div>
 
-            {/* WHAT YOU'LL GET */}
-            <div className="space-y-5">
-              <h2 className="font-heading text-2xl text-dark">
-                What You'll Get
-              </h2>
-              <ul className="grid sm:grid-cols-2 gap-y-4 gap-x-8">
-                {program.points.map((point, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
-                    <span className="text-muted leading-relaxed">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* RIGHT CTA */}
-          <div className="w-full lg:pl-4 lg:flex lg:justify-end md:mt-24">
-            <div className="w-full max-w-md lg:sticky lg:top-20 rounded-3xl bg-white/90 backdrop-blur border border-primary/15 shadow-soft p-8 md:p-9 space-y-6">
-              <div className="space-y-2">
-                <h3 className="font-heading text-xl text-dark">Get Started</h3>
-                <p className="text-sm text-muted leading-[1.6]">
-                  Choose how you'd like to move forward with this program.
-                </p>
-              </div>
-
-              {program.status === "active" && (
-                <button
-                  onClick={() => navigate("/register")}
-                  className="w-full rounded-full bg-primary py-3 text-white font-medium hover:opacity-90 transition shine-button"
+            {/* RIGHT: VIDEO PLAYER (16:9 Ratio) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="relative group w-full"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#9667E0] to-[#D4BBFC] rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative aspect-video rounded-[1.75rem] bg-black overflow-hidden shadow-2xl border border-white/20">
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  controls
+                  playsInline
+                  poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070"
                 >
-                  Apply Now
-                </button>
-              )}
-
-              {program.status === "soon" && (
-                <button className="w-full rounded-full border border-primary text-primary py-3 hover:bg-primary/10 transition">
-                  Join Waitlist
-                </button>
-              )}
-
-              {program.status === "closed" && (
-                <p className="text-center text-sm text-gray-500">
-                  This program is currently closed.
-                </p>
-              )}
-
-              <p className="text-xs text-muted text-center leading-relaxed">
-                You'll be guided step-by-step before making any commitment.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section className="relative py-20 sm:py-24 lg:py-28 bg-background overflow-hidden">
-        <div className="absolute inset-0 flex justify-center -z-10">
-          <div className="w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl" />
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
-          <div className="space-y-3">
-            <h2 className="font-heading text-4xl md:text-5xl text-dark">
-              Limited Time Offer
-            </h2>
-
-            <p className="text-muted">
-              Secure your seat before enrollment closes
-            </p>
-          </div>
-
-          <div className="mx-auto max-w-2xl rounded-3xl bg-white/80 backdrop-blur-sm px-8 sm:px-10 py-12 shadow-soft border border-primary/10">
-            <div className="flex flex-col items-center gap-4 mb-6">
-              <p className="text-sm text-muted line-through">
-                Regular price Rs. 7,499
-              </p>
-
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <span className="font-heading text-5xl sm:text-6xl text-primary">
-                  Rs. 4,999
-                </span>
-
-                <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm">
-                  Only 20 seats available
-                </span>
+                  <source src={program.videoUrl || ""} type="video/mp4" />
+                </video>
               </div>
-
-              <p className="text-sm text-muted">
-                One-time payment - lifetime access
-              </p>
-            </div>
-
-            <div className="h-px bg-border my-6" />
-
-            <div className="text-sm text-muted space-y-1.5 mb-8">
-              <p>Pay securely using UPI, Debit/Credit Card, or Razorpay.</p>
-              <p>Enroll - choose payment method - get instant access.</p>
-            </div>
-
-            <div className="flex justify-center">
-              {program.status === "active" && (
-                <button
-                  onClick={() => navigate("/register")}
-                  className="w-full rounded-full bg-primary py-3 text-white font-medium hover:opacity-90 transition shine-button"
-                >
-                  Enroll Now
-                </button>
-              )}
-
-              {program.status === "soon" && (
-                <button className="w-full rounded-full border border-primary text-primary py-3 hover:bg-primary/10 transition">
-                  Join Waitlist
-                </button>
-              )}
-
-              {program.status === "closed" && (
-                <p className="text-center text-sm text-gray-500">
-                  This program is currently closed.
-                </p>
-              )}
-            </div>
-
-            <p className="mt-5 text-sm text-muted">
-              Need help?{" "}
-              <a href="/contact" className="text-primary font-medium">
-                Contact support
-              </a>
-            </p>
+            </motion.div>
           </div>
         </div>
       </section>
+
+      {/* --- MAIN CONTENT & EXPANDED SIDEBAR --- */}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-12 items-start">
+          {/* LEFT CONTENT: WHAT YOU'LL MASTER */}
+          <div className="space-y-12">
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div className="p-6 rounded-3xl bg-white border border-purple-50 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[#9667E0]/10 flex items-center justify-center text-[#9667E0] mb-6">
+                  <Clock size={24} />
+                </div>
+                <h4 className="font-bold text-dark mb-2 text-lg">Self-Paced</h4>
+                <p className="text-muted/70">
+                  Learn at your own speed with lifetime access to all modules.
+                </p>
+              </div>
+              <div className="p-6 rounded-3xl bg-white border border-purple-50 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[#9667E0]/10 flex items-center justify-center text-[#9667E0] mb-6">
+                  <Users size={24} />
+                </div>
+                <h4 className="font-bold text-dark mb-2 text-lg">Community</h4>
+                <p className="text-muted/70">
+                  Join 500+ students in our private Discord networking group.
+                </p>
+              </div>
+            </div>
+
+            {/* KEEPING UI SAME: WHAT YOU'LL MASTER */}
+            <div>
+              <h2 className="text-2xl font-heading text-dark mb-6 text-center sm:text-left">
+                What You'll Master
+              </h2>
+              <div className="grid gap-4">
+                {program.points.map((point, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ x: 10 }}
+                    className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-purple-50 hover:border-[#9667E0]/30 transition-all shadow-sm group"
+                  >
+                    <CheckCircle2 className="text-[#9667E0] group-hover:scale-110 transition-transform" />
+                    <span className="text-dark font-medium">{point}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: EXPANDED LIMITED OFFER SECTION */}
+          <aside className="lg:sticky lg:top-28">
+            <div className="relative p-7 md:p-8 rounded-[2.25rem] bg-white border border-purple-100 shadow-2xl shadow-purple-100/50 overflow-hidden">
+              <div className="absolute top-0 right-0 p-6 opacity-10">
+                <Zap size={120} className="text-[#9667E0]" />
+              </div>
+
+              <div className="relative z-10 space-y-6">
+                <div>
+                  <div className="flex items-center gap-2 text-[#9667E0] font-bold text-sm mb-2 uppercase tracking-widest">
+                    <span className="w-2 h-2 rounded-full bg-[#9667E0] animate-ping" />
+                    Limited Offer
+                  </div>
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-4xl md:text-5xl font-heading text-dark">
+                      ₹4,999
+                    </span>
+                    <span className="text-muted line-through text-lg">
+                      ₹7,499
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-dark/70 text-base">
+                    <ShieldCheck size={20} className="text-green-500" />
+                    7-Day Money Back Guarantee
+                  </div>
+                  <div className="flex items-center gap-3 text-dark/70 text-base">
+                    <Users size={20} className="text-[#9667E0]" />
+                    Only 12 Seats Remaining
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => navigate("/register")}
+                  className="w-full py-4 rounded-2xl bg-[#9667E0] text-white font-bold text-lg shadow-[0_10px_30px_rgba(150,103,224,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+                >
+                  Enroll Now <ArrowRight size={20} />
+                </button>
+
+                <div className="pt-6 border-t border-purple-50">
+                  <p className="text-center text-xs text-muted mb-6 uppercase tracking-widest font-bold">
+                    Secure Payment Methods
+                  </p>
+                  <div className="flex justify-center gap-6 opacity-50 grayscale hover:grayscale-0 transition-all">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                      className="h-5"
+                      alt="Paypal"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png"
+                      className="h-5"
+                      alt="UPI"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                      className="h-5"
+                      alt="Mastercard"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
       <FAQSection />
-    </section>
+    </div>
   );
 }

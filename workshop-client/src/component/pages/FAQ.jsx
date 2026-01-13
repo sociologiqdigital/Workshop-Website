@@ -1,171 +1,137 @@
-import React, { useState, useRef } from "react";
-
-import { motion } from "framer-motion";
-
-import { ArrowLeft, ArrowRight, Plus, Minus } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const faqs = [
   {
-    id: 1,
-
     question: "What makes this program different from other business courses?",
-
     answer:
-      "Unlike generic courses, we provide a hands-on 'Kickstarter' approach. You don't just learn theory; you build your digital structure, niche, and branding live over 4 weeks with direct guidance.",
+      "Unlike generic courses, we provide a hands-on 'Kickstarter' approach. You don't just learn theory - you build your digital structure, niche, and branding live over 4 weeks with direct guidance.",
   },
-
   {
-    id: 2,
-
     question: "Do I need any technical skills to start?",
-
     answer:
-      "Not at all. We walk you through every tool—from Canva for design to setting up your Instagram automation. If you can use a smartphone, you can build this business.",
+      "No technical background is required. The program is designed for beginners and non-tech founders, with step-by-step guidance throughout.",
   },
-
   {
-    id: 3,
-
     question: "How does the 1:1 strategy call work?",
-
     answer:
-      "For the first 10 signups, we schedule a private session to audit your specific business idea, refine your monetization strategy, and clear any roadblocks personalized to your goals.",
+      "Each participant gets a personal strategy call focused on clarity, positioning, and next steps tailored to your business idea.",
   },
-
   {
-    id: 4,
-
-    question: "What is the daily time commitment required?",
-
+    question: "Will I get recordings of the sessions?",
     answer:
-      "We recommend at least 60-90 minutes a day. This includes attending or watching the session recordings and implementing the daily action steps.",
+      "Yes. All live sessions are recorded and shared so you can revisit the material anytime.",
   },
 ];
 
-const FAQSection = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function FAQSection() {
+  const [activeIndex, setActiveIndex] = useState(1);
 
-  const scrollRef = useRef(null);
-
-  const scroll = (direction) => {
-    const { current } = scrollRef;
-
-    const scrollAmount = 400;
-
-    if (direction === "left") {
-      current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-
-      setActiveIndex(Math.max(0, activeIndex - 1));
-    } else {
-      current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-
-      setActiveIndex(Math.min(faqs.length - 1, activeIndex + 1));
-    }
-  };
+  const prev = () => setActiveIndex((i) => (i === 0 ? faqs.length - 1 : i - 1));
+  const next = () => setActiveIndex((i) => (i === faqs.length - 1 ? 0 : i + 1));
 
   return (
-    <section className="py-20 sm:py-24 lg:py-28 bg-white overflow-hidden">
+    <section className="py-24 bg-[#F3EAFE] overflow-x-visible">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header with Navigation */}
+        {/* HEADER */}
+        <div className="flex items-start justify-between mb-16">
+          <h2 className="font-heading text-5xl leading-tight text-dark">
+            Frequently <br />
+            <span className="text-primary">Asked Questions</span>
+          </h2>
 
-        <div className="flex flex-col lg:flex-row justify-between items-start mb-12 sm:mb-16 gap-8">
-          <div className="max-w-xl min-w-0">
-            <h2 className="text-5xl md:text-7xl font-bold text-primary leading-tight">
-              Frequently <br />
-              <span className="italic text-wine">Asked Questions</span>
-            </h2>
-          </div>
-
-          <div className="space-y-6 text-right min-w-0">
-            <p className="text-muted max-w-[300px] text-sm leading-relaxed ml-auto">
-              Find answers to common questions about our workshop process,
-              curriculum, and requirements.
-            </p>
-
-            <div className="flex gap-4 justify-end">
+          <div className="max-w-sm text-sm text-muted">
+            Find answers to common questions about our workshop process,
+            curriculum, and requirements.
+            <div className="flex gap-3 mt-4">
               <button
-                onClick={() => scroll("left")}
-                className="p-4 rounded-full border border-primary/20 hover:bg-white transition-all shadow-sm group"
+                onClick={prev}
+                className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center hover:bg-primary hover:text-white transition"
               >
-                <ArrowLeft
-                  size={20}
-                  className="text-[rgb(var(--color-primary))]"
-                />
+                <ArrowLeft size={16} />
               </button>
-
               <button
-                onClick={() => scroll("right")}
-                className="p-4 rounded-full bg-[rgb(var(--color-primary))] text-white hover:bg-[rgb(var(--color-wine))] transition-all shadow-lg"
+                onClick={next}
+                className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center"
               >
-                <ArrowRight size={20} />
+                <ArrowRight size={16} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Horizontal Scrollable Cards */}
+        {/* CAROUSEL */}
+        <div className="relative overflow-x-visible">
+          {/* extra right padding fixes last-card cut */}
+          <div className="flex gap-10 items-center pr-[160px]">
+            {faqs.map((item, index) => {
+              const isActive = index === activeIndex;
 
-        <div
-          ref={scrollRef}
-          className="flex gap-8 overflow-x-auto pb-12 no-scrollbar snap-x snap-mandatory"
-        >
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={faq.id}
-              whileHover={{ y: -10 }}
-              onClick={() => setActiveIndex(index)}
-              className={`flex-shrink-0 w-[350px] md:w-[450px] h-[480px] p-10 rounded-[2.5rem] transition-all duration-500 cursor-pointer snap-start flex flex-col justify-between ${
-                activeIndex === index
-                  ? "bg-[rgb(var(--color-primary))] text-white shadow-2xl shadow-[rgb(var(--color-primary))]/30"
-                  : "bg-[rgb(var(--color-surface))] text-[rgb(var(--color-dark))] border border-[rgb(var(--color-accent))]/20 shadow-sm"
-              }`}
-            >
-              <div className="space-y-6">
-                <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center border ${
-                    activeIndex === index
-                      ? "border-white/40 bg-white/10"
-                      : "border-[rgb(var(--color-accent))]"
-                  }`}
+              return (
+                <motion.div
+                  key={index}
+                  onClick={() => setActiveIndex(index)}
+                  layout
+                  animate={{ width: isActive ? 420 : 300 }}
+                  transition={{
+                    width: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
+                    layout: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
+                  }}
+                  className={`
+                    h-[360px]
+                    rounded-[2.5rem]
+                    p-8
+                    cursor-pointer
+                    flex-shrink-0
+                    overflow-hidden
+                    ${
+                      isActive
+                        ? "bg-primary text-white shadow-[0_40px_80px_rgba(124,58,237,0.35)]"
+                        : "bg-white/70 text-muted"
+                    }
+                  `}
                 >
-                  {activeIndex === index ? (
-                    <Minus size={20} />
-                  ) : (
-                    <Plus
-                      size={20}
-                      className="text-[rgb(var(--color-primary))]"
-                    />
-                  )}
-                </div>
+                  {/* CONTENT */}
+                  <div className="flex flex-col h-full">
+                    {/* QUESTION */}
+                    <motion.h4
+                      layout="position"
+                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                      className={`font-heading text-xl leading-snug ${
+                        isActive
+                          ? "text-white mb-4 mt-0"
+                          : "text-dark mt-auto mb-0"
+                      }`}
+                    >
+                      {item.question}
+                    </motion.h4>
 
-                <h3
-                  className={`text-2xl md:text-3xl font-bold leading-snug font-serif ${
-                    activeIndex === index
-                      ? "text-white"
-                      : "text-[rgb(var(--color-dark))]"
-                  }`}
-                >
-                  {faq.question}
-                </h3>
-              </div>
-
-              <motion.p
-                initial={false}
-                animate={{ opacity: activeIndex === index ? 1 : 0.7 }}
-                className={`text-lg leading-relaxed ${
-                  activeIndex === index
-                    ? "text-white/90"
-                    : "text-[rgb(var(--color-muted))]"
-                }`}
-              >
-                {faq.answer}
-              </motion.p>
-            </motion.div>
-          ))}
+                    {/* ANSWER */}
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.p
+                          initial={{ opacity: 0, y: 12 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{
+                            delay: 0.28, // after width expansion
+                            duration: 0.35,
+                            ease: "easeOut",
+                          }}
+                          className="text-sm leading-relaxed text-white/90"
+                        >
+                          {item.answer}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default FAQSection;
+}

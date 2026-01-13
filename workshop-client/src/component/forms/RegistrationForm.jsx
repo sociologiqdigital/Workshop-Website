@@ -5,7 +5,7 @@ import SlotPicker from "./SlotPicker";
 import { Calendar, CheckCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ submitLabel = "Pay & Register" }) {
   const [form, setForm] = useState({
     name: "",
     registrationType: "",
@@ -206,7 +206,7 @@ export default function RegistrationForm() {
             !isFormValid ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          Pay & Register
+          {submitLabel}
         </button>
       </form>
 
