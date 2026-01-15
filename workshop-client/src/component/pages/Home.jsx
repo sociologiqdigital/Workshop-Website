@@ -313,7 +313,7 @@ const Home = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-dark mb-1.5">
+                    <h3 className="text-xl font-bold text-dark mb-1.5 lining-nums">
                       {program.title}
                     </h3>
                     <p className="text-muted/70 text-[11px] leading-relaxed mb-4 line-clamp-2">
@@ -338,7 +338,7 @@ const Home = () => {
                     <div className="h-10 w-full" />
                   </motion.div>
 
-                  {/* 2. THE CIRCULAR ORBITING CTA - Reduced Width */}
+                  {/* 2. THE CIRCULAR ORBITING CTA  */}
                   {!isClosed && (
                     <motion.div
                       initial={{
@@ -374,7 +374,7 @@ const Home = () => {
                         damping: 15,
                       }}
                       // Slightly narrower to keep the CTA fully inside the card.
-                      className="absolute bottom-6 left-0 right-0 z-30 w-[80%] max-w-[260px] mx-auto pointer-events-none group-hover:pointer-events-auto"
+                      className="absolute bottom-8 left-0 right-0 z-30 w-[80%] max-w-[260px] mx-auto pointer-events-none group-hover:pointer-events-auto"
                     >
                       <button
                         onClick={() => navigate(`/programs/${program.slug}`)}
