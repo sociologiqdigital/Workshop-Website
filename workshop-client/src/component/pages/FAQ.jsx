@@ -32,19 +32,19 @@ export default function FAQSection() {
   const next = () => setActiveIndex((i) => (i === faqs.length - 1 ? 0 : i + 1));
 
   return (
-    <section className="py-24 bg-[#F3EAFE] overflow-x-visible">
+    <section className="py-24 bg-[#F3EAFE] overflow-x-visible antialiased [text-rendering:geometricPrecision]">
       <div className="max-w-7xl mx-auto px-6">
         {/* HEADER */}
-        <div className="flex items-start justify-between mb-16">
+        <div className="flex flex-col items-center lg:flex-row lg:items-start lg:justify-between gap-10 mb-16 text-center lg:text-left">
           <h2 className="font-heading text-5xl leading-tight text-dark">
             Frequently <br />
-            <span className="text-primary">Asked Questions</span>
+            <span className="text-accent font-bold">Asked Questions</span>
           </h2>
 
-          <div className="max-w-sm text-sm text-muted">
+          <div className="max-w-sm text-sm text-muted leading-relaxed mx-auto lg:mx-0">
             Find answers to common questions about our workshop process,
             curriculum, and requirements.
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-3 mt-4 justify-center lg:justify-start">
               <button
                 onClick={prev}
                 className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center hover:bg-primary hover:text-white transition"
@@ -63,13 +63,13 @@ export default function FAQSection() {
 
         {/* CAROUSEL */}
         <div className="relative overflow-x-visible">
-          {/* extra right padding fixes last-card cut */}
-          <div className="flex gap-10 items-center pr-[160px]">
+          <div className="flex gap-10 items-stretch pr-[160px]">
             {faqs.map((item, index) => {
               const isActive = index === activeIndex;
 
               return (
-                <motion.div
+                <motion.button
+                  type="button"
                   key={index}
                   onClick={() => setActiveIndex(index)}
                   layout
@@ -82,56 +82,83 @@ export default function FAQSection() {
                     h-[360px]
                     rounded-[2.5rem]
                     p-8
-                    cursor-pointer
                     flex-shrink-0
                     overflow-hidden
+                    text-left
+                    flex
                     ${
                       isActive
-                        ? "bg-primary text-white shadow-[0_40px_80px_rgba(124,58,237,0.35)]"
+                        ? "bg-primary text-white shadow-[0_30px_60px_rgba(124,58,237,0.2)]"
                         : "bg-white/70 text-muted"
                     }
                   `}
                 >
-                  {/* CONTENT */}
-                  <div className="flex flex-col h-full">
-                    {/* QUESTION */}
+                  {/*  Consistent inner layout so cards align */}
+                  <div className="flex flex-col h-full w-full">
+                    {/* QUESTION (always pinned at top) */}
                     <motion.h4
                       layout="position"
                       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                      className={`font-heading text-xl leading-snug ${
-                        isActive
-                          ? "text-white mb-4 mt-0"
-                          : "text-dark mt-auto mb-0"
+                      className={`font-heading text-xl leading-snug tracking-tight ${
+                        isActive ? "text-white" : "text-dark"
                       }`}
                     >
                       {item.question}
                     </motion.h4>
 
-                    {/* ANSWER */}
-                    <AnimatePresence>
-                      {isActive && (
-                        <motion.p
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{
-                            delay: 0.28, // after width expansion
-                            duration: 0.35,
-                            ease: "easeOut",
-                          }}
-                          className="text-sm leading-relaxed text-white/90"
-                        >
-                          {item.answer}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
+                    {/* Spacer keeps answer area consistent */}
+                    <div className="mt-4 flex-1">
+                      <AnimatePresence mode="wait">
+                        {isActive ? (
+                          <motion.p
+                            key="answer"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 6 }}
+                            transition={{
+                              delay: 0.22,
+                              duration: 0.35,
+                              ease: "easeOut",
+                            }}
+                            className="text-sm leading-relaxed text-white/90"
+                          >
+                            {item.answer}
+                          </motion.p>
+                        ) : (
+                          <motion.div
+                            key="hint"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-sm leading-relaxed text-muted/70"
+                          ></motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* small bottom row to balance layout */}
+                    <div className="pt-4">
+                      <div
+                        className={`h-[2px] w-14 rounded-full ${
+                          isActive ? "bg-white/30" : "bg-primary/20"
+                        }`}
+                      />
+                    </div>
                   </div>
-                </motion.div>
+                </motion.button>
               );
             })}
           </div>
         </div>
       </div>
+
+      <style>{`
+        section {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+      `}</style>
     </section>
   );
 }

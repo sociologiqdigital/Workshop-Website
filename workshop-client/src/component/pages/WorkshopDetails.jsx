@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { programs } from "../data/Workshop";
 import FAQSection from "./FAQ";
 import MarqueeNotice from "../common/MarqueeNotice";
+import PayULogo from "../styles/images/PayU.svg";
 import {
   CheckCircle2,
   Play,
@@ -18,6 +19,9 @@ export default function WorkshopDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const program = programs.find((p) => p.slug === slug);
+  const handleEnrollClick = () => {
+    navigate(program.status === "soon" ? "/waitlist" : "/register");
+  };
 
   if (!program) {
     return (
@@ -174,7 +178,7 @@ export default function WorkshopDetails() {
                 </div>
 
                 <button
-                  onClick={() => navigate("/register")}
+                  onClick={handleEnrollClick}
                   className="w-full py-4 rounded-2xl bg-[#9667E0] text-white font-bold text-lg shadow-[0_10px_30px_rgba(150,103,224,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                 >
                   Enroll Now <ArrowRight size={20} />
@@ -185,13 +189,9 @@ export default function WorkshopDetails() {
                     Secure Payment Methods
                   </p>
                   <div className="flex justify-center gap-6 opacity-50 grayscale hover:grayscale-0 transition-all">
+                    <img src={PayULogo} className="h-5" alt="PayU" />
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
-                      className="h-5"
-                      alt="Paypal"
-                    />
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png"
+                      src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
                       className="h-5"
                       alt="UPI"
                     />

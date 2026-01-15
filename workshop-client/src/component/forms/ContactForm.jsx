@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-
+import { Send } from "lucide-react";
 export default function ContactForm() {
   const [form, setForm] = useState({
     fullName: "",
@@ -66,7 +66,7 @@ export default function ContactForm() {
     // 🔗 API integration will go here later
     console.log("Contact Form Data:", form);
 
-    // ✅ RESET FORM AFTER SUBMIT
+    //  RESET FORM AFTER SUBMIT
     setForm({
       fullName: "",
       email: "",
@@ -76,87 +76,63 @@ export default function ContactForm() {
     setTouched({});
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Full Name */}
-      <div className="flex flex-col">
-        <label className="form-label">Full Name</label>
+ return (
+  <form onSubmit={handleSubmit} className="space-y-5">
+    {/* Common Wrapper for Inputs */}
+    {[
+      { label: "Full Name", name: "fullName", type: "text", placeholder: "John Doe" },
+      { label: "Email Address", name: "email", type: "email", placeholder: "john@example.com" },
+      { label: "Phone Number", name: "phone", type: "tel", placeholder: "1234567890" },
+    ].map((field) => (
+      <div key={field.name} className="flex flex-col gap-1.5">
+        <label className="text-[11px] font-bold uppercase tracking-wider text-[rgb(var(--color-dark))]/60 ml-1">
+          {field.label}
+        </label>
         <input
-          type="text"
-          name="fullName"
-          placeholder="Enter your full name"
-          className="form-input"
-          value={form.fullName}
+          {...field}
+          className={`px-6 py-4 rounded-2xl bg-[#F9F7FF] border-2 transition-all outline-none text-sm
+            ${touched[field.name] && errors[field.name] 
+              ? "border-red-100 focus:border-red-300" 
+              : "border-transparent focus:border-[rgb(var(--color-primary))]/30 focus:bg-white focus:shadow-inner"}`}
+          value={form[field.name]}
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        {touched.fullName && errors.fullName && (
-          <p className="form-error">{errors.fullName}</p>
+        {touched[field.name] && errors[field.name] && (
+          <span className="text-[10px] text-red-500 font-medium ml-1">{errors[field.name]}</span>
         )}
       </div>
+    ))}
 
-      {/* Email */}
-      <div className="flex flex-col">
-        <label className="form-label">Email Address</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email address"
-          className="form-input"
-          value={form.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.email && errors.email && (
-          <p className="form-error">{errors.email}</p>
-        )}
-      </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-[11px] font-bold uppercase tracking-wider text-[rgb(var(--color-dark))]/60 ml-1">Message</label>
+      <textarea
+        name="message"
+        rows="4"
+        placeholder="How can we help?"
+        className="px-6 py-4 rounded-2xl bg-[#F9F7FF] border-2 border-transparent focus:border-[rgb(var(--color-primary))]/30 focus:bg-white transition-all outline-none text-sm resize-none"
+        value={form.message}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      {touched.message && errors.message && (
+        <span className="text-[10px] text-red-500 font-medium ml-1">{errors.message}</span>
+      )}
+    </div>
 
-      {/* Phone */}
-      <div className="flex flex-col">
-        <label className="form-label">Phone Number</label>
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Enter 10-digit phone number"
-          maxLength="10"
-          className="form-input"
-          value={form.phone}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.phone && errors.phone && (
-          <p className="form-error">{errors.phone}</p>
-        )}
-      </div>
-
-      {/* Message */}
-      <div className="flex flex-col">
-        <label className="form-label">Query / Message</label>
-        <textarea
-          name="message"
-          rows="4"
-          placeholder="Enter your query or message (minimum 10 characters)"
-          className="form-input"
-          value={form.message}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.message && errors.message && (
-          <p className="form-error">{errors.message}</p>
-        )}
-      </div>
-
-      {/* Submit */}
-      <button
-        type="submit"
-        disabled={!isFormValid}
-        className={`btn btn-primary w-full ${
-          !isFormValid ? "opacity-50 cursor-not-allowed" : ""
+    <button
+      type="submit"
+      disabled={!isFormValid}
+      className={`group relative w-full py-4 rounded-2xl font-bold text-sm tracking-widest uppercase overflow-hidden transition-all duration-300
+        ${!isFormValid 
+          ? "bg-gray-100 text-gray-400 cursor-not-allowed" 
+          : "bg-[rgb(var(--color-primary))] text-white shadow-lg shadow-[rgb(var(--color-primary))]/25 hover:shadow-[rgb(var(--color-primary))]/40 hover:-translate-y-1 active:translate-y-0"
         }`}
-      >
-        Submit
-      </button>
-    </form>
-  );
+    >
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        Send Message <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+      </span>
+    </button>
+  </form>
+);
 }

@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import RegistrationForm from "../forms/RegistrationForm";
-import RegistrationImage from "../styles/images/registration-illustration.svg";
+import RegistrationImage from "../styles/images/RegistrationImg.png";
+import WaitingListImg from "../styles/images/WaitingListImg.png";
 
 export default function RegisterLayout({ variant = "register" }) {
   const isWaitlist = variant === "waitlist";
+  const heroImage = isWaitlist ? WaitingListImg : RegistrationImage;
   // Animation variants
   const fadeInRight = {
     hidden: { opacity: 0, x: 40 },
@@ -21,7 +23,7 @@ export default function RegisterLayout({ variant = "register" }) {
   };
 
   return (
-    <section className="relative min-h-screen bg-[rgb(var(--color-background))] overflow-hidden">
+    <section className="relative min-h-screen bg-[#F2EBFB] overflow-hidden">
       {/* INTERACTIVE BACKGROUND
           Moving blobs and a split-screen design that adapts to the brand palette.
       */}
@@ -49,7 +51,7 @@ export default function RegisterLayout({ variant = "register" }) {
               className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgb(var(--color-primary))]/10 border border-[rgb(var(--color-primary))]/20"
             >
               <span className="w-2 h-2 rounded-full bg-[rgb(var(--color-primary))] animate-pulse" />
-              <p className="text-xs font-bold uppercase tracking-wider text-[rgb(var(--color-primary))]">
+              <p className="text-xs font-bold uppercase tracking-wider text-accent">
                 Workshop Enrollment Open
               </p>
             </motion.div>
@@ -59,7 +61,7 @@ export default function RegisterLayout({ variant = "register" }) {
               className="font-serif text-5xl md:text-6xl text-[rgb(var(--color-dark))] leading-[1.1] mb-4"
             >
               Step into your <br />
-              <span className="text-[rgb(var(--color-primary))] italic">
+              <span className="text-accent">
                 New Future.
               </span>
             </motion.h1>
@@ -71,6 +73,19 @@ export default function RegisterLayout({ variant = "register" }) {
               Join a community of builders. Fill in your details below to
               reserve your preferred session slot.
             </motion.p>
+
+            <motion.div
+              variants={fadeInRight}
+              className="lg:hidden mb-10"
+            >
+              <div className="rounded-[2rem] bg-white/70 border border-white shadow-lg p-4">
+                <img
+                  src={heroImage}
+                  alt="Workshop registration illustration"
+                  className="w-full h-auto rounded-[1.5rem] object-cover"
+                />
+              </div>
+            </motion.div>
 
             {/* Glassmorphic Form Card */}
             <motion.div variants={fadeInRight} className="relative group">
@@ -119,7 +134,7 @@ export default function RegisterLayout({ variant = "register" }) {
 
               <div className="relative rounded-[3rem] bg-gradient-to-br from-white to-[rgb(var(--color-background))] p-4 shadow-2xl border border-white">
                 <img
-                  src={RegistrationImage}
+                  src={heroImage}
                   alt="Workshop preview"
                   className="w-full h-auto rounded-[2.5rem] object-cover shadow-inner"
                 />

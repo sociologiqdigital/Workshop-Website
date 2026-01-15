@@ -58,28 +58,26 @@ const TestimonialColumn = ({ list, reverse, duration }) => (
 
 const TestimonialSection = () => {
   return (
-    <section className="relative section bg-[#F7F5FB] overflow-hidden">
+    <section className="relative section bg-[#F2EBFB] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-12 gap-16 items-center">
           {/* LEFT CONTENT */}
-          <div className="lg:col-span-5 space-y-6">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs tracking-widest uppercase font-semibold">
+          <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-accent text-xs tracking-widest uppercase font-semibold">
               Community Voices
             </span>
 
             <h2 className="font-heading text-5xl leading-tight text-dark">
               Built with care, <br />
-              <span className="italic text-primary">
+              <span className=" text-accent font-bold">
                 trusted by action-takers.
               </span>
             </h2>
 
-            <p className="text-muted text-lg max-w-md">
+            <p className="text-muted text-lg max-w-md mx-auto lg:mx-0">
               These aren’t testimonials. They’re reflections from people who
               chose clarity over confusion.
             </p>
-
-            <button className="btn btn-primary mt-4">Read all stories</button>
           </div>
 
           {/* RIGHT MARQUEE */}

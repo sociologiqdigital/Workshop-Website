@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 
 function FooterColumn({ title, children }) {
   return (
-    <div className="flex flex-col gap-6">
-      <h4 className="text-xs font-bold tracking-[0.2em] text-[rgb(var(--color-primary))] uppercase">
+    <div className="flex flex-col gap-3">
+      <h4 className="text-[10px] font-bold tracking-[0.22em] text-[rgb(var(--color-primary))] uppercase">
         {title}
       </h4>
-      <ul className="flex flex-col gap-4 text-sm font-medium">{children}</ul>
+      <ul className="flex flex-col gap-2 text-[13px] font-medium">
+        {children}
+      </ul>
     </div>
   );
 }
@@ -17,43 +19,48 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[rgb(var(--color-dark))] text-white pt-24 pb-12 overflow-hidden">
+    <footer className="relative bg-[rgb(var(--color-dark))] text-white pt-10 pb-6 overflow-hidden">
       {/* Background Glow Effect */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[rgb(var(--color-primary))]/5 blur-[120px] rounded-full -mb-64 -mr-32" />
+      <div className="absolute bottom-0 right-0 w-[380px] h-[380px] bg-[rgb(var(--color-primary))]/5 blur-[110px] rounded-full -mb-52 -mr-24" />
 
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
-        {/* TOP SECTION: Branding & Newsletter */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 pb-20 border-b border-white/5">
-          <div className="lg:col-span-5 space-y-8">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* TOP SECTION: Branding & Links */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-8 border-b border-white/5">
+          <div className="lg:col-span-5 space-y-4">
             <Link to="/" className="inline-block group">
-              <h3 className="font-serif text-3xl md:text-4xl leading-none text-primary">
+              <h3 className="font-serif text-2xl md:text-3xl leading-none text-primary">
                 Digi Biz Kickstart{" "}
               </h3>
             </Link>
-            <p className="text-lg text-white/50 leading-relaxed max-w-md">
+
+            <p className="text-[13px] md:text-sm text-white/50 leading-relaxed max-w-md">
               Launch your digital business in 30 days. Empowering entrepreneurs
               to transform ideas into thriving online legacies through
               strategic, step-by-step guidance.
             </p>
-            <div className="flex gap-4">
+
+            <div className="flex gap-3">
               {[
                 {
-                  icon: <Instagram size={20} />,
+                  target: "_blank",
+                  icon: <Instagram size={18} />,
                   link: "https://www.instagram.com/thinkdigitalwithruchi/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#",
                 },
                 {
-                  icon: <Facebook size={20} />,
+                  target: "_blank",
+                  icon: <Facebook size={18} />,
                   link: "https://www.facebook.com/ruchi.shegaonkar.7/",
                 },
                 {
-                  icon: <Linkedin size={20} />,
+                  target: "_blank",
+                  icon: <Linkedin size={18} />,
                   link: "https://www.linkedin.com/in/sociologiq/",
                 },
               ].map((social, i) => (
                 <a
                   key={i}
                   href={social.link}
-                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-[rgb(var(--color-primary))] hover:border-[rgb(var(--color-primary))] transition-all duration-300 group"
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[rgb(var(--color-primary))] hover:border-[rgb(var(--color-primary))] transition-all duration-300 group"
                 >
                   <span className="group-hover:scale-110 transition-transform">
                     {social.icon}
@@ -63,7 +70,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
+          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-6">
             <FooterColumn title="Programs">
               <li>
                 <Link
@@ -72,7 +79,7 @@ export default function Footer() {
                 >
                   Workshops{" "}
                   <ArrowUpRight
-                    size={14}
+                    size={13}
                     className="opacity-0 group-hover:opacity-100 transition-all"
                   />
                 </Link>
@@ -152,8 +159,8 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM SECTION: Copyright & Credits */}
-        <div className="pt-12 flex flex-col md:flex-row items-center justify-between gap-8 text-sm tracking-tight">
-          <div className="flex items-center gap-6 text-white/40">
+        <div className="pt-5 flex flex-col md:flex-row items-center justify-between gap-4 text-[12px] tracking-tight">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-white/40 text-center md:text-left">
             <span>© {currentYear} Digital Biz Kickstarter.</span>
             <span className="hidden md:block w-1 h-1 rounded-full bg-white/20" />
             <span>
@@ -168,7 +175,7 @@ export default function Footer() {
 
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-xs flex items-center gap-2"
+            className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[11px] flex items-center gap-2"
           >
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             Available for Q1 Mentorship

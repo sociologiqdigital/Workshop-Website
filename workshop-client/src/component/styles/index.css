@@ -104,3 +104,39 @@ h1, h2, h3 {
   background-size: 200% auto;
   animation: shimmer 6s linear infinite;
 }
+/* Apply to your section class */
+.section-ethereal {
+  background: radial-gradient(circle at top left, rgb(var(--color-primary) / 0.15), transparent 40%),
+              radial-gradient(circle at bottom right, rgb(var(--color-accent) / 0.1), transparent 40%),
+              linear-gradient(180deg, #FFFFFF 0%, rgb(var(--color-background) / 0.2) 100%);
+}
+.form-input {
+  width: 100%;
+  background: #fafafa;
+  border: 1.5px solid #eaeaea;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: rgb(var(--color-primary));
+  box-shadow: 0 0 0 4px rgba(150, 103, 224, 0.12);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--color-dark));
+}
+
+.form-error {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e11d48;
+}

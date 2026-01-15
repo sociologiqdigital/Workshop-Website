@@ -7,6 +7,7 @@ import {
   AnimatePresence,
   useInView,
   useSpring,
+  useMotionValue,
 } from "framer-motion";
 import confetti from "canvas-confetti";
 import {
@@ -25,6 +26,7 @@ import {
   PhoneCall,
   CheckCircle2,
   ShieldCheck,
+  Zap,
   ArrowRight,
 } from "lucide-react";
 
@@ -53,6 +55,7 @@ const iconMap = {
   Rocket,
   Layout,
   PhoneCall,
+  Zap,
 };
 
 const Home = () => {
@@ -144,7 +147,7 @@ const Home = () => {
       {/* 1. HERO SECTION */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative min-h-screen  flex items-center justify-center overflow-hidden bg-[#F9F7FF] bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
+        className="relative min-h-screen  flex items-center justify-center overflow-hidden bg-primary bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
       >
         {/* --- ANIMATED MESH GRADIENT (Light & Airy Lavender) --- */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -196,7 +199,7 @@ const Home = () => {
         </motion.div>
 
         {/* --- CONTENT --- */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 text-center pt-24">
+        <div className="relative z-20 max-w-6xl mx-auto px-6 text-center pt-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -236,8 +239,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. PROGRAM OVERVIEW - Fluid Staggered Layout */}
-      <section className="relative py-24 sm:py-32 px-6 overflow-hidden bg-[linear-gradient(180deg,#F6F1FF_0%,#FFFFFF_100%)]">
+      {/* 2. PROGRAM OVERVIEW */}
+      <section className="relative py-12 sm:py-16 px-6 overflow-hidden bg-white">
         {/* --- VIBRANT MESH BACKGROUND --- */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
           <div
@@ -258,132 +261,175 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto">
           {/* SECTION HEADER */}
-          <div className="text-left mb-16 space-y-4">
+          <div className="text-center mb-10 space-y-3">
             <span className="text-[#9667E0] font-bold uppercase text-[10px] tracking-[0.25em]">
-              Program Overview
+              Everything you need to know before you register.
             </span>
-            <h2 className="text-5xl md:text-7xl font-heading text-dark leading-tight">
-              The <span className="text-[#9667E0]">Essentials.</span>
+            <h2 className="text-4xl md:text-6xl font-heading text-dark leading-tight">
+              Workshop <span className="text-[#9667E0]">Details.</span>
             </h2>
           </div>
 
-          {/* 3-COLUMN GRID */}
-          <div className="grid lg:grid-cols-3 gap-8 items-stretch">
-            {programs.map((program, index) => (
-              <motion.div
-                key={program.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="relative group h-full"
-              >
-                {/* --- NEON BORDER CONTAINER --- */}
-                <div className="relative h-full p-[2px] rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(150,103,224,0.2)]">
-                  {/* 1. THE ROTATING LASER (Only for active card) */}
-                  {/* {program.status === "active" && (
-                  <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] opacity-100">
-                    <div 
-                      className="w-full h-full"
-                      style={{
-                        background: 'conic-gradient(from 0deg, transparent 0deg, transparent 150deg, #9667E0 180deg, transparent 210deg, transparent 360deg)'
-                      }}
-                    />
-                  </div>
-                )} */}
+          {/* 3D tilt + magnetic CTA + tap + steam gloss */}
+          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+            {programs.map((program, index) => {
+              const x = useMotionValue(0);
+              const y = useMotionValue(0);
 
-                  {/* 2. CARD CONTENT BODY */}
-                  <div className="relative bg-white rounded-[2.4rem] p-8 md:p-10 h-full flex flex-col z-10 border border-gray-100">
-                    {/* Badge & Workshop # */}
-                    <div className="flex justify-between items-center mb-8">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-muted/40">
-                        Workshop 0{index + 1}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase border ${
-                          program.status === "active"
-                            ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
-                            : program.status === "soon"
-                            ? "bg-amber-50 text-amber-600 border-amber-200"
-                            : "bg-gray-100 text-gray-400 border-gray-200"
-                        }`}
+              const rotateX = useTransform(y, [-50, 50], [8, -8]);
+              const rotateY = useTransform(x, [-50, 50], [-8, 8]);
+
+              const handleCardMouseMove = (e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                x.set(e.clientX - rect.left - rect.width / 2);
+                y.set(e.clientY - rect.top - rect.height / 2);
+              };
+
+              const resetTilt = () => {
+                x.set(0);
+                y.set(0);
+              };
+
+              const isClosed = program.status === "closed";
+
+              return (
+                <motion.div
+                  key={program.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative h-full"
+                >
+                  <motion.div
+                    className="group relative h-full"
+                    style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                    onMouseMove={handleCardMouseMove}
+                    onMouseLeave={resetTilt}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {/* OUTER GLOW */}
+                    <div
+                      className="relative h-full p-[2px] rounded-[2.5rem] overflow-hidden
+                                 transition-all duration-500
+                                 group-hover:shadow-[0_60px_120px_rgba(150,103,224,0.5)]"
+                    >
+                      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]">
+                        <div
+                          className="absolute -left-[120%] top-0 w-[120%] h-full
+                                     bg-gradient-to-r from-transparent via-white/30 to-transparent
+                                     skew-x-[-20deg]
+                                     group-hover:animate-[gloss_1.2s_ease-in-out]"
+                        />
+                      </div>
+
+                      {/* CARD */}
+                      <div
+                        className="relative bg-white rounded-[2.4rem] p-6 md:p-8 h-full flex flex-col z-10
+                                   border border-[#9667E0]/25
+                                   transition-all duration-500
+                                   group-hover:-translate-y-4
+                                   group-hover:border-[#9667E0]
+                                   group-hover:shadow-[0_40px_90px_rgba(150,103,224,0.6)]"
                       >
-                        {program.statusLabel}
-                      </span>
-                    </div>
+                        {/* HEADER */}
+                        <div className="flex justify-between items-center mb-5">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted/40">
+                            Workshop 0{index + 1}
+                          </span>
 
-                    {/* Title & Description */}
-                    <div className="mb-8 flex-grow">
-                      <h3 className="text-2xl font-bold text-dark mb-4 leading-snug">
-                        {program.title}
-                      </h3>
-                      <p className="text-muted/70 text-sm leading-relaxed mb-6">
-                        {program.description}
-                      </p>
-
-                      {/* Bullet Points from your Reference */}
-                      <ul className="space-y-3">
-                        {program.points?.map((point, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-3 text-[13px] text-muted/80"
+                          <span
+                            className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase border ${
+                              program.status === "active"
+                                ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
+                                : program.status === "soon"
+                                ? "bg-amber-50 text-amber-600 border-amber-200"
+                                : "bg-gray-100 text-gray-400 border-gray-200"
+                            }`}
                           >
-                            <Check
-                              size={14}
-                              className="text-[#9667E0] mt-0.5 shrink-0"
-                            />
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                            {program.statusLabel}
+                          </span>
+                        </div>
 
-                    {/* CALL TO ACTION BUTTON */}
-                    <div className="mt-auto">
-                      <button
-                        onClick={
-                          program.status === "closed"
-                            ? undefined
-                            : () => navigate(`/programs/${program.slug}`)
-                        }
-                        disabled={program.status === "closed"}
-                        className={
-                          program.status === "closed"
-                            ? "w-full py-4 border border-gray-200 text-gray-400 font-bold rounded-2xl cursor-not-allowed"
-                            : "w-full py-4 bg-[#9667E0] text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(150,103,224,0.2)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
-                        }
-                      >
-                        {program.status === "active"
-                          ? "Apply Now"
-                          : program.status === "soon"
-                          ? "Join Waitlist"
-                          : "Closed"}{" "}
-                        {program.status === "closed" ? null : (
-                          <ArrowRight size={18} />
-                        )}
-                      </button>
+                        {/* CONTENT */}
+                        <div className="mb-5 flex-grow">
+                          <h3 className="text-2xl font-bold text-dark mb-3 leading-snug lining-nums">
+                            {program.title}
+                          </h3>
+                          <p className="text-muted/70 text-sm leading-relaxed mb-5">
+                            {program.description}
+                          </p>
+
+                          <ul className="space-y-2.5">
+                            {program.points?.map((point, i) => (
+                              <li
+                                key={i}
+                                className="flex items-start gap-3 text-[13px] text-muted/80"
+                              >
+                                <Check
+                                  size={14}
+                                  className="text-[#9667E0] mt-0.5 shrink-0"
+                                />
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* CTA SLOT (MAGNETIC) */}
+                        <div className="mt-auto pt-3">
+                          <div className="relative h-[56px]">
+                            <motion.button
+                              onClick={
+                                isClosed
+                                  ? undefined
+                                  : () => navigate(`/programs/${program.slug}`)
+                              }
+                              disabled={isClosed}
+                              className={
+                                isClosed
+                                  ? "absolute inset-0 w-full py-3.5 border border-gray-200 text-gray-400 font-bold rounded-2xl opacity-0 translate-y-6 pointer-events-none transition-all duration-300"
+                                  : `
+                                    absolute inset-0 w-full py-3.5 rounded-2xl font-bold text-white
+                                    flex items-center justify-center gap-2
+                                    bg-[#9667E0]
+                                    shadow-[0_22px_55px_rgba(150,103,224,0.55)]
+                                    opacity-0 translate-y-6 pointer-events-none
+                                    group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
+                                    transition-all duration-300 delay-150
+                                  `
+                              }
+                              whileHover={{ x: 4, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              {program.status === "active"
+                                ? "Apply Now"
+                                : program.status === "soon"
+                                ? "Join Waitlist"
+                                : "Closed"}{" "}
+                              {isClosed ? null : <ArrowRight size={18} />}
+                            </motion.button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `,
-          }}
-        />
+        <style>{`
+          @keyframes gloss {
+            from { left: -120%; }
+            to { left: 120%; }
+          }
+        `}</style>
       </section>
 
       {/* 3. WHO BENEFITS */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-20 bg-[#F2EBFB] relative overflow-hidden">
         {/* Soft Lavender Background Glows */}
         <div className="absolute bottom-[10%] right-[-20%] w-[500px] h-[500px] bg-[#F9F7FF] rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[-15%] right-[-5%] w-[500px] h-[500px] bg-[#F2EBFB]/50 rounded-full blur-[120px] -z-10" />
@@ -514,18 +560,13 @@ const Home = () => {
                   <p className="text-xl md:text-2xl font-heading text-[#2F1E1E] leading-tight group-hover:text-[#9667E0] transition-colors duration-300">
                     {benefit}
                   </p>
-
-                  {/* Subtle Decoration */}
-                  <div className="mt-6 flex items-center gap-2 text-[#9667E0] font-bold text-xs opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0">
-                    View Path <ArrowRight size={14} />
-                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* Bottom Trust Badge */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -547,38 +588,57 @@ const Home = () => {
             <p className="text-sm text-[#2F1E1E]/50 font-medium">
               Join 500+ entrepreneurs building their digital future
             </p>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
       {/* 4. WHAT YOU'LL LEARN (TABBED) */}
-      <section className="py-32 bg-[linear-gradient(180deg,#F6F1FF_0%,#FFFFFF_100%)]">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-[#9667E0] font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block">
+       <section className="relative py-20 md:py-24 overflow-hidden bg-white">
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 right-0 w-[50%] h-[50%] rounded-full bg-[#D4BBFC]/30 blur-[120px]"
+          />
+          <motion.div
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-0 left-0 w-[40%] h-[40%] rounded-full bg-[#9667E0]/15 blur-[100px]"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="text-[#9667E0] font-bold tracking-[0.4em] uppercase text-[10px] mb-3 block"
+            >
               The Roadmap
-            </span>
-            <h2 className="text-5xl md:text-6xl font-heading text-dark">
-              What You'll Learn
+            </motion.span>
+            <h2 className="text-4xl md:text-6xl font-serif text-[#2D233C] leading-tight">
+              What You'll <span className="italic text-[#9667E0]">Learn</span>
             </h2>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-20">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-14">
             {weeks.map((week, index) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className="relative px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase"
+                className="relative px-7 md:px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all"
               >
                 {activeTab === index && (
                   <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-[#D4BBFC]/30 border border-[#D4BBFC] rounded-full"
+                    layoutId="activeTabOutline"
+                    className="absolute inset-0 bg-white border border-[#D4BBFC] rounded-full shadow-[0_15px_35px_rgba(150,103,224,0.2)]"
                   />
                 )}
                 <span
                   className={`relative z-10 ${
-                    activeTab === index ? "text-[#9667E0]" : "text-muted"
+                    activeTab === index
+                      ? "text-[#9667E0]"
+                      : "text-[#5A506E]/60 hover:text-[#5A506E]"
                   }`}
                 >
                   Week {week.number}
@@ -590,34 +650,76 @@ const Home = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="flex flex-col md:flex-row items-center gap-16"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+              className="relative flex flex-col lg:flex-row items-stretch overflow-hidden bg-white rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(45,35,60,0.15)] border border-white"
             >
-              <div className="w-full md:w-1/3 flex justify-center">
-                <span className="text-[12rem] font-heading text-[#9667E0]/10 select-none leading-none">
-                  {weeks[activeTab].number}
-                </span>
+              <div className="w-full lg:w-[42%] bg-[#9667E0] relative flex flex-col items-center justify-center p-12 md:p-14 overflow-hidden">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 m-auto w-[88%] max-w-[460px] aspect-square border-[1px] border-white/20 rounded-[4rem]"
+                />
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 m-auto w-[70%] max-w-[360px] aspect-square border-[2px] border-dashed border-white/10 rounded-full"
+                />
+
+                <motion.div
+                  key={`num-${activeTab}`}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="relative z-10 text-center"
+                >
+                  <span className="text-[10rem] md:text-[13rem] font-serif font-bold text-white leading-none block drop-shadow-2xl lining-nums">
+                    {weeks[activeTab].number}
+                  </span>
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="h-px w-8 bg-white/40" />
+                    <span className="text-white font-bold tracking-[0.6em] uppercase text-sm">
+                      Week
+                    </span>
+                    <div className="h-px w-8 bg-white/40" />
+                  </div>
+                </motion.div>
               </div>
-              <div className="w-full md:w-2/3 space-y-6">
-                <h3 className="text-4xl font-heading text-dark">
-                  {weeks[activeTab].title}
-                </h3>
-                <p className="text-[#9667E0] font-medium text-lg italic">
-                  {weeks[activeTab].description}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  {weeks[activeTab].topics.map((topic, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 text-muted text-sm"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#D4BBFC]" />{" "}
-                      {topic}
-                    </div>
-                  ))}
-                </div>
+
+              <div className="w-full lg:w-[58%] p-8 md:p-12 lg:p-14 flex flex-col justify-center bg-white relative">
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <h3 className="text-3xl md:text-4xl font-serif text-[#2D233C] mb-5 leading-tight">
+                    {weeks[activeTab].title}
+                  </h3>
+
+                  <p className="text-[#5A506E] text-lg md:text-xl font-light leading-relaxed mb-8 pl-6 border-l-4 border-[#D4BBFC]">
+                    {weeks[activeTab].description}
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {weeks[activeTab].topics.map((topic, i) => (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 + i * 0.1 }}
+                        key={i}
+                        className="flex items-center gap-4 p-4 rounded-2xl bg-[#F9F7FF] border border-[#9667E0]/10 hover:border-[#9667E0]/40 transition-colors group"
+                      >
+                        <div className="w-6 h-6 rounded-full bg-[#9667E0] flex items-center justify-center shrink-0">
+                          <div className="w-1.5 h-1.5 rounded-full bg-white group-hover:scale-150 transition-transform" />
+                        </div>
+                        <span className="text-[#2D233C] text-sm font-medium leading-tight">
+                          {topic}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -627,8 +729,25 @@ const Home = () => {
       {/* 5. BONUSES */}
       <section
         ref={bonusSectionRef}
-        className="py-24 bg-white relative overflow-hidden"
+        /* UPDATED: Added linear gradient background from your index.css tokens */
+        className="py-20 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,217,252,0.4) 100%)",
+        }}
       >
+        {/* --- BACKGROUND DECORATIVE GLOWS --- */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div
+            className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full opacity-20 blur-[120px]"
+            style={{ background: "rgb(var(--color-primary))" }}
+          />
+          <div
+            className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full opacity-20 blur-[120px]"
+            style={{ background: "rgb(var(--color-accent))" }}
+          />
+        </div>
+
         <canvas
           ref={confettiCanvasRef}
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -639,13 +758,12 @@ const Home = () => {
             <motion.div
               ref={bonusGiftRef}
               animate={isOpen ? { scale: 1.1 } : { scale: [1, 1.05, 1] }}
-              // transition={{ repeat: Infinity, duration: 2 }}
               className="inline-block mb-6"
             >
-              <Gift size={64} className="text-[#9667E0]/20" />
+              <Gift size={64} className="text-[rgb(var(--color-accent))]/20" />
             </motion.div>
             <h2 className="text-4xl md:text-5xl text-dark font-heading">
-              Exclusive <span className="text-[#9667E0]">Bonuses</span>
+              Exclusive <span className="text-accent">Bonuses</span>
             </h2>
           </div>
 
@@ -659,20 +777,23 @@ const Home = () => {
                 className="relative group h-full"
               >
                 {/* --- THE NEON GLOW CONTAINER --- */}
-                <div className="relative p-[2px] rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(150,103,224,0.4)]">
-                  {/* 1. THE ROTATING NEON BORDER (The 'Laser' effect) */}
-                  <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] opacity-100 group-hover:opacity-100 transition-opacity">
+                <div className="relative p-[2px] rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(150,103,224,0.15)]">
+                  {/* 1. STATIC LAVENDER BORDER (Matches index.css accent) */}
+                  <div className="absolute inset-0 border-2 border-[rgb(var(--color-accent))]/30 rounded-[2.5rem] z-0" />
+
+                  {/* 2. THE ROTATING NEON BORDER */}
+                  <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
                     <div
                       className="w-full h-full"
                       style={{
                         background:
-                          "conic-gradient(from 0deg, transparent 0deg, transparent 150deg, #9667E0 180deg, transparent 210deg, transparent 360deg)",
+                          "conic-gradient(from 0deg, transparent 0deg, transparent 150deg, rgb(var(--color-accent)) 180deg, transparent 210deg, transparent 360deg)",
                       }}
                     />
                   </div>
 
-                  {/* 2. THE CARD CONTENT (Inner Body) */}
-                  <div className="relative bg-white rounded-[2.4rem] p-8 h-full min-h-[300px] flex flex-col items-center justify-center z-10">
+                  {/* 3. THE CARD CONTENT (Inner Body) */}
+                  <div className="relative bg-white/90 backdrop-blur-sm rounded-[2.4rem] p-8 h-full min-h-[300px] flex flex-col items-center justify-center z-10 border border-white/50">
                     {/* Pulsing Icon with Glow */}
                     <motion.div
                       animate={{
@@ -701,23 +822,22 @@ const Home = () => {
                     </p>
                   </div>
 
-                  {/* 3. EXTERNAL NEON FUZZ (Visible Glow) */}
-                  <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[#9667E0]/20 blur-[1px]" />
+                  {/* 4. EXTERNAL NEON FUZZ */}
+                  <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[rgb(var(--color-accent))]/10 blur-[2px] pointer-events-none" />
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Custom CSS for the spin animation if not in your Tailwind config */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  `,
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    `,
           }}
         />
       </section>
