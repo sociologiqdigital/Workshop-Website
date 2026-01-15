@@ -240,194 +240,159 @@ const Home = () => {
       </section>
 
       {/* 2. PROGRAM OVERVIEW */}
-      <section className="relative py-12 sm:py-16 px-6 overflow-hidden bg-white">
-        {/* --- VIBRANT MESH BACKGROUND --- */}
+      <section className="relative py-14 px-6 overflow-hidden bg-white">
+        {/* Mesh Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          <div
-            className="absolute bottom-[20%] right-[-20%] w-[500px] h-[500px] rounded-full opacity-20 blur-[120px]"
-            style={{
-              background:
-                "radial-gradient(circle, #9667E0 0%, transparent 70%)",
-            }}
-          />
-          <div
-            className="absolute bottom-[-5%] right-[-5%] w-[600px] h-[600px] rounded-full opacity-30 blur-[100px]"
-            style={{
-              background:
-                "radial-gradient(circle, #D4BBFC 0%, transparent 70%)",
-            }}
-          />
+          <div className="absolute bottom-[5%] right-[-5%] w-[350px] h-[350px] rounded-full opacity-10 blur-[80px] bg-[#9667E0]" />
         </div>
 
         <div className="max-w-7xl mx-auto">
-          {/* SECTION HEADER */}
-          <div className="text-center mb-10 space-y-3">
-            <span className="text-[#9667E0] font-bold uppercase text-[10px] tracking-[0.25em]">
-              Everything you need to know before you register.
+          <div className="text-center mb-10">
+            <span className="text-[#9667E0] font-bold uppercase text-[9px] tracking-[0.3em] block mb-1">
+              Program Overview
             </span>
-            <h2 className="text-4xl md:text-6xl font-heading text-dark leading-tight">
+            <h2 className="text-3xl md:text-5xl font-heading text-dark">
               Workshop <span className="text-[#9667E0]">Details.</span>
             </h2>
           </div>
 
-          {/* 3D tilt + magnetic CTA + tap + steam gloss */}
-          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+          <div className="grid lg:grid-cols-3 gap-6 items-start">
             {programs.map((program, index) => {
-              const x = useMotionValue(0);
-              const y = useMotionValue(0);
+              const [isHovered, setIsHovered] = useState(false);
+              const mouseX = useMotionValue(0);
+              const mouseY = useMotionValue(0);
 
-              const rotateX = useTransform(y, [-50, 50], [8, -8]);
-              const rotateY = useTransform(x, [-50, 50], [-8, 8]);
+              const rotateX = useTransform(mouseY, [-100, 100], [5, -5]);
+              const rotateY = useTransform(mouseX, [-100, 100], [-5, 5]);
 
-              const handleCardMouseMove = (e) => {
+              const handleMouseMove = (e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-                x.set(e.clientX - rect.left - rect.width / 2);
-                y.set(e.clientY - rect.top - rect.height / 2);
-              };
-
-              const resetTilt = () => {
-                x.set(0);
-                y.set(0);
+                mouseX.set(e.clientX - rect.left - rect.width / 2);
+                mouseY.set(e.clientY - rect.top - rect.height / 2);
               };
 
               const isClosed = program.status === "closed";
 
               return (
-                <motion.div
+                <div
                   key={program.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="relative h-full"
+                  className="relative group flex flex-col items-center" // Centering container
+                  style={{ perspective: "1500px" }}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => {
+                    setIsHovered(false);
+                    mouseX.set(0);
+                    mouseY.set(0);
+                  }}
+                  onMouseMove={handleMouseMove}
                 >
+                  {/* 1. THE CARD */}
                   <motion.div
-                    className="group relative h-full"
-                    style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                    onMouseMove={handleCardMouseMove}
-                    onMouseLeave={resetTilt}
-                    whileTap={{ scale: 0.97 }}
+                    style={{
+                      rotateX: isHovered ? -10 : rotateX,
+                      rotateY,
+                      transformStyle: "preserve-3d",
+                    }}
+                    transition={{ type: "spring", stiffness: 120, damping: 20 }}
+                    className="relative z-20 w-full bg-white rounded-[1.8rem] p-6 border border-[#9667E0]/15 shadow-sm flex flex-col overflow-hidden"
                   >
-                    {/* OUTER GLOW */}
-                    <div
-                      className="relative h-full p-[2px] rounded-[2.5rem] overflow-hidden
-                                 transition-all duration-500
-                                 group-hover:shadow-[0_60px_120px_rgba(150,103,224,0.5)]"
-                    >
-                      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]">
-                        <div
-                          className="absolute -left-[120%] top-0 w-[120%] h-full
-                                     bg-gradient-to-r from-transparent via-white/30 to-transparent
-                                     skew-x-[-20deg]
-                                     group-hover:animate-[gloss_1.2s_ease-in-out]"
-                        />
-                      </div>
-
-                      {/* CARD */}
-                      <div
-                        className="relative bg-white rounded-[2.4rem] p-6 md:p-8 h-full flex flex-col z-10
-                                   border border-[#9667E0]/25
-                                   transition-all duration-500
-                                   group-hover:-translate-y-4
-                                   group-hover:border-[#9667E0]
-                                   group-hover:shadow-[0_40px_90px_rgba(150,103,224,0.6)]"
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-[8px] font-bold text-muted/30 uppercase tracking-widest">
+                        Module 0{index + 1}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border ${
+                          program.status === "active"
+                            ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
+                            : program.status === "soon"
+                            ? "bg-[#FFF5D6] text-[#D98C12] border-[#F5D48B]"
+                            : "bg-gray-50 text-gray-400 border-gray-200"
+                        }`}
                       >
-                        {/* HEADER */}
-                        <div className="flex justify-between items-center mb-5">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted/40">
-                            Workshop 0{index + 1}
-                          </span>
-
-                          <span
-                            className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase border ${
-                              program.status === "active"
-                                ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
-                                : program.status === "soon"
-                                ? "bg-amber-50 text-amber-600 border-amber-200"
-                                : "bg-gray-100 text-gray-400 border-gray-200"
-                            }`}
-                          >
-                            {program.statusLabel}
-                          </span>
-                        </div>
-
-                        {/* CONTENT */}
-                        <div className="mb-5 flex-grow">
-                          <h3 className="text-2xl font-bold text-dark mb-3 leading-snug lining-nums">
-                            {program.title}
-                          </h3>
-                          <p className="text-muted/70 text-sm leading-relaxed mb-5">
-                            {program.description}
-                          </p>
-
-                          <ul className="space-y-2.5">
-                            {program.points?.map((point, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-3 text-[13px] text-muted/80"
-                              >
-                                <Check
-                                  size={14}
-                                  className="text-[#9667E0] mt-0.5 shrink-0"
-                                />
-                                <span>{point}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* CTA SLOT (MAGNETIC) */}
-                        <div className="mt-auto pt-3">
-                          <div className="relative h-[56px]">
-                            <motion.button
-                              onClick={
-                                isClosed
-                                  ? undefined
-                                  : () => navigate(`/programs/${program.slug}`)
-                              }
-                              disabled={isClosed}
-                              className={
-                                isClosed
-                                  ? "absolute inset-0 w-full py-3.5 border border-gray-200 text-gray-400 font-bold rounded-2xl opacity-0 translate-y-6 pointer-events-none transition-all duration-300"
-                                  : `
-                                    absolute inset-0 w-full py-3.5 rounded-2xl font-bold text-white
-                                    flex items-center justify-center gap-2
-                                    bg-[#9667E0]
-                                    shadow-[0_22px_55px_rgba(150,103,224,0.55)]
-                                    opacity-0 translate-y-6 pointer-events-none
-                                    group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
-                                    transition-all duration-300 delay-150
-                                  `
-                              }
-                              whileHover={{ x: 4, y: -2 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              {program.status === "active"
-                                ? "Apply Now"
-                                : program.status === "soon"
-                                ? "Join Waitlist"
-                                : "Closed"}{" "}
-                              {isClosed ? null : <ArrowRight size={18} />}
-                            </motion.button>
-                          </div>
-                        </div>
-                      </div>
+                        {program.statusLabel}
+                      </span>
                     </div>
+
+                    <h3 className="text-xl font-bold text-dark mb-1.5">
+                      {program.title}
+                    </h3>
+                    <p className="text-muted/70 text-[11px] leading-relaxed mb-4 line-clamp-2">
+                      {program.description}
+                    </p>
+
+                    <ul className="space-y-1.5 mb-2">
+                      {program.points?.slice(0, 4).map((point, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-[11px] text-muted/80 leading-snug"
+                        >
+                          <Check
+                            size={11}
+                            className="text-[#9667E0] mt-0.5 shrink-0"
+                          />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="h-10 w-full" />
                   </motion.div>
-                </motion.div>
+
+                  {/* 2. THE CIRCULAR ORBITING CTA - Reduced Width */}
+                  {!isClosed && (
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        scale: 0.5,
+                        x: -40, // Less extreme horizontal start
+                        y: 60,
+                        z: -200,
+                        rotate: -15,
+                      }}
+                      animate={
+                        isHovered
+                          ? {
+                              opacity: 1,
+                              scale: 1,
+                              x: 0,
+                              y: 0,
+                              z: 180,
+                              rotate: 0,
+                            }
+                          : {
+                              opacity: 0,
+                              scale: 0.5,
+                              x: -40,
+                              y: 60,
+                              z: -200,
+                              rotate: -15,
+                            }
+                      }
+                      transition={{
+                        type: "spring",
+                        stiffness: 180,
+                        damping: 15,
+                      }}
+                      // Slightly narrower to keep the CTA fully inside the card.
+                      className="absolute bottom-6 left-0 right-0 z-30 w-[80%] max-w-[260px] mx-auto pointer-events-none group-hover:pointer-events-auto"
+                    >
+                      <button
+                        onClick={() => navigate(`/programs/${program.slug}`)}
+                        className="w-full py-3 bg-[#9667E0] text-white text-[12px] font-bold rounded-xl shadow-[0_15px_30px_rgba(150,103,224,0.35)] flex items-center justify-center gap-2 hover:bg-[#8554d1] transition-colors"
+                      >
+                        {program.status === "active"
+                          ? "Apply Now"
+                          : "Join Waitlist"}
+                        <ArrowRight size={14} />
+                      </button>
+                    </motion.div>
+                  )}
+                </div>
               );
             })}
           </div>
         </div>
-
-        <style>{`
-          @keyframes gloss {
-            from { left: -120%; }
-            to { left: 120%; }
-          }
-        `}</style>
       </section>
-
       {/* 3. WHO BENEFITS */}
       <section className="py-20 bg-[#F2EBFB] relative overflow-hidden">
         {/* Soft Lavender Background Glows */}
@@ -593,7 +558,7 @@ const Home = () => {
       </section>
 
       {/* 4. WHAT YOU'LL LEARN (TABBED) */}
-       <section className="relative py-20 md:py-24 overflow-hidden bg-white">
+      <section className="relative py-20 md:py-24 overflow-hidden bg-white">
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -659,12 +624,20 @@ const Home = () => {
               <div className="w-full lg:w-[42%] bg-[#9667E0] relative flex flex-col items-center justify-center p-12 md:p-14 overflow-hidden">
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                   className="absolute inset-0 m-auto w-[88%] max-w-[460px] aspect-square border-[1px] border-white/20 rounded-[4rem]"
                 />
                 <motion.div
                   animate={{ rotate: -360 }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                   className="absolute inset-0 m-auto w-[70%] max-w-[360px] aspect-square border-[2px] border-dashed border-white/10 rounded-full"
                 />
 
