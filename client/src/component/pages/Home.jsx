@@ -27,6 +27,8 @@ import {
   Video,
   Clock,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   Compass,
   Layers,
   TrendingUp,
@@ -93,10 +95,15 @@ export default function Home() {
     "CEO",
     "IPP",
   ];
-  const MotionLink = motion(Link);
   const typedWord = useTypewriter(words);
   const [active, setActive] = useState(0);
   const [hoveredId, setHoveredId] = useState(null);
+  const journeyScrollRef = useRef(null);
+  const journeyDragState = useRef({
+    isDown: false,
+    startX: 0,
+    scrollLeft: 0,
+  });
   const achievements = [
     {
       title: "Clarity Accelerator Live",
@@ -319,174 +326,252 @@ export default function Home() {
     );
   }
 
+  const handleJourneyPointerDown = (e) => {
+    if (!journeyScrollRef.current) return;
+    journeyDragState.current.isDown = true;
+    journeyDragState.current.startX = e.clientX;
+    journeyDragState.current.scrollLeft = journeyScrollRef.current.scrollLeft;
+    journeyScrollRef.current.setPointerCapture?.(e.pointerId);
+  };
+
+  const handleJourneyPointerMove = (e) => {
+    if (!journeyScrollRef.current || !journeyDragState.current.isDown) return;
+    const walk = e.clientX - journeyDragState.current.startX;
+    journeyScrollRef.current.scrollLeft =
+      journeyDragState.current.scrollLeft - walk;
+  };
+
+  const handleJourneyPointerUp = (e) => {
+    journeyDragState.current.isDown = false;
+    journeyScrollRef.current?.releasePointerCapture?.(e.pointerId);
+  };
+
+  const scrollJourney = (direction) => {
+    if (!journeyScrollRef.current) return;
+    journeyScrollRef.current.scrollBy({
+      left: direction * 260,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background pt-[80px] pb-16 sm:pt-[96px] sm:pb-16 md:pt-[120px] md:pb-20 grid-bg">
-        {/* Soft editorial background accents */}
+      <section className="relative overflow-hidden bg-background home-hero grid-bg pt-10 pb-8 md:pt-16 md:pb-12">
+        {/* Background Accents */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl " />
-        <div className="pointer-events-none absolute top-40 right-[-160px] hidden md:block w-[320px] h-[320px] bg-primary/8 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start md:items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* LEFT CONTENT */}
             <motion.div
-              className="
-          relative
-          max-w-[560px]
-          mx-0
-          text-left
-        "
+              className="relative max-w-[520px] text-left"
               initial="hidden"
               animate="visible"
               variants={{
                 hidden: {},
-                visible: { transition: { staggerChildren: 0.12 } },
+                visible: { transition: { staggerChildren: 0.1 } },
               }}
             >
-              {/* Greeting */}
+              {/* Greeting - Tight gap */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 5 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className="text-[13px] sm:text-[14px] md:text-[15px] text-muted mb-0.5 uppercase tracking-widest font-medium"
+              >
+                Hello, I'm
+              </motion.div>
+
+              {/* Name - Leading tight to remove extra space below */}
+              <motion.h1
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className="font-heading text-[36px] sm:text-[48px] md:text-[62px] text-dark leading-[1.1] mb-2"
+              >
+                Ruchi <span className="text-primary">Dorlikar</span>
+              </motion.h1>
+
+              {/* Single Line Title Section */}
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex flex-col items-start gap-1 text-[13px] sm:text-[14px] md:text-[15px] text-muted mb-2"
+                className="flex items-center gap-3 mb-6"
               >
-                <div className="flex items-center gap-2">
-                  <span className="hello-brand">Hello, I'am</span>
-                </div>
-              </motion.div>
-              <motion.h1
-                variants={{
-                  hidden: { opacity: 0, y: 14 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="font-heading text-[26px] sm:text-[32px] md:text-[52px] text-dark leading-[1.08] mb-1"
-              >
-                <span>
-                  Ruchi <span className="text-primary">Dorlikar</span>
-                </span>
-              </motion.h1>
-
-              {/* And I am + typewriter */}
-              <motion.h1
-                variants={{
-                  hidden: { opacity: 0, y: 12 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="flex flex-wrap items-baseline gap-2 text-[14px] sm:text-[16px] md:text-[18px] text-muted mb-4"
-              >
-                <span>And I am</span>
-                <span className="text-primary text-[22px] sm:text-[28px] md:text-[36px] font-medium tracking-wide whitespace-nowrap">
+                {/* <span className="text-[14px] sm:text-[16px] md:text-[18px] text-muted whitespace-nowrap font-medium">
+                  And I am
+                </span> */}
+                <span className="text-primary text-[20px] sm:text-[26px] md:text-[32px] font-bold tracking-tight leading-none">
                   <span className="relative">
                     {typedWord}
-                    <span className="inline-block ml-[2px] type-cursor"></span>
+                    <span className="inline-block ml-1 w-[2px] h-[24px] md:h-[32px] bg-primary animate-pulse align-middle"></span>
                   </span>
                 </span>
-              </motion.h1>
+              </motion.div>
 
               {/* Description */}
               <motion.p
                 variants={{
-                  hidden: { opacity: 0, y: 14 },
+                  hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="
-            text-[16px] sm:text-[17px] md:text-[18px]
-            text-muted
-            leading-[1.75]
-            mb-7
-            max-w-[520px]
-            mx-0
-          "
+                className="text-[16px] sm:text-[17px] md:text-[18px] text-muted leading-relaxed mb-8 max-w-[520px]"
               >
                 Creating digital paths with clarity,{" "}
-                <span className="text-dark font-medium">
+                <span className="text-dark font-semibold">
                   confidence, and conscious growth
                 </span>{" "}
                 for modern brands and leaders.
                 <Link
                   to="/about"
-                  className="
-                    inline-flex items-center text-[12px] md:text-[13px]
-                    font-medium text-primary ml-2 underline underline-offset-4
-                  "
+                  className="inline-flex items-center text-[13px] font-bold text-primary ml-2 underline underline-offset-4 hover:text-dark transition-colors"
                 >
-                  Know your Coach
+                  Know More
                   <ArrowRight className="ml-1 w-3 h-3" />
                 </Link>
               </motion.p>
-              {/* Editorial divider */}
+
               <motion.div
                 variants={{
                   hidden: { opacity: 0, width: 0 },
-                  visible: { opacity: 1, width: "56px" },
+                  visible: { opacity: 1, width: "60px" },
                 }}
-                className="h-[2px] bg-primary/60 mb-7 mx-auto md:mx-0"
+                className="h-[3px] bg-primary mb-8"
               />
             </motion.div>
-            {/* RIGHT IMAGE */}
+
+            {/* RIGHT IMAGE  */}
             <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative hidden md:flex justify-center lg:justify-end items-center"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative hidden md:flex justify-end items-center"
             >
-              {/* image */}
-              <ImageWithFallback
-                src={HeroImg}
-                alt="Ruchi Dorlikar"
-                className="relative z-10 w-[420px] h-[540px] lg:w-[460px] lg:h-[580px] object-cover rounded-[36px]"
-              />
-
-              {/* floating badge - top left */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.4 }}
-                className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
-              >
-                <Compass className="w-4 h-4 text-primary" />
-                <span className="text-xs font-semibold text-dark tracking-wide">
-                  Clarity Coach
-                </span>
-              </motion.div>
-
-              {/* floating badge - bottom left */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.4 }}
-                className="absolute bottom-8 left-6 z-20 flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md"
-              >
-                <TrendingUp className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium text-dark">
-                  80+ workshops
-                </span>
-              </motion.div>
-
-              {/* floating badge - bottom right */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.4 }}
-                className="absolute bottom-6 right-4 z-20 flex items-center gap-3 bg-white px-4 py-3 rounded-2xl shadow-md"
-              >
-                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <Layers size={16} />
+              <div className="relative">
+                {/* Main Image Container */}
+                {/* <div className="relative z-10 w-[380px] h-[500px] lg:w-[420px] lg:h-[560px] rounded-[48px] overflow-hidden border-[12px] border-white shadow-soft"> */}
+                <div className="relative z-10 w-[360px] h-[480px] lg:w-[420px] lg:h-[540px] rounded-[40px] overflow-hidden">
+                  <ImageWithFallback
+                    src={HeroImg}
+                    alt="Ruchi Dorlikar"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="leading-tight">
-                  <p className="text-sm font-semibold text-dark">217+ builds</p>
-                  <p className="text-[11px] text-muted">Digital systems</p>
-                </div>
-              </motion.div>
+                {/* </div> */}
+
+                {/* Badge 1: Top Left - Professional Label */}
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-white px-4 py-2.5 rounded-full shadow-md border border-primary/5"
+                >
+                  <Compass className="w-4 h-4 text-primary" />
+                  <span className="text-[11px] font-bold text-dark uppercase tracking-wider">
+                    Clarity Coach
+                  </span>
+                </motion.div>
+
+                {/* Badge 2: Mid Right  */}
+                <motion.div
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                  className="absolute top-1/4 right-6 z-20 bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-primary/10 flex flex-col items-center"
+                >
+                  <div className="flex -space-x-2 mb-1">
+                    <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-bold border-2 border-white">
+                      G
+                    </div>
+                    <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-[8px] text-white font-bold border-2 border-white">
+                      A
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-bold text-dark tracking-tighter">
+                    Google Certified
+                  </span>
+                </motion.div>
+
+                {/* Badge 3: Bottom Left - JCI President 2025 (Important Milestone from PDF) */}
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.9 }}
+                  className="absolute bottom-6 left-6 z-20 bg-white text-dark px-5 py-3 rounded-2xl shadow-md border border-primary/5 flex flex-col items-start"
+                >
+                  <span className="text-[18px] font-heading font-bold text-primary leading-none">
+                    2025
+                  </span>
+                  <span className="text-[9px] uppercase tracking-widest font-medium opacity-80">
+                    LO President
+                  </span>
+                </motion.div>
+
+                {/* Badge 4: Bottom Right - Project Stats */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 1.1 }}
+                  className="absolute bottom-6 right-6 z-20 flex items-center gap-3 bg-white px-5 py-4 rounded-3xl shadow-md border border-primary/5"
+                >
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <Layers size={18} />
+                  </div>
+                  <div className="leading-tight">
+                    <p className="text-sm font-bold text-dark tracking-tight">
+                      217+ Builds
+                    </p>
+                    <p className="text-[10px] text-muted font-medium uppercase tracking-tighter">
+                      Digital Systems
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
-      
+
+      {/* Refined Stats Section */}
+      <section className="relative bg-background home-section overflow-hidden">
+        {/* soft ambient wash */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" />
+
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-14 md:gap-y-0">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className="relative flex flex-col items-center text-center px-6"
+              >
+                {/* vertical separator */}
+                {index !== 0 && (
+                  <span className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 h-10 w-px bg-primary/25" />
+                )}
+
+                {/* number container */}
+                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center">
+                  <AnimatedCounter value={stat.value} />
+                  <span className="text-primary ml-1 lining-nums">+</span>
+                </div>
+
+                {/* label */}
+                <p className="mt-2 text-[16px] font-bold md:text-[14px] italic text-muted-foreground max-w-[160px]">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Current Situation */}
-      <section className="relative py-20 lg:py-32 overflow-hidden bg-[#FAFAF8]">
+      <section className="relative overflow-hidden bg-[#FAFAF8] home-section">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           {/* Container with a defined height to anchor absolute children */}
           <div className="relative flex flex-col lg:block min-h-[500px]">
@@ -613,157 +698,141 @@ export default function Home() {
       </section>
 
       {/* Journey section */}
-      <section className="py-24 md:py-28 px-6 lg:px-20 max-w-[1440px] mx-auto overflow-hidden grid-bg">
-        {/* HEADER */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-24"
-        >
-          <div className="text-[#C9A24D] tracking-[0.3em] uppercase mb-4 font-inter">
-            My Journey
-          </div>
-
-          <h2 className="font-playfair text-[#2A2A2A] text-4xl md:text-[3.5rem] font-semibold mb-6">
-            From Vision to <span className="text-[#7B1E3A]">Reality</span>
-          </h2>
-
-          <p className="text-[#6B6B6B] text-lg max-w-2xl mx-auto font-inter">
-            A decade of transformation, growth, and impact—one milestone at a
-            time.
-          </p>
-        </motion.div>
-
-        {/* TIMELINE */}
-        <div className="relative">
-          {/* WAVY CONNECTING LINE */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
-            viewBox="0 0 1400 1200"
-            preserveAspectRatio="none"
+      <section className="relative bg-background pt-12 pb-12 overflow-hidden grid-bg">
+        <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="border-l-4 border-primary pl-6 "
           >
-            <motion.path
-              d="
-          M 200 150
-          C 450 220, 550 100, 750 180
-          S 1050 260, 1200 160
-          S 900 420, 700 380
-          S 350 520, 200 460
-          S 500 760, 900 720
-          S 1200 900, 1100 1050
-        "
-              stroke="#C9A24D"
-              strokeWidth="2"
-              strokeDasharray="6 10"
-              fill="none"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.35 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2.2, ease: "easeInOut" }}
-            />
-          </svg>
+            <span className="text-primary tracking-widest uppercase text-[10px] font-bold bg-primary/5 px-2 py-1">
+              Timeline
+            </span>
+            <h2 className="font-heading text-3xl md:text-4xl text-dark mt-2 text-center">
+              My Story <span className="text-primary italic">In Frames</span>
+            </h2>
+          </motion.div>
+        </div>
 
-          {/* MILESTONES */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-28 md:gap-y-40 relative z-10">
-            {milestones.map((milestone, index) => {
-              const isLeft = index % 2 === 0;
+        {/* Scrollable Container */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => scrollJourney(-1)}
+            aria-label="Scroll journey left"
+            className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-white/80 text-primary shadow-sm backdrop-blur hover:bg-primary hover:text-white transition"
+          >
+            <ChevronLeft size={14} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollJourney(1)}
+            aria-label="Scroll journey right"
+            className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-white/80 text-primary shadow-sm backdrop-blur hover:bg-primary hover:text-white transition"
+          >
+            <ChevronRight size={14} />
+          </button>
 
-              return (
+          <div
+            ref={journeyScrollRef}
+            onPointerDown={handleJourneyPointerDown}
+            onPointerMove={handleJourneyPointerMove}
+            onPointerUp={handleJourneyPointerUp}
+            onPointerLeave={handleJourneyPointerUp}
+            className="relative overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing"
+          >
+            {/* Visual Wire */}
+            <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
+
+            {/* Flex Wrapper - Added px-[5%] to prevent the first image from sticking to the left edge */}
+            <div className="flex flex-nowrap gap-10 px-8 md:px-[10%] min-w-max pt-6">
+              {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className={`flex flex-col items-start ${
-                    isLeft ? "md:items-end md:pr-24" : "md:items-start md:pl-24"
-                  }`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative group"
                 >
-                  {/* POLAROID */}
+                  {/* THE CLIP */}
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-30 w-3 h-10 bg-gradient-to-b from-[#e5e7eb] to-[#9ca3af] rounded-sm shadow-sm border-x border-white/30">
+                    <div className="w-full h-[1px] bg-black/5 mt-2" />
+                  </div>
+
+                  {/* POLAROID CARD */}
                   <motion.div
                     whileHover={{
-                      rotate: [0, 5, 0],
-                      y: [0, -20, 0],
+                      rotate: 0,
+                      scale: 1.03,
+                      y: 3,
                     }}
-                    className="bg-white p-4 pb-8 shadow-[0_30px_60px_rgba(0,0,0,0.18)] mb-8 cursor-pointer"
+                    transition={{ type: "spring", stiffness: 110, damping: 22 }}
+                    className="relative bg-white p-3 pb-8 shadow-soft border border-black/5 origin-top transition-transform duration-500 cursor-help will-change-transform"
                     style={{
-                      transform: `rotate(${milestone.rotate}deg)`,
-                      width: 320,
+                      width: "220px",
+                      rotate: milestone.rotate || (index % 2 === 0 ? -3 : 3),
                     }}
                   >
-                    <div className="overflow-hidden mb-4 ">
+                    {/* The Image */}
+                    <div className="bg-muted/5 aspect-[4/5] overflow-hidden mb-3">
                       <ImageWithFallback
                         src={milestone.image}
                         alt={milestone.title}
-                        className="w-full h-64 object-cover"
+                        className="w-full h-full object-cover  transition-all duration-700"
                       />
                     </div>
 
-                    <div className="text-center font-playfair text-dark">
+                    {/* The Year */}
+                    <div className="text-center font-heading text-xl text-dark group-hover:text-primary transition-colors lining-nums">
                       {milestone.year}
                     </div>
+
+                    {/* HOVER OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#4A1020]/95 via-[#7B1E3A]/70 to-[#B8899B]/10 p-5 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <h4 className="text-white font-heading text-base mb-1 border-b border-white/20 pb-2 w-full">
+                        {milestone.title}
+                      </h4>
+                      <p className="text-white/90 text-[10px] leading-relaxed font-body mt-2">
+                        {milestone.description}
+                      </p>
+                    </div>
                   </motion.div>
-
-                  {/* TEXT */}
-                  <div
-                    className={`max-w-md text-left ${
-                      isLeft ? "md:text-right" : "md:text-left"
-                    }`}
-                  >
-                    <h3
-                      className={`text-primary text-3xl font-semibold mb-3 text-center ${
-                        isLeft ? "md:text-right" : "md:text-left"
-                      }`}
-                    >
-                      {milestone.title}
-                    </h3>
-
-                    <p
-                      className={`text-muted leading-relaxed text-center ${
-                        isLeft ? "md:text-right" : "md:text-left"
-                      }`}
-                    >
-                      {milestone.description}
-                    </p>
-                  </div>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Centered Scroll Indicator instead of a bar */}
+        <div className="flex justify-center items-center gap-2 text-muted/40 text-[9px] uppercase tracking-[0.3em] mt-4">
+          {/* <div className="w-12 h-[1px] bg-muted/20"></div> */}
+          {/* <span className="font-semibold">DRAG OR SCROOL TO NAVIGATE</span> */}
+          {/* <div className="w-12 h-[1px] bg-muted/20"></div> */}
         </div>
       </section>
 
       {/* Gallery section */}
-      <section className="py-20 sm:py-24 md:py-28 px-6 sm:px-10 lg:px-20 max-w-[1440px] mx-auto bg-[#FAFAF8]">
+      <section className="home-section px-6 sm:px-10 lg:px-20 max-w-[1440px] mx-auto bg-[#FAFAF8]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
-          <div
-            className="text-[#C9A24D] tracking-[0.3em] uppercase mb-4"
-            // style={{ fontFamily: "'Inter', sans-serif" }}
-          >
+          <div className="text-[#C9A24D] tracking-[0.3em] uppercase mb-4">
             Events & Moments
           </div>
-          <h2
-            className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 600,
-            }}
-          >
+          <h2 className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]">
             Captured <span className="text-[#7B1E3A]">Experiences</span>
           </h2>
         </motion.div>
 
         {/* Staggered masonry-style grid */}
         <div className="relative">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {galleryItems.map((item, index) => {
               const baseTilt = item.rotate || 0;
               const hoverTilt = baseTilt + (baseTilt >= 0 ? 3 : -3);
@@ -775,8 +844,8 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  className={`${index === 1 || index === 4 ? "mt-12" : ""} ${
-                    index === 2 || index === 5 ? "mt-24" : ""
+                  className={`${index === 1 || index === 4 ? "mt-6" : ""} ${
+                    index === 2 || index === 5 ? "mt-12" : ""
                   }`}
                 >
                   <motion.div
@@ -823,28 +892,14 @@ export default function Home() {
                           }}
                           transition={{ duration: 0.3, delay: 0.1 }}
                         >
-                          <h3
-                            className="text-white mb-2"
-                            style={{
-                              fontFamily: "'Playfair Display', serif",
-                              fontSize: "1.5rem",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {item.title}
-                          </h3>
-                          <p
-                            className="text-white/90"
-                            // style={{ fontFamily: "'Inter', sans-serif" }}
-                          >
-                            {item.location}
-                          </p>
+                          <h3 className="text-white mb-2">{item.title}</h3>
+                          <p className="text-white/90">{item.location}</p>
                         </motion.div>
                       </motion.div>
                     </div>
 
                     {/* Subtle paper texture effect */}
-                    <div
+                    {/* <div
                       className="absolute inset-0 pointer-events-none"
                       style={{
                         boxShadow:
@@ -853,7 +908,7 @@ export default function Home() {
                             : "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
                         transition: "box-shadow 0.4s ease",
                       }}
-                    />
+                    /> */}
                   </motion.div>
                 </motion.div>
               );
@@ -867,44 +922,36 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-16"
-        >
-          {/* <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            className="text-[#7B1E3A] border-2 border-[#7B1E3A] px-8 py-4 rounded-full transition-all duration-300 hover:bg-[#7B1E3A] hover:text-white"
-            // style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            View All Events
-          </motion.button> */}
-        </motion.div>
+          className="text-center mt-10"
+        ></motion.div>
       </section>
+
       {/* Great Achievements */}
-      <section className="relative bg-background py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-background home-section overflow-hidden">
         {/* ambient flow accents */}
-        <div className="pointer-events-none absolute top-20 -left-20 w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 right-[-120px] w-[520px] h-[520px] rounded-full bg-primary/5 blur-3xl" />
+        <div className="pointer-events-none absolute top-20 left-0 w-[420px] h-[420px] rounded-full bg-primary/10 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 right-0 w-[520px] h-[520px] rounded-full bg-primary/5 blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Header */}
-          <div className="max-w-2xl mx-auto text-center mb-24">
-            <p className="text-xs uppercase tracking-[0.4em] text-[#C9A24D] mb-5">
+          <div className="max-w-2xl mx-auto mb-14 text-center">
+            <p className="text-xs text-center uppercase tracking-[0.4em] text-[#C9A24D] mb-5">
               Great Achievements
             </p>
-            <h2 className="font-heading text-4xl md:text-5xl text-dark leading-tight">
+            <h2 className="font-heading text-4xl text-center md:text-5xl text-dark leading-tight">
               Wins that fuel the journey forward
             </h2>
           </div>
 
           {/* FLOW WRAPPER */}
-          <div className="grid grid-cols-1 gap-12 items-center lg:[grid-template-columns:1.15fr_0.85fr]">
+          <div className="grid grid-cols-1 gap-10 items-start lg:[grid-template-columns:1.15fr_0.85fr]">
             {/* Feature visual */}
             <motion.div
               key={active}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative overflow-hidden rounded-[28px] border border-primary/10 shadow-[0_30px_90px_rgba(0,0,0,0.08)] min-h-[320px] bg-gradient-to-br from-primary/8 via-transparent to-primary/5"
+              className="relative overflow-hidden rounded-[28px] border border-primary/10 shadow-[0_30px_90px_rgba(0,0,0,0.08)] h-[320px] sm:h-[380px] lg:h-[420px] bg-gradient-to-br from-primary/8 via-transparent to-primary/5"
             >
               <img
                 src={achievements[active].image}
@@ -923,7 +970,7 @@ export default function Home() {
             </motion.div>
 
             {/* Details + selectors */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6">
               <motion.div
                 key={`text-${active}`}
                 initial={{ opacity: 0, y: 18 }}
@@ -984,41 +1031,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Refined Stats Section */}
-      <section className="relative bg-background pt-12 md:pt-16 pb-16 md:pb-20 overflow-hidden">
-        {/* soft ambient wash */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" />
-
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-14 md:gap-y-0">
-            {stats.map((stat, index) => (
-              <div
-                key={stat.label}
-                className="relative flex flex-col items-center text-center px-6"
-              >
-                {/* vertical separator */}
-                {index !== 0 && (
-                  <span className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 h-10 w-px bg-primary/25" />
-                )}
-
-                {/* number container */}
-                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center">
-                  <AnimatedCounter value={stat.value} />
-                  <span className="text-primary ml-1">+</span>
-                </div>
-
-                {/* label */}
-                <p className="mt-2 text-[13px] md:text-[14px] italic text-muted-foreground max-w-[160px]">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Blog Section */}
-      <section className="bg-background py-8 px-4 grid-bg">
+      <section className="bg-background home-section px-4 grid-bg">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
             {/* LEFT — FEATURED BLOG */}
@@ -1051,23 +1065,24 @@ export default function Home() {
             {/* RIGHT — SUPPORTING THOUGHTS */}
             <div className="space-y-12">
               {secondaryBlogs.map((blog, index) => (
-                <MotionLink
+                <motion.div
                   key={blog.slug}
-                  to={`/blog/${blog.slug}`}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group block max-w-md"
+                  className="max-w-md"
                 >
-                  <p className="text-xs uppercase tracking-wide  mb-2 text-[#C9A24D]">
-                    {blog.category}
-                  </p>
+                  <Link to={`/blog/${blog.slug}`} className="group block">
+                    <p className="text-xs uppercase tracking-wide mb-2 text-[#C9A24D]">
+                      {blog.category}
+                    </p>
 
-                  <h3 className="font-heading text-xl md:text-2xl text-dark leading-snug group-hover:text-primary transition-colors">
-                    {blog.title}
-                  </h3>
-                </MotionLink>
+                    <h3 className="font-heading text-xl md:text-2xl text-dark leading-snug group-hover:text-primary transition-colors">
+                      {blog.title}
+                    </h3>
+                  </Link>
+                </motion.div>
               ))}
 
               <Link
@@ -1084,37 +1099,99 @@ export default function Home() {
       {/* Let's work together section */}
       <section className="relative bg-background py-16 md:py-24 overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6">
-          <div className="cta-panel">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="cta-panel overflow-hidden group"
+          >
+            {/* ANIMATED RINGS */}
             <div className="cta-rings" aria-hidden="true">
-              <span className="cta-ring cta-ring-1" />
-              <span className="cta-ring cta-ring-2" />
-              <span className="cta-ring cta-ring-3" />
-              <span className="cta-ring cta-ring-4" />
+              {[1, 2, 3, 4].map((num) => (
+                <motion.span
+                  key={num}
+                  className={`cta-ring cta-ring-${num}`}
+                  animate={{
+                    rotate: num % 2 === 0 ? 360 : -360,
+                    scale: [1.5, 1.05, 1.5],
+                  }}
+                  transition={{
+                    rotate: {
+                      duration: 20 + num * 5, // Each ring moves at a different speed
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                    scale: {
+                      duration: 4 + num,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  }}
+                />
+              ))}
             </div>
 
-            <div className="cta-content">
-              <p className="cta-eyebrow">A gentle next step</p>
+            {/* CONTENT WITH STAGGERED ENTRANCE */}
+            <div className="cta-content relative z-10">
+              <motion.p
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="cta-eyebrow"
+              >
+                A gentle next step
+              </motion.p>
 
-              <h2 className="cta-title">Let's Work together.</h2>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="cta-title"
+              >
+                Let's Work together.
+              </motion.h2>
 
-              <p className="cta-sub">
-                Join women who are building clarity, confidence, and sustainable
-                businesses without burnout or noise.
-              </p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="cta-sub"
+              >
+                Join a community of entrepreneurs building clarity, confidence,
+                and sustainable businesses without burnout or noise.
+              </motion.p>
 
-              <div className="cta-actions">
-                <Link to="/register" className="cta-pill cta-pill-primary">
-                  Register Now
-                  <ArrowRight className="cta-pill-icon" />
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="cta-actions"
+              >
+                <Link to="/register">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="cta-pill cta-pill-primary flex items-center gap-2"
+                  >
+                    Register Now
+                    <ArrowRight className="cta-pill-icon" />
+                  </motion.div>
                 </Link>
 
-                <Link to="/contact" className="cta-pill cta-pill-secondary">
-                  Contact Us
-                  <ArrowRight className="cta-pill-icon" />
+                <Link to="/contact">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="cta-pill cta-pill-secondary flex items-center gap-2"
+                  >
+                    Contact Us
+                    <ArrowRight className="cta-pill-icon" />
+                  </motion.div>
                 </Link>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </>

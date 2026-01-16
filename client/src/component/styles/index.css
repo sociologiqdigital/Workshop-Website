@@ -99,6 +99,14 @@
     @apply py-24 px-6;
   }
 
+  .home-section {
+    @apply py-12 md:py-16;
+  }
+
+  .home-hero {
+    @apply pt-16 pb-12 sm:pt-20 sm:pb-12 md:pt-24 md:pb-16;
+  }
+
   .section-title {
     @apply font-heading text-4xl md:text-5xl text-dark mb-4;
   }
@@ -148,6 +156,36 @@
   }
   to {
     background-position: 200% 50%;
+  }
+}
+
+@layer components {
+  .cta-wave {
+    position: absolute;
+    inset: -20% -10%;
+    background:
+      radial-gradient(120% 60% at 50% 120%, rgba(var(--color-primary), 0.85) 0 55%, transparent 56%),
+      radial-gradient(120% 60% at 50% 120%, rgba(var(--color-primary), 0.65) 0 45%, transparent 46%);
+    transform: translateY(110%);
+    filter: blur(6px);
+    transition: transform 700ms ease, opacity 300ms ease;
+  }
+
+  .group:hover .cta-wave {
+    transform: translateY(0%);
+    animation: waveFloat 2.2s ease-in-out infinite;
+  }
+}
+
+@keyframes waveFloat {
+  0% {
+    transform: translateY(0%) translateX(0%) scale(1);
+  }
+  50% {
+    transform: translateY(-6%) translateX(3%) scale(1.03);
+  }
+  100% {
+    transform: translateY(0%) translateX(0%) scale(1);
   }
 }
 /* ===============================
@@ -614,4 +652,86 @@
   .cta-panel::after {
     animation: none;
   }
+}
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+/* Wave Morphing Animations */
+
+@keyframes pathAnim-0 {
+  0%, 100% { d: path("M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"); }
+  25% { d: path("M 0,600 L 0,112 C 61.7,131.3 123.4,150.6 211,152 C 298.5,153.3 411.7,136.8 510,135 C 608.2,133.1 691.3,146 760,157 C 828.6,167.9 882.8,176.9 950,163 C 1017.1,149 1097.1,112.3 1181,100 C 1264.8,87.6 1352.4,99.8 1440,112 L 1440,600 L 0,600 Z"); }
+  50% { d: path("M 0,600 L 0,112 C 87.5,104.8 175.1,97.7 248,86 C 320.8,74.2 378.9,57.9 445,77 C 511,96 584.9,150.5 675,147 C 765,143.4 871.2,81.6 954,63 C 1036.7,44.3 1095.9,68.6 1173,84 C 1250,99.3 1345,105.6 1440,112 L 1440,600 L 0,600 Z"); }
+  75% { d: path("M 0,600 L 0,112 C 87.5,111.8 175,111.7 252,123 C 328.9,134.2 395.3,157 472,154 C 548.6,150.9 635.6,122.2 713,97 C 790.3,71.7 858,49.9 934,57 C 1009.9,64 1094.2,100 1180,114 C 1265.7,127.9 1352.8,119.9 1440,112 L 1440,600 L 0,600 Z"); }
+}
+
+@keyframes pathAnim-1 {
+  0%, 100% { d: path("M 0,600 L 0,262 C 90.5,238.9 181.1,215.8 252,216 C 322.8,216.1 373.9,239.6 444,246 C 514,252.3 603,241.5 695,232 C 787,222.4 882,214.2 969,215 C 1055.9,215.7 1134.8,225.6 1212,235 C 1289,244.3 1364.5,253.1 1440,262 L 1440,600 L 0,600 Z"); }
+  50% { d: path("M 0,600 L 0,262 C 61.5,283.1 123.1,304.2 207,294 C 290.8,283.7 397,242 496,250 C 594.9,257.9 686.8,315.6 758,313 C 829.1,310.4 879.7,247.5 940,242 C 1000.2,236.4 1070,288.1 1155,301 C 1239.9,313.8 1339.9,287.9 1440,262 L 1440,600 L 0,600 Z"); }
+}
+
+@keyframes pathAnim-2 {
+  0%, 100% { d: path("M 0,600 L 0,412 C 80.7,385 161.4,358 249,372 C 336.5,385.9 430.9,440.9 521,452 C 611,463 696.8,430 757,411 C 817.2,391.9 851.8,386.7 933,386 C 1014.1,385.2 1141.7,388.9 1234,394 C 1326.2,399.0 1383.1,405.5 1440,412 L 1440,600 L 0,600 Z"); }
+  50% { d: path("M 0,600 L 0,412 C 97.8,396.9 195.6,381.9 281,372 C 366.3,362 439.2,357.1 512,362 C 584.7,366.8 657.2,381.6 724,386 C 790.8,390.4 851.9,384.4 939,376 C 1026,367.5 1139.1,356.4 1227,362 C 1314.8,367.5 1377.4,389.7 1440,412 L 1440,600 L 0,600 Z"); }
+}
+
+/* Helper classes to apply these animations */
+.animate-wave-0 { animation: pathAnim-0 4s linear infinite; }
+.animate-wave-1 { animation: pathAnim-1 4s linear infinite; }
+.animate-wave-2 { animation: pathAnim-2 4s linear infinite; }
+
+/* --- Vision Portal Ripple Animation --- */
+@keyframes ripple-out {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.animate-ripple {
+  animation: ripple-out 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* --- Water Wave Button (Path Morphing) --- */
+@keyframes wave-morph {
+  0%, 100% { d: path("M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"); }
+  50% { d: path("M 0,600 L 0,112 C 87.5,104.8 175.1,97.7 248,86 C 320.8,74.2 378.9,57.9 445,77 C 511,96 584.9,150.5 675,147 C 765,143.4 871.2,81.6 954,63 C 1036.7,44.3 1095.9,68.6 1173,84 C 1250,99.3 1345,105.6 1440,112 L 1440,600 L 0,600 Z"); }
+}
+
+.animate-wave-path { animation: wave-morph 3s ease-in-out infinite; }
+
+.wave-button {
+  background-color: #fff;
+  transition: background-color 500ms ease 600ms, border-color 300ms ease;
+}
+
+.wave-button:hover {
+  background-color: rgb(var(--color-primary));
+}
+
+.wave-fill {
+  transform: translate3d(0, 100%, 0);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.wave-button:hover .wave-fill {
+  transform: translate3d(0, 0%, 0);
+}
+
+.wave-text,
+.wave-icon {
+  transition: color 400ms ease 600ms;
+}
+
+.wave-fill,
+.animate-wave-path {
+  backface-visibility: hidden;
 }

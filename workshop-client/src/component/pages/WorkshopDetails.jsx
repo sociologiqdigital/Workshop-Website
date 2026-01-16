@@ -60,7 +60,7 @@ export default function WorkshopDetails() {
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-3xl md:text-4xl lg:text-5xl font-heading text-dark leading-tight"
+                className="text-3xl md:text-4xl lg:text-5xl font-heading text-dark leading-tight lining-nums"
               >
                 {program.title}
               </motion.h1>
@@ -123,10 +123,9 @@ export default function WorkshopDetails() {
               </div>
             </div>
 
-            {/* KEEPING UI SAME: WHAT YOU'LL MASTER */}
             <div>
               <h2 className="text-2xl font-heading text-dark mb-6 text-center sm:text-left">
-                What You'll Master
+                What You'll Learn
               </h2>
               <div className="grid gap-4">
                 {program.points.map((point, index) => (
@@ -157,10 +156,10 @@ export default function WorkshopDetails() {
                     Limited Offer
                   </div>
                   <div className="flex items-baseline gap-3">
-                    <span className="text-4xl md:text-5xl font-heading text-dark">
+                    <span className="text-4xl md:text-5xl font-heading text-dark lining-nums">
                       ₹4,999
                     </span>
-                    <span className="text-muted line-through text-lg">
+                    <span className="text-muted line-through text-lg lining-nums">
                       ₹7,499
                     </span>
                   </div>
@@ -168,7 +167,11 @@ export default function WorkshopDetails() {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-dark/70 text-base">
-                    <ShieldCheck size={20} className="text-green-500" />
+                    <ShieldCheck
+                      size={20}
+                      className="text-green-500"
+                      lining-nums
+                    />
                     7-Day Money Back Guarantee
                   </div>
                   <div className="flex items-center gap-3 text-dark/70 text-base">
