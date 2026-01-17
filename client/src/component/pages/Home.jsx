@@ -790,7 +790,7 @@ export default function Home() {
                     </div>
 
                     {/* HOVER OVERLAY */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#4A1020]/95 via-[#7B1E3A]/70 to-[#B8899B]/10 p-5 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#4A1020]/95 via-[#7B1E3A]/70 to-[#B8899B]/10 p-5 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <h4 className="text-white font-heading text-base mb-1 border-b border-white/20 pb-2 w-full">
                         {milestone.title}
                       </h4>
@@ -825,7 +825,7 @@ export default function Home() {
           <div className="text-[#C9A24D] tracking-[0.3em] uppercase mb-4">
             Events & Moments
           </div>
-          <h2 className="text-[#2A2A2A] text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+          <h2 className="text-[#2A2A2A] text-3xl md:text-4xl sm:text-4xl lg:text-[3.5rem]">
             Captured <span className="text-[#7B1E3A]">Experiences</span>
           </h2>
         </motion.div>
@@ -938,7 +938,7 @@ export default function Home() {
             <p className="text-xs text-center uppercase tracking-[0.4em] text-[#C9A24D] mb-5">
               Great Achievements
             </p>
-            <h2 className="font-heading text-4xl text-center md:text-5xl text-dark leading-tight">
+            <h2 className="font-heading  text-center text-3xl md:text-4xl text-dark leading-tight">
               Wins that fuel the journey forward
             </h2>
           </div>

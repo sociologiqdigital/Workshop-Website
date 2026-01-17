@@ -11,6 +11,8 @@ import Contact from "./component/pages/Contact";
 import BlogDetail from "./component/pages/BlogDetail";
 import BookingModal from "./component/common/BookingModal";
 import WorkshopModal from "./component/common/WorkshopModal";
+import  PrivacyPolicy  from "./component/pages/PrivacyPolicy";
+import  TermsAndConditions  from "./component/pages/TermsAndCondition";
 
 function AppContent() {
   const location = useLocation();
@@ -29,6 +31,8 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/book-session" element={<BookingModal />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
       </Routes>
 
       <Footer />

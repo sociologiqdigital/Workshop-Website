@@ -752,15 +752,19 @@ const Home = () => {
                 {/* --- THE NEON GLOW CONTAINER --- */}
                 <div className="relative p-[2px] rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(150,103,224,0.15)]">
                   {/* 1. STATIC LAVENDER BORDER (Matches index.css accent) */}
-                  <div className="absolute inset-0 border-2 border-[rgb(var(--color-accent))]/30 rounded-[2.5rem] z-0" />
+                  <div className="absolute inset-0 border-2 border-[rgb(var(--color-accent))]/30 rounded-[2.5rem] z-0 group-hover:shadow-[0_0_18px_rgba(150,103,224,0.45)] transition-shadow duration-500" />
 
-                  {/* 2. THE ROTATING NEON BORDER */}
-                  <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                  {/* 2. ROTATING BORDER GLOW (MASKED TO EDGE) */}
+                  <div className="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0">
                     <div
-                      className="w-full h-full"
+                      className="absolute inset-0 p-[4px] rounded-[2.5rem] animate-[spin_4s_linear_infinite]"
                       style={{
                         background:
-                          "conic-gradient(from 0deg, transparent 0deg, transparent 150deg, rgb(var(--color-accent)) 180deg, transparent 210deg, transparent 360deg)",
+                          "conic-gradient(from 0deg, transparent 0deg, transparent 130deg, rgba(150,103,224,0.9) 170deg, transparent 210deg, transparent 360deg)",
+                        WebkitMask:
+                          "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                        WebkitMaskComposite: "xor",
+                        maskComposite: "exclude",
                       }}
                     />
                   </div>

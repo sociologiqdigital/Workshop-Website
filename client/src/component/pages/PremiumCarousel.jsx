@@ -15,7 +15,7 @@ export default function PremiumCarousel() {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <section className="relative w-full bg-background pt-4 pb-20 overflow-visible">
+    <section className="relative w-full bg-background pt-0 pb-4 md:pb-6 overflow-visible">
       {/* 3D Perspective Wrapper */}
       <div
         className="w-full relative px-0 sm:px-6 md:px-10"

@@ -23,7 +23,7 @@ export default function Footer() {
           <div>
             <Link to="/">
               <h3 className="font-heading text-2xl mb-4 text-white">
-               Ruchi Dorlikar
+                Ruchi Dorlikar
               </h3>
             </Link>
 
@@ -61,9 +61,9 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-                <Link to="/about/#faq" className="hover:text-white transition">
-                  FAQs
-                </Link>
+              <Link to="/about/#faq" className="hover:text-white transition">
+                FAQs
+              </Link>
             </li>
             <li>
               <Link to="/contact" className="hover:text-white transition">
@@ -98,8 +98,10 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-white/10 pt-4 flex flex-col md:flex-row items-center justify-between text-xs text-white/60 gap-4 mt-10">
           <span>
-            © 2025 Digital Biz Kickstarter. All rights reserved. | Powered by
-            SociologiQ Digital Solutions
+            © 2025 Digital Biz Kickstarter. All rights reserved. | Powered by {""}
+            <Link to="https://sociologiq.com/">
+              SociologiQ Digital Solutions Pvt. Ltd
+            </Link>
           </span>
 
           <div className="flex gap-4">

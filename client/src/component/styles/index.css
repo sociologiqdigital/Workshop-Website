@@ -735,3 +735,26 @@
 .animate-wave-path {
   backface-visibility: hidden;
 }
+/* Custom serif override for premium headings */
+.serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* A more elegant spinning animation for the vision portal background */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Tighten the spacing for the large Editorial-style heading */
+.tracking-tighter {
+  letter-spacing: -0.04em;
+}
+
+/* Premium shadows for the icon circles */
+.shadow-sm {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(122, 30, 45, 0.02);
+}

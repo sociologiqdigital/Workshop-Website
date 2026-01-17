@@ -63,7 +63,7 @@ export default function FAQSection() {
 
         {/* CAROUSEL */}
         <div className="relative overflow-x-visible">
-          <div className="flex gap-10 items-stretch pr-[160px]">
+          <div className="flex gap-10 items-start pr-[260px] min-h-[320px]">
             {faqs.map((item, index) => {
               const isActive = index === activeIndex;
 
@@ -73,13 +73,16 @@ export default function FAQSection() {
                   key={index}
                   onClick={() => setActiveIndex(index)}
                   layout
-                  animate={{ width: isActive ? 420 : 300 }}
+                  animate={{
+                    width: isActive ? 360 : 260,
+                    height: isActive ? 320 : 140,
+                  }}
                   transition={{
                     width: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
+                    height: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
                     layout: { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
                   }}
                   className={`
-                    h-[360px]
                     rounded-[2.5rem]
                     p-8
                     flex-shrink-0

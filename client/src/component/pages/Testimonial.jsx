@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { testimonialsData } from "../data/testimonial";
+
 export const Testimonial = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -18,10 +19,10 @@ export const Testimonial = () => {
   const activeTestimonial = testimonialsData[activeIndex];
 
   return (
-    <section className="py-16 md:py-20 bg-background" id="testimonial">
+    <section className="py-12 md:py-16 bg-background" id="testimonial">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-primary/10 rounded-3xl p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* LEFT — SLIDER */}
+        <div className="bg-primary/10 rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* LEFT SLIDER */}
           <div className="relative min-h-[240px] md:min-h-[280px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -38,8 +39,10 @@ export const Testimonial = () => {
                   borderBottomLeftRadius: 0,
                 }}
               >
-                <span className="absolute top-2 left-2 text-7xl font-heading text-primary/30">&ldquo;</span>
-                <p className="font-heading text-xl text-dark leading-relaxed mb-6">
+                <span className="absolute top-2 left-2 text-7xl font-heading text-primary/30">
+                  &ldquo;
+                </span>
+                <p className="font-heading text-lg md:text-xl text-dark leading-relaxed mb-5">
                   {activeTestimonial.quote}
                 </p>
                 <div className="text-right">
@@ -47,7 +50,7 @@ export const Testimonial = () => {
                     {activeTestimonial.name}
                   </p>
                   <p className="text-sm text-muted">
-                    {activeTestimonial.role} · {activeTestimonial.location}
+                    {activeTestimonial.role} - {activeTestimonial.location}
                   </p>
                 </div>
               </motion.div>
@@ -67,17 +70,17 @@ export const Testimonial = () => {
             </div>
           </div>
 
-          {/* RIGHT — CONTENT */}
+          {/* RIGHT CONTENT */}
           <div>
             <p className="text-sm uppercase tracking-widest text-primary mb-4">
               Testimonials
             </p>
 
-            <h2 className="font-heading text-4xl md:text-5xl text-dark mb-6">
+            <h2 className="font-heading text-3xl md:text-4xl text-dark mb-5 tracking-tight">
               What Our Clients Say About Us
             </h2>
 
-            <p className="text-muted leading-relaxed mb-8 max-w-md">
+            <p className="text-muted leading-relaxed mb-6 max-w-md">
               Hear directly from our satisfied clients about their experiences
               working with us. Their stories reflect clarity, confidence, and
               sustainable growth.
@@ -90,4 +93,3 @@ export const Testimonial = () => {
     </section>
   );
 };
-
