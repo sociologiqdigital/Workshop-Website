@@ -24,8 +24,7 @@ function ScrollToHash() {
 }
 
 export default function App() {
-  // const location = useLocation();
-  // const isHomepage= useLocation.pathname === "/";
+ 
   return (
     <BrowserRouter>
       <ScrollToHash />

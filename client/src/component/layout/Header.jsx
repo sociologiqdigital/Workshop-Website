@@ -15,7 +15,7 @@ export default function Navbar() {
     { label: "Home", to: "/" },
     { label: "About Ruchi", to: "/about" },
     { label: "Blog", to: "/blog" },
-    { label: "Workshops", dropdown: true },
+    { label: "Workshops", to: "http://localhost:5174/" },
   ];
 
   /* ---------------- SCROLL LOGIC ---------------- */

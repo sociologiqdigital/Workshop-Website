@@ -700,16 +700,26 @@
 }
 
 /* --- Water Wave Button (Path Morphing) --- */
-@keyframes wave-morph {
-  0%, 100% { d: path("M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"); }
-  50% { d: path("M 0,600 L 0,112 C 87.5,104.8 175.1,97.7 248,86 C 320.8,74.2 378.9,57.9 445,77 C 511,96 584.9,150.5 675,147 C 765,143.4 871.2,81.6 954,63 C 1036.7,44.3 1095.9,68.6 1173,84 C 1250,99.3 1345,105.6 1440,112 L 1440,600 L 0,600 Z"); }
+@keyframes wave-liquid-morph {
+  0%, 100% { 
+    d: path("M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"); 
+  }
+  50% { 
+    d: path("M 0,600 L 0,90 C 200,160 400,40 600,100 C 800,160 1000,40 1200,100 C 1350,140 1440,90 1440,90 L 1440,600 L 0,600 Z"); 
+  }
 }
 
-.animate-wave-path { animation: wave-morph 3s ease-in-out infinite; }
+.animate-wave-path { 
+  animation: wave-liquid-morph 3s ease-in-out infinite; 
+}
 
 .wave-button {
-  background-color: #fff;
-  transition: background-color 500ms ease 600ms, border-color 300ms ease;
+  position: relative;
+  background-color: #fff; /* Initial state */
+  /* Delay the background color change until the wave fills the container (600ms) */
+  transition: background-color 0s linear 600ms, border-color 300ms ease;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .wave-button:hover {
@@ -717,18 +727,25 @@
 }
 
 .wave-fill {
-  transform: translate3d(0, 100%, 0);
-  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(105%);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  z-index: 1;
 }
 
 .wave-button:hover .wave-fill {
-  transform: translate3d(0, 0%, 0);
+  transform: translateY(0%);
 }
 
 .wave-text,
 .wave-icon {
-  transition: color 400ms ease 600ms;
+  position: relative;
+  z-index: 10;
+  transition: color 300ms ease 400ms;
 }
 
 .wave-fill,

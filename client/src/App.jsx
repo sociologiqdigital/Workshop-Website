@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./component/layout/Header";
 import Footer from "./component/layout/Footer";
 // Pages
@@ -14,11 +14,27 @@ import WorkshopModal from "./component/common/WorkshopModal";
 import  PrivacyPolicy  from "./component/pages/PrivacyPolicy";
 import  TermsAndConditions  from "./component/pages/TermsAndCondition";
 
+
+function ScrollToHash() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const element = document.getElementById(hash.slice(1));
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [hash]);
+
+  return null;
+}
+
 function AppContent() {
   const location = useLocation();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
+      <ScrollToHash />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

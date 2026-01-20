@@ -37,17 +37,26 @@ export default function Footer() {
           {/* Programs */}
           <FooterColumn title="Programs">
             <li>
-              <Link to="/workshops" className="hover:text-white transition">
+              <Link
+                to="http://localhost:5174/"
+                className="hover:text-white transition"
+              >
                 Workshops
               </Link>
             </li>
             <li>
-              <Link to="/mentorship" className="hover:text-white transition">
+              <Link
+                to="http://localhost:5174/"
+                className="hover:text-white transition"
+              >
                 1:1 Mentorship
               </Link>
             </li>
             <li>
-              <Link to="/resources" className="hover:text-white transition">
+              <Link
+                to="http://localhost:5174/"
+                className="hover:text-white transition"
+              >
                 Resources
               </Link>
             </li>
@@ -98,7 +107,8 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-white/10 pt-4 flex flex-col md:flex-row items-center justify-between text-xs text-white/60 gap-4 mt-10">
           <span>
-            © 2025 Digital Biz Kickstarter. All rights reserved. | Powered by {""}
+            © 2025 Digital Biz Kickstarter. All rights reserved. | Powered by{" "}
+            {""}
             <Link to="https://sociologiq.com/">
               SociologiQ Digital Solutions Pvt. Ltd
             </Link>

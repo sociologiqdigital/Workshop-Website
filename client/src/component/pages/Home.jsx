@@ -482,7 +482,7 @@ export default function Home() {
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.7 }}
-                  className="absolute top-1/4 right-6 z-20 bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-primary/10 flex flex-col items-center"
+                  className="absolute top-6 right-6 z-20 bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-primary/10 flex flex-col items-center"
                 >
                   <div className="flex -space-x-2 mb-1">
                     <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-bold border-2 border-white">
@@ -574,21 +574,20 @@ export default function Home() {
       <section className="relative overflow-hidden bg-[#FAFAF8] home-section">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           {/* Container with a defined height to anchor absolute children */}
-          <div className="relative flex flex-col lg:block min-h-[500px]">
+          <div className="relative flex flex-col lg:block lg:min-h-[500px]">
             {/* MAROON GRADIENT SLAB */}
             <motion.div
               initial={{ opacity: 0, x: -80 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="relative lg:absolute left-0 top-0 w-full lg:w-[45%] rounded-[2.5rem] lg:rounded-r-none overflow-hidden z-10"
+              className="relative lg:absolute left-0 top-0 w-full lg:w-[45%] rounded-[2.5rem] lg:rounded-r-none overflow-hidden z-10 min-h-[360px] sm:min-h-[420px] lg:min-h-[480px]"
               style={{
                 background:
                   "linear-gradient(165deg, #7B1E3A 0%, #9B3E5A 50%, #B8859E 100%)",
-                minHeight: "480px", // Fixed minimum height for better alignment
               }}
             >
-              <div className="relative z-10 px-10 lg:px-16 py-16 h-full flex flex-col justify-center min-h-[480px]">
+              <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-12 sm:py-14 lg:py-16 h-full flex flex-col justify-center min-h-[360px] sm:min-h-[420px] lg:min-h-[480px]">
                 {/* Label */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -632,7 +631,7 @@ export default function Home() {
             </motion.div>
 
             {/* RIGHT CARDS — Aligned to the vertical center of the slab */}
-            <div className="relative lg:absolute lg:top-1/2 lg:left-[40%] lg:-translate-y-1/2 z-20 mt-[-40px] lg:mt-0">
+            <div className="relative lg:absolute lg:top-1/2 lg:left-[40%] lg:-translate-y-1/2 z-20 mt-8 lg:mt-0">
               <div className="flex flex-col lg:flex-row gap-6 items-center lg:items-stretch px-4 lg:px-0">
                 {roles.map((role, index) => {
                   const IconComponent = role.icon;
@@ -745,8 +744,8 @@ export default function Home() {
             {/* Visual Wire */}
             <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
 
-            {/* Flex Wrapper - Added px-[5%] to prevent the first image from sticking to the left edge */}
-            <div className="flex flex-nowrap gap-10 px-8 md:px-[10%] min-w-max pt-6">
+            {/* Flex Wrapper */}
+            <div className="flex flex-nowrap gap-6 md:gap-10 px-4 sm:px-6 md:px-[10%] min-w-max pt-6">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
@@ -764,39 +763,37 @@ export default function Home() {
                   {/* POLAROID CARD */}
                   <motion.div
                     whileHover={{
-                      rotate: 0,
-                      scale: 1.03,
-                      y: 3,
+                      rotate: 8,
                     }}
                     transition={{ type: "spring", stiffness: 110, damping: 22 }}
-                    className="relative bg-white p-3 pb-8 shadow-soft border border-black/5 origin-top transition-transform duration-500 cursor-help will-change-transform"
+                    className="relative bg-white p-2.5 pb-6 sm:p-3 sm:pb-8 shadow-soft border border-black/5 origin-top transition-transform duration-500 cursor-help will-change-transform"
                     style={{
-                      width: "220px",
+                      width: "clamp(180px, 55vw, 220px)",
                       rotate: milestone.rotate || (index % 2 === 0 ? -3 : 3),
                     }}
                   >
                     {/* The Image */}
-                    <div className="bg-muted/5 aspect-[4/5] overflow-hidden mb-3">
+                    <div className="relative bg-muted/5 aspect-[4/5] overflow-hidden mb-3">
                       <ImageWithFallback
                         src={milestone.image}
                         alt={milestone.title}
                         className="w-full h-full object-cover  transition-all duration-700"
                       />
+
+                      {/* HOVER OVERLAY*/}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#4A1020]/95 via-[#7B1E3A]/70 to-[#B8899B]/10 p-5 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <h4 className="text-white font-heading text-base mb-1 border-b border-white/20 pb-2 w-full ">
+                          {milestone.title}
+                        </h4>
+                        <p className="text-white/90 text-[10px] leading-relaxed font-body mt-2 text-4xl">
+                          {milestone.description}
+                        </p>
+                      </div>
                     </div>
 
                     {/* The Year */}
                     <div className="text-center font-heading text-xl text-dark group-hover:text-primary transition-colors lining-nums">
                       {milestone.year}
-                    </div>
-
-                    {/* HOVER OVERLAY */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#4A1020]/95 via-[#7B1E3A]/70 to-[#B8899B]/10 p-5 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <h4 className="text-white font-heading text-base mb-1 border-b border-white/20 pb-2 w-full">
-                        {milestone.title}
-                      </h4>
-                      <p className="text-white/90 text-[10px] leading-relaxed font-body mt-2">
-                        {milestone.description}
-                      </p>
                     </div>
                   </motion.div>
                 </motion.div>
@@ -806,11 +803,11 @@ export default function Home() {
         </div>
 
         {/* Centered Scroll Indicator instead of a bar */}
-        <div className="flex justify-center items-center gap-2 text-muted/40 text-[9px] uppercase tracking-[0.3em] mt-4">
-          {/* <div className="w-12 h-[1px] bg-muted/20"></div> */}
-          {/* <span className="font-semibold">DRAG OR SCROOL TO NAVIGATE</span> */}
-          {/* <div className="w-12 h-[1px] bg-muted/20"></div> */}
-        </div>
+        {/* <div className="flex justify-center items-center gap-2 text-muted/40 text-[9px] uppercase tracking-[0.3em] mt-4">
+          <div className="w-12 h-[1px] bg-muted/20"></div> 
+          <span className="font-semibold">DRAG OR SCROOL TO NAVIGATE</span>
+           <div className="w-12 h-[1px] bg-muted/20"></div> 
+        </div> */}
       </section>
 
       {/* Gallery section */}

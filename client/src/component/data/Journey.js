@@ -26,17 +26,17 @@ export const milestones = [
       "https://images.unsplash.com/photo-1762158007969-eb58e74ee3d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25mZXJlbmNlJTIwc3BlYWtpbmclMjBldmVudHxlbnwxfHx8fDE3Njc2MDA3NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
     rotate: -2,
   },
+  // {
+  //   year: "Aug 2019",
+  //   title: "Onboarded KIMS Hospital (Pune)",
+  //   description:
+  //     "Secured a key healthcare client, expanding credibility and scope.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1623679116710-78b05d2fe2f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBkZXNrfGVufDF8fHx8MTc2NzUzMTY4NHww&ixlib=rb-4.1.0&q=80&w=1080",
+  //   rotate: 3,
+  // },
   {
-    year: "Aug 2019",
-    title: "Onboarded KIMS Hospital (Pune)",
-    description:
-      "Secured a key healthcare client, expanding credibility and scope.",
-    image:
-      "https://images.unsplash.com/photo-1623679116710-78b05d2fe2f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBkZXNrfGVufDF8fHx8MTc2NzUzMTY4NHww&ixlib=rb-4.1.0&q=80&w=1080",
-    rotate: 3,
-  },
-  {
-    year: "Late 2019",
+    year: "Sep 2019",
     title: "Built First Freelance Team – “SocialBuzz”",
     description:
       "Formed a trusted team to scale delivery and creative output.",
@@ -53,17 +53,17 @@ export const milestones = [
       "https://images.unsplash.com/photo-1760420940953-3958ad9f6287?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b3Jrc2hvcCUyMGV2ZW50fGVufDF8fHx8MTc2NzYwMDc1OHww&ixlib=rb-4.1.0&q=80&w=1080",
     rotate: 1,
   },
+  // {
+  //   year: "Mid 2020",
+  //   title: "Shifted Base from Navi Mumbai to Nagpur",
+  //   description:
+  //     "Relocated operations to build stronger regional reach.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1762158007969-eb58e74ee3d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25mZXJlbmNlJTIwc3BlYWtpbmclMjBldmVudHxlbnwxfHx8fDE3Njc2MDA3NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  //   rotate: -2,
+  // },
   {
-    year: "Mid 2020",
-    title: "Shifted Base from Navi Mumbai to Nagpur",
-    description:
-      "Relocated operations to build stronger regional reach.",
-    image:
-      "https://images.unsplash.com/photo-1762158007969-eb58e74ee3d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25mZXJlbmNlJTIwc3BlYWtpbmclMjBldmVudHxlbnwxfHx8fDE3Njc2MDA3NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    rotate: -2,
-  },
-  {
-    year: "2021–Now",
+    year: "2021–Present",
     title: "Expanded Services, Team, and Client Portfolio",
     description:
       "Scaled offerings and partnerships while growing the team.",
