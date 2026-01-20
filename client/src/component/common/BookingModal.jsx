@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -23,19 +23,152 @@ const SERVICES = [
   "Other", // Added Other option
 ];
 
+const initialData = {
+  name: "",
+  city: "",
+  topic: "",
+  customTopic: "",
+  date: "",
+};
+
+const initialTouched = {
+  name: false,
+  city: false,
+  topic: false,
+  customTopic: false,
+  date: false,
+};
+
 export default function BookingModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
-  const [data, setData] = useState({
-    name: "",
-    city: "",
-    topic: "",
-    customTopic: "",
-    date: "",
-  });
+  const [data, setData] = useState(initialData);
+  const [touched, setTouched] = useState(initialTouched);
+  const [errors, setErrors] = useState({});
   const totalSteps = 5;
 
   const next = () => step < totalSteps && setStep((s) => s + 1);
   const back = () => step > 1 && setStep((s) => s - 1);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setStep(1);
+      setData(initialData);
+      setTouched(initialTouched);
+      setErrors({});
+    }
+  }, [isOpen]);
+
+  const validateField = (field, values) => {
+    const value = String(values[field] || "").trim();
+
+    switch (field) {
+      case "name": {
+        if (!value) return "Name is required.";
+        if (!/^[a-zA-Z\s.'-]+$/.test(value))
+          return "Use letters and basic punctuation only.";
+        if (value.length < 2) return "Name is too short.";
+        if (value.length > 60) return "Name is too long.";
+        return "";
+      }
+      case "city": {
+        if (!value) return "City is required.";
+        if (!/^[a-zA-Z\s.'-]+$/.test(value))
+          return "Use letters and basic punctuation only.";
+        if (value.length < 2) return "City is too short.";
+        if (value.length > 60) return "City is too long.";
+        return "";
+      }
+      case "topic": {
+        if (!value) return "Choose a service.";
+        return "";
+      }
+      case "customTopic": {
+        if (values.topic !== "Other") return "";
+        if (!value) return "Please specify your requirement.";
+        if (value.length < 3) return "Please add a little more detail.";
+        if (value.length > 120) return "Please keep this under 120 characters.";
+        return "";
+      }
+      case "date": {
+        if (!value) return "Pick a date.";
+        const candidate = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(candidate.getTime())) return "Invalid date.";
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (candidate < today) return "Date cannot be in the past.";
+        return "";
+      }
+      default:
+        return "";
+    }
+  };
+
+  const validateStep = (currentStep, values) => {
+    const fieldMap = {
+      1: ["name"],
+      2: ["city"],
+      3: ["topic", "customTopic"],
+      4: ["date"],
+    };
+    const fields = fieldMap[currentStep] || [];
+    const stepErrors = {};
+
+    fields.forEach((field) => {
+      const error = validateField(field, values);
+      if (error) stepErrors[field] = error;
+    });
+
+    return stepErrors;
+  };
+
+  const handleNext = () => {
+    const stepErrors = validateStep(step, data);
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...stepErrors }));
+      setTouched((prev) => {
+        const nextTouched = { ...prev };
+        Object.keys(stepErrors).forEach((field) => {
+          nextTouched[field] = true;
+        });
+        return nextTouched;
+      });
+      return;
+    }
+    next();
+  };
+
+  const handleBlur = (field) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => {
+      const nextErrors = { ...prev };
+      const error = validateField(field, data);
+      if (error) {
+        nextErrors[field] = error;
+      } else {
+        delete nextErrors[field];
+      }
+      return nextErrors;
+    });
+  };
+
+  const updateField = (field, value) => {
+    setData((prev) => ({ ...prev, [field]: value }));
+    if (touched[field]) {
+      setErrors((prev) => {
+        const nextErrors = { ...prev };
+        const error = validateField(field, {
+          ...data,
+          [field]: value,
+        });
+        if (error) {
+          nextErrors[field] = error;
+        } else {
+          delete nextErrors[field];
+        }
+        return nextErrors;
+      });
+    }
+  };
 
   // Animation for the text field appearance
   const inputExpand = {
@@ -146,12 +279,21 @@ export default function BookingModal({ isOpen, onClose }) {
                         className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-2xl outline-none focus:border-[#7A1E2D] transition-all placeholder:text-slate-200"
                         placeholder="Your Name"
                         value={data.name}
-                        onChange={(e) =>
-                          setData({ ...data, name: e.target.value })
-                        }
+                        onChange={(e) => updateField("name", e.target.value)}
+                        onBlur={() => handleBlur("name")}
+                        aria-invalid={touched.name && Boolean(errors.name)}
+                        aria-describedby="booking-name-error"
                       />
+                      {touched.name && errors.name && (
+                        <p
+                          id="booking-name-error"
+                          className="text-xs text-[#B42318] font-semibold"
+                        >
+                          {errors.name}
+                        </p>
+                      )}
                       <button
-                        onClick={next}
+                        onClick={handleNext}
                         disabled={!data.name}
                         className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
                       >
@@ -177,12 +319,21 @@ export default function BookingModal({ isOpen, onClose }) {
                         className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-2xl outline-none focus:border-[#7A1E2D] transition-all placeholder:text-slate-200"
                         placeholder="Your City"
                         value={data.city}
-                        onChange={(e) =>
-                          setData({ ...data, city: e.target.value })
-                        }
+                        onChange={(e) => updateField("city", e.target.value)}
+                        onBlur={() => handleBlur("city")}
+                        aria-invalid={touched.city && Boolean(errors.city)}
+                        aria-describedby="booking-city-error"
                       />
+                      {touched.city && errors.city && (
+                        <p
+                          id="booking-city-error"
+                          className="text-xs text-[#B42318] font-semibold"
+                        >
+                          {errors.city}
+                        </p>
+                      )}
                       <button
-                        onClick={next}
+                        onClick={handleNext}
                         disabled={!data.city}
                         className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
                       >
@@ -220,9 +371,47 @@ export default function BookingModal({ isOpen, onClose }) {
                               key={service}
                               whileHover={{ scale: 1.03, y: -2 }}
                               whileTap={{ scale: 0.97 }}
-                              onClick={() =>
-                                setData({ ...data, topic: service })
-                              }
+                              onClick={() => {
+                                const nextData = {
+                                  ...data,
+                                  topic: service,
+                                  customTopic:
+                                    service === "Other"
+                                      ? data.customTopic
+                                      : "",
+                                };
+                                setData(nextData);
+                                setTouched((prev) => ({
+                                  ...prev,
+                                  topic: true,
+                                  customTopic:
+                                    service === "Other"
+                                      ? prev.customTopic
+                                      : false,
+                                }));
+                                setErrors((prev) => {
+                                  const nextErrors = { ...prev };
+                                  const topicError = validateField(
+                                    "topic",
+                                    nextData
+                                  );
+                                  const customError = validateField(
+                                    "customTopic",
+                                    nextData
+                                  );
+                                  if (topicError) {
+                                    nextErrors.topic = topicError;
+                                  } else {
+                                    delete nextErrors.topic;
+                                  }
+                                  if (customError) {
+                                    nextErrors.customTopic = customError;
+                                  } else {
+                                    delete nextErrors.customTopic;
+                                  }
+                                  return nextErrors;
+                                });
+                              }}
                               className={`px-6 py-3 rounded-full border-2 text-sm font-bold tracking-wide transition-all duration-300 ${
                                 isSelected
                                   ? "bg-[#7A1E2D] border-[#7A1E2D] text-white shadow-lg shadow-red-900/20"
@@ -243,6 +432,11 @@ export default function BookingModal({ isOpen, onClose }) {
                           );
                         })}
                       </div>
+                      {touched.topic && errors.topic && (
+                        <p className="text-xs text-center text-[#B42318] font-semibold">
+                          {errors.topic}
+                        </p>
+                      )}
 
                       {/* Dynamic Input for "Other" with matching Pill design */}
                       <AnimatePresence>
@@ -260,13 +454,24 @@ export default function BookingModal({ isOpen, onClose }) {
                                 placeholder="Specify your requirement..."
                                 value={data.customTopic}
                                 onChange={(e) =>
-                                  setData({
-                                    ...data,
-                                    customTopic: e.target.value,
-                                  })
+                                  updateField("customTopic", e.target.value)
                                 }
+                                onBlur={() => handleBlur("customTopic")}
+                                aria-invalid={
+                                  touched.customTopic &&
+                                  Boolean(errors.customTopic)
+                                }
+                                aria-describedby="booking-custom-topic-error"
                               />
                             </div>
+                            {touched.customTopic && errors.customTopic && (
+                              <p
+                                id="booking-custom-topic-error"
+                                className="mt-2 text-xs text-center text-[#B42318] font-semibold"
+                              >
+                                {errors.customTopic}
+                              </p>
+                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -274,7 +479,7 @@ export default function BookingModal({ isOpen, onClose }) {
                       {/* Primary Action Button */}
                       <div className="mt-auto pt-4">
                         <button
-                          onClick={next}
+                          onClick={handleNext}
                           disabled={
                             !data.topic ||
                             (data.topic === "Other" && !data.customTopic)
@@ -308,14 +513,23 @@ export default function BookingModal({ isOpen, onClose }) {
                           type="date"
                           className="w-full bg-transparent border-b-2 border-slate-200 py-4 pl-10 text-xl outline-none focus:border-[#7A1E2D] transition-all"
                           value={data.date}
-                          onChange={(e) =>
-                            setData({ ...data, date: e.target.value })
-                          }
+                          onChange={(e) => updateField("date", e.target.value)}
+                          onBlur={() => handleBlur("date")}
+                          aria-invalid={touched.date && Boolean(errors.date)}
+                          aria-describedby="booking-date-error"
                           min={new Date().toISOString().split("T")[0]}
                         />
                       </div>
+                      {touched.date && errors.date && (
+                        <p
+                          id="booking-date-error"
+                          className="text-xs text-[#B42318] font-semibold"
+                        >
+                          {errors.date}
+                        </p>
+                      )}
                       <button
-                        onClick={next}
+                        onClick={handleNext}
                         disabled={!data.date}
                         className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
                       >

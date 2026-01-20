@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { programs } from "../data/courses";
 
-export default function Navbar() {
+export default function Navbar({ onBookClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
 
@@ -108,12 +108,13 @@ export default function Navbar() {
           })}
 
           {/* CTA */}
-          <Link
-            to="/contact"
+          <button
+            type="button"
+            onClick={() => onBookClick?.()}
             className="rounded-full bg-primary/90 px-6 py-2.5 text-sm font-medium text-white hover:bg-primary transition shine-button"
           >
-            Let’s Connect
-          </Link>
+            Let's Connect
+          </button>
         </div>
 
         {/* MOBILE TOGGLE */}
@@ -177,13 +178,16 @@ export default function Navbar() {
                 );
               })}
 
-              <Link
-                to="/contact"
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  onBookClick?.();
+                }}
                 className="w-full text-center rounded-full bg-white px-6 py-3 text-sm font-medium text-primary hover:bg-white/90 transition"
-                onClick={() => setIsOpen(false)}
               >
-                Contact
-              </Link>
+                Let's Connect
+              </button>
             </div>
           </motion.div>
         )}

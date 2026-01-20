@@ -77,7 +77,7 @@ const tooltipClass = `
 `;
 const animatedStatLabels = new Set();
 //import {star_bg} from "../styles/images/star_bg.svg"
-export default function Home() {
+export default function Home({ onBookClick }) {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -1176,16 +1176,16 @@ export default function Home() {
                   </motion.div>
                 </Link>
 
-                <Link to="/contact">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="cta-pill cta-pill-secondary flex items-center gap-2"
-                  >
-                    Contact Us
-                    <ArrowRight className="cta-pill-icon" />
-                  </motion.div>
-                </Link>
+                <motion.button
+                  type="button"
+                  onClick={() => onBookClick?.()}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="cta-pill cta-pill-secondary flex items-center gap-2"
+                >
+                  Book 1:1 coffee
+                  <ArrowRight className="cta-pill-icon" />
+                </motion.button>
               </motion.div>
             </div>
           </motion.div>

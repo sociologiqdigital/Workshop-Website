@@ -35,9 +35,12 @@ function AppContent() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <ScrollToHash />
-      <Header />
+      <Header onBookClick={() => setIsBookingOpen(true)} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home onBookClick={() => setIsBookingOpen(true)} />}
+        />
         <Route
           path="/about"
           element={<About onBookClick={() => setIsBookingOpen(true)} />}

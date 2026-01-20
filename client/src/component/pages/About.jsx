@@ -1,12 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  Sparkles,
-  Eye,
-  Mic,
-  BookmarkCheck,
-  ArrowRight,
-} from "lucide-react";
+import { Sparkles, Eye, Mic, BookmarkCheck, ArrowRight } from "lucide-react";
 
 // Components
 import FAQSection from "./FaqSection";
@@ -34,11 +28,10 @@ export default function About({ onBookClick }) {
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-            
             {/* TEXT CONTENT */}
             <div className="lg:col-span-6 space-y-8 order-2 lg:order-1">
               <header className="space-y-4">
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
@@ -49,10 +42,12 @@ export default function About({ onBookClick }) {
                     The Visionary
                   </span>
                 </motion.div>
-                
+
                 <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-dark leading-[1.1] tracking-tight">
                   About <br />
-                  <span className="text-primary italic font-medium">The Founder</span>
+                  <span className="text-primary italic font-medium">
+                    The Founder
+                  </span>
                 </h1>
               </header>
 
@@ -82,10 +77,20 @@ export default function About({ onBookClick }) {
                 >
                   <span className="wave-text relative z-10 flex items-center gap-3 tracking-widest uppercase text-primary transition-colors group-hover:text-white">
                     Book 1 to 1 call
-                    <ArrowRight size={18} className="wave-icon group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={18}
+                      className="wave-icon group-hover:translate-x-1 transition-transform"
+                    />
                   </span>
-                  <svg className="wave-fill absolute left-0 top-0 h-full w-full pointer-events-none z-0" viewBox="0 0 1440 600" preserveAspectRatio="none">
-                    <path className="animate-wave-path fill-primary" d="M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z" />
+                  <svg
+                    className="wave-fill absolute left-0 top-0 h-full w-full pointer-events-none z-0"
+                    viewBox="0 0 1440 600"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      className="animate-wave-path fill-primary"
+                      d="M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"
+                    />
                   </svg>
                 </motion.button>
               </div>
@@ -110,10 +115,9 @@ export default function About({ onBookClick }) {
       {/* --- THE VISION SECTION --- */}
       <section className="relative py-20 md:py-32 overflow-hidden border-t border-dark/5 bg-surface/30">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -translate-y-1/2" />
-        
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
             {/* PORTAL BOX (Left on Desktop) */}
             <div className="lg:col-span-5 relative flex justify-center">
               <motion.div
@@ -122,10 +126,11 @@ export default function About({ onBookClick }) {
                 transition={{ duration: 0.8 }}
                 className="relative w-full max-w-[480px]"
               >
-                <div className="relative w-full bg-primary text-white p-10 md:p-14 flex flex-col justify-center gap-8
+                <div
+                  className="relative w-full bg-primary text-white p-10 md:p-14 flex flex-col justify-center gap-8
                                rounded-[60px] md:rounded-[100px] rounded-tr-[20px] rounded-bl-[20px]
-                               shadow-[0_40px_80px_-15px_rgba(122,30,45,0.3)] overflow-hidden group">
-                  
+                               shadow-[0_40px_80px_-15px_rgba(122,30,45,0.3)] overflow-hidden group"
+                >
                   {/* Animated Background */}
                   <div className="absolute inset-0 opacity-20 pointer-events-none">
                     <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] animate-spin-slow bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3),transparent_70%)]" />
@@ -133,8 +138,13 @@ export default function About({ onBookClick }) {
 
                   <div className="relative z-10 space-y-6">
                     <div className="inline-flex items-center gap-2 py-1.5 px-4 bg-white/10 rounded-full backdrop-blur-md border border-white/10">
-                      <Sparkles size={14} className="text-accent animate-pulse" />
-                      <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent">The Vision</span>
+                      <Sparkles
+                        size={14}
+                        className="text-accent animate-pulse"
+                      />
+                      <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent">
+                        The Vision
+                      </span>
                     </div>
 
                     <h4 className="font-heading text-2xl md:text-3xl lg:text-4xl leading-[1.2] tracking-tight">
@@ -147,15 +157,21 @@ export default function About({ onBookClick }) {
 
                     <div className="pt-4 flex items-center gap-4">
                       <div className="h-px w-10 bg-accent/40" />
-                      <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-accent/80">SociologiQ Leadership</p>
+                      <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-accent/80">
+                        SociologiQ Leadership
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Floating Decorative Bubble */}
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="absolute -top-6 -right-6 w-24 h-24 bg-accent/20 backdrop-blur-md rounded-full border border-white/20 -z-10"
                 />
               </motion.div>
@@ -171,12 +187,16 @@ export default function About({ onBookClick }) {
               >
                 <div className="flex items-center gap-3">
                   <span className="h-px w-12 bg-primary/40" />
-                  <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-primary/80">The Origin Story</span>
+                  <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-primary/80">
+                    The Origin Story
+                  </span>
                 </div>
 
                 <h2 className="font-heading text-4xl md:text-5xl text-dark leading-tight tracking-tight">
                   Corporate Roots.
-                  <span className="text-primary italic font-light serif">Creative Wings.</span>
+                  <span className="text-primary italic font-light serif">
+                    Creative Wings.
+                  </span>
                 </h2>
 
                 <div className="space-y-6 relative border-l border-primary/10 pl-8">
@@ -221,11 +241,10 @@ export default function About({ onBookClick }) {
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
+      <FAQSection />
       {/* --- TESTIMONIAL SECTION --- */}
       <div className="py-20 md:py-28 border-t border-dark/5">
         <Testimonial />
