@@ -19,6 +19,7 @@ import { ImageWithFallback } from "../common/ImageWithFallback";
 import BenefitImage from "../styles/images/whoBenefitImg.jpg";
 import HeroImg from "../styles/images/HeroImg.png";
 import AchievementImg from "../styles/images/achivementImg.jpg";
+import SteamingCoffee from "../common/SteamingCoffee";
 
 import {
   Calendar,
@@ -98,6 +99,7 @@ export default function Home({ onBookClick }) {
   const typedWord = useTypewriter(words);
   const [active, setActive] = useState(0);
   const [hoveredId, setHoveredId] = useState(null);
+  const [isCoffeeHovered, setIsCoffeeHovered] = useState(false);
   const journeyScrollRef = useRef(null);
   const journeyDragState = useRef({
     isDown: false,
@@ -357,7 +359,7 @@ export default function Home({ onBookClick }) {
   return (
     <>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background home-hero grid-bg pt-10 pb-8 md:pt-16 md:pb-12">
+      <section className="relative overflow-hidden bg-background home-hero grid-bg pt-6 pb-6 md:pt-12 md:pb-10">
         {/* Background Accents */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl " />
 
@@ -365,7 +367,7 @@ export default function Home({ onBookClick }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* LEFT CONTENT */}
             <motion.div
-              className="relative max-w-[520px] text-left"
+              className="relative max-w-[520px] text-left md:pl-8 lg:pl-12"
               initial="hidden"
               animate="visible"
               variants={{
@@ -426,14 +428,17 @@ export default function Home({ onBookClick }) {
                 <span className="text-dark font-semibold">
                   confidence, and conscious growth
                 </span>{" "}
-                for modern brands and leaders.
-                <Link
-                  to="/about"
-                  className="inline-flex items-center text-[13px] font-bold text-primary ml-2 underline underline-offset-4 hover:text-dark transition-colors"
-                >
-                  Know More
-                  <ArrowRight className="ml-1 w-3 h-3" />
-                </Link>
+                for modern brands and{" "}
+                <span className="whitespace-nowrap">
+                  leaders.
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center text-[13px] font-bold text-primary ml-2 underline underline-offset-4 hover:text-dark transition-colors"
+                  >
+                    Know More
+                    <ArrowRight className="ml-1 w-3 h-3" />
+                  </Link>
+                </span>
               </motion.p>
 
               <motion.div
@@ -443,6 +448,20 @@ export default function Home({ onBookClick }) {
                 }}
                 className="h-[3px] bg-primary mb-8"
               />
+
+              <motion.button
+                onMouseEnter={() => setIsCoffeeHovered(true)}
+                onMouseLeave={() => setIsCoffeeHovered(false)}
+                onClick={() => onBookClick?.()}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center gap-2.5 rounded-full bg-primary/95 px-6 py-2.5 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-primary hover:shadow-primary/20 hover:-translate-y-0.5 active:scale-95 overflow-hidden shine-button"
+              >
+                <SteamingCoffee isHovered={isCoffeeHovered} />
+                <span className="relative tracking-wide font-body">
+                  Schedule a Coffee Chat
+                </span>
+              </motion.button>
             </motion.div>
 
             {/* RIGHT IMAGE  */}
@@ -450,12 +469,12 @@ export default function Home({ onBookClick }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative hidden md:flex justify-end items-center"
+              className="relative hidden md:flex justify-end items-center md:pr-8 lg:pr-12"
             >
               <div className="relative">
                 {/* Main Image Container */}
                 {/* <div className="relative z-10 w-[380px] h-[500px] lg:w-[420px] lg:h-[560px] rounded-[48px] overflow-hidden border-[12px] border-white shadow-soft"> */}
-                <div className="relative z-10 w-[360px] h-[480px] lg:w-[420px] lg:h-[540px] rounded-[40px] overflow-hidden">
+                <div className="relative z-10 w-[340px] h-[460px] lg:w-[400px] lg:h-[520px] rounded-[40px] overflow-hidden">
                   <ImageWithFallback
                     src={HeroImg}
                     alt="Ruchi Dorlikar"

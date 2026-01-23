@@ -19,9 +19,9 @@ export const Testimonial = () => {
   const activeTestimonial = testimonialsData[activeIndex];
 
   return (
-    <section className="py-12 md:py-16 bg-background" id="testimonial">
+    <section className="py-3 md:py-5 bg-background" id="testimonial">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-primary/10 rounded-3xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div className="bg-primary/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* LEFT SLIDER */}
           <div className="relative min-h-[240px] md:min-h-[280px]">
             <AnimatePresence mode="wait">
@@ -77,7 +77,7 @@ export const Testimonial = () => {
             </p>
 
             <h2 className="font-heading text-3xl md:text-4xl text-dark mb-5 tracking-tight">
-              What Our Clients Say About Us
+              What Our Community Is Saying
             </h2>
 
             <p className="text-muted leading-relaxed mb-6 max-w-md">

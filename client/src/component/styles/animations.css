@@ -24,3 +24,20 @@
   pointer-events: none;
   will-change: transform, border-radius;
 }
+
+@keyframes coffeeFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.coffee-icon {
+  display: inline-flex;
+  animation: coffeeFloat 2.4s ease-in-out infinite;
+}

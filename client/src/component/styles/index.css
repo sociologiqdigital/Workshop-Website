@@ -9,7 +9,7 @@
    =============================== */
 :root {
   /* Primary – Maroon */
-  --color-primary: 122 30 45;        /* refined maroon */
+  --color-primary: 122 30 45;         /* refined maroon #7A1E2D */
 
   /* Accent – Soft maroon-beige (NOT gold) */
   --color-accent: 242 230 232;       
@@ -774,4 +774,49 @@
 /* Premium shadows for the icon circles */
 .shadow-sm {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(122, 30, 45, 0.02);
+}
+
+/* About hero orbit text ring */
+.about-orbit {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: -38px;
+  bottom: -42px;
+  top: auto;
+  right: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-orbit svg {
+  width: 100%;
+  height: 100%;
+  animation: about-orbit-spin 18s linear infinite;
+  transform-origin: center;
+}
+
+.about-orbit text {
+  font-size: 16px;
+  letter-spacing: 0.35em;
+  fill: rgba(var(--color-primary), 0.75);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@keyframes about-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-orbit svg {
+    animation: none;
+  }
+}
+@layer utilities {
+  .clip-wing-portal {
+    /* Precise asymmetrical wing shape coordinates */
+    clip-path: url(#wing-portal-full);
+  }
 }

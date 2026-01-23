@@ -25,6 +25,8 @@ const SERVICES = [
 
 const initialData = {
   name: "",
+  email: "",
+  phone: "",
   city: "",
   topic: "",
   customTopic: "",
@@ -33,6 +35,8 @@ const initialData = {
 
 const initialTouched = {
   name: false,
+  email: false,
+  phone: false,
   city: false,
   topic: false,
   customTopic: false,
@@ -44,7 +48,7 @@ export default function BookingModal({ isOpen, onClose }) {
   const [data, setData] = useState(initialData);
   const [touched, setTouched] = useState(initialTouched);
   const [errors, setErrors] = useState({});
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   const next = () => step < totalSteps && setStep((s) => s + 1);
   const back = () => step > 1 && setStep((s) => s - 1);
@@ -78,6 +82,20 @@ export default function BookingModal({ isOpen, onClose }) {
         if (value.length > 60) return "City is too long.";
         return "";
       }
+      case "email": {
+        if (!value) return "Email is required.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return "Enter a valid email address.";
+        if (value.length > 120) return "Email is too long.";
+        return "";
+      }
+      case "phone": {
+        if (!value) return "Phone number is required.";
+        if (!/^\d+$/.test(value)) return "Use numbers only.";
+        if (value.length < 10) return "Enter a ten digit phone number.";
+        if (value.length > 15) return "Phone number is too long.";
+        return "";
+      }
       case "topic": {
         if (!value) return "Choose a service.";
         return "";
@@ -106,9 +124,10 @@ export default function BookingModal({ isOpen, onClose }) {
   const validateStep = (currentStep, values) => {
     const fieldMap = {
       1: ["name"],
-      2: ["city"],
-      3: ["topic", "customTopic"],
-      4: ["date"],
+      2: ["email", "phone"],
+      3: ["city"],
+      4: ["topic", "customTopic"],
+      5: ["date"],
     };
     const fields = fieldMap[currentStep] || [];
     const stepErrors = {};
@@ -265,7 +284,7 @@ export default function BookingModal({ isOpen, onClose }) {
                   exit="exit"
                   className="absolute inset-0 px-10 pt-20 pb-8 flex flex-col"
                 >
-                  {/* ... STEP 1 & 2 remain same as previous code ... */}
+                  {/* ... STEP*/}
                   {step === 1 && (
                     <div className="space-y-6 my-auto">
                       <h2 className="text-4xl font-serif text-slate-900 leading-tight">
@@ -311,8 +330,73 @@ export default function BookingModal({ isOpen, onClose }) {
                   {step === 2 && (
                     <div className="space-y-6 my-auto">
                       <h2 className="text-4xl font-serif text-slate-900 leading-tight">
+                        How can we{" "}
+                        <span className="italic text-[#7A1E2D]">reach you?</span>
+                      </h2>
+                      <input
+                        autoFocus
+                        className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-2xl outline-none focus:border-[#7A1E2D] transition-all placeholder:text-slate-200"
+                        placeholder="Email ID"
+                        type="email"
+                        value={data.email}
+                        onChange={(e) => updateField("email", e.target.value)}
+                        onBlur={() => handleBlur("email")}
+                        aria-invalid={touched.email && Boolean(errors.email)}
+                        aria-describedby="booking-email-error"
+                      />
+                      {touched.email && errors.email && (
+                        <p
+                          id="booking-email-error"
+                          className="text-xs text-[#B42318] font-semibold"
+                        >
+                          {errors.email}
+                        </p>
+                      )}
+                      <input
+                        className="w-full bg-transparent border-b-2 border-slate-200 py-4 text-2xl outline-none focus:border-[#7A1E2D] transition-all placeholder:text-slate-200"
+                        placeholder="Phone Number"
+                        type="tel"
+                        inputMode="numeric"
+                        value={data.phone}
+                        onChange={(e) =>
+                          updateField(
+                            "phone",
+                            e.target.value.replace(/\D/g, "")
+                          )
+                        }
+                        onBlur={() => handleBlur("phone")}
+                        aria-invalid={touched.phone && Boolean(errors.phone)}
+                        aria-describedby="booking-phone-error"
+                      />
+                      {touched.phone && errors.phone && (
+                        <p
+                          id="booking-phone-error"
+                          className="text-xs text-[#B42318] font-semibold"
+                        >
+                          {errors.phone}
+                        </p>
+                      )}
+                      <button
+                        onClick={handleNext}
+                        disabled={!data.email || !data.phone}
+                        className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
+                      >
+                        Continue
+                        <motion.div
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ repeat: Infinity, duration: 1.5 }}
+                        >
+                          <ArrowRight size={16} />
+                        </motion.div>
+                      </button>
+                    </div>
+                  )}
+
+                  {step === 3 && (
+                    <div className="space-y-6 my-auto">
+                      <h2 className="text-4xl font-serif text-slate-900 leading-tight">
                         Where are you{" "}
-                        <span className="italic text-[#7A1E2D]">from?</span>
+                        <span className=" text-[#7A1E2D]">from?</span>
                       </h2>
                       <input
                         autoFocus
@@ -348,8 +432,8 @@ export default function BookingModal({ isOpen, onClose }) {
                     </div>
                   )}
 
-                  {/* STEP 3: PILL-STYLE SERVICE SELECTION */}
-                  {step === 3 && (
+                  {/* STEP 4: PILL-STYLE SERVICE SELECTION */}
+                  {step === 4 && (
                     <div className="space-y-6 flex flex-col h-full">
                       <div className="space-y-1 text-center">
                         <h2 className="text-3xl font-serif text-slate-900 leading-tight">
@@ -363,7 +447,7 @@ export default function BookingModal({ isOpen, onClose }) {
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap justify-center items-center gap-3 max-w-[420px] mx-auto">
+                      <div className="grid grid-cols-3 gap-2 max-w-[390px] mx-auto">
                         {SERVICES.map((service) => {
                           const isSelected = data.topic === service;
                           return (
@@ -412,18 +496,18 @@ export default function BookingModal({ isOpen, onClose }) {
                                   return nextErrors;
                                 });
                               }}
-                              className={`px-6 py-3 rounded-full border-2 text-sm font-bold tracking-wide transition-all duration-300 ${
+                              className={`px-2 py-2 rounded-full border text-[16px] font-semibold leading-tight tracking-wide transition-all duration-300 ${
                                 isSelected
                                   ? "bg-[#7A1E2D] border-[#7A1E2D] text-white shadow-lg shadow-red-900/20"
                                   : "bg-white border-slate-100 text-slate-600 hover:border-[#7A1E2D]/30"
                               }`}
                             >
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center justify-center gap-2">
                                 {isSelected && (
                                   <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="w-1.5 h-1.5 rounded-full bg-white"
+                                    className="w-1.5 h-1.5 rounded-full bg-white "
                                   />
                                 )}
                                 {service}
@@ -498,7 +582,7 @@ export default function BookingModal({ isOpen, onClose }) {
                     </div>
                   )}
                   {/* STEP 4: DATE */}
-                  {step === 4 && (
+                  {step === 5 && (
                     <div className="space-y-6 my-auto">
                       <h2 className="text-4xl font-serif text-slate-900 leading-tight">
                         When shall we{" "}
@@ -545,7 +629,7 @@ export default function BookingModal({ isOpen, onClose }) {
                   )}
 
                   {/* STEP 5: FINAL */}
-                  {step === 5 && (
+                  {step === 6 && (
                     <div className="space-y-6 text-center my-auto">
                       <Sparkles className="mx-auto text-[#7A1E2D]" size={32} />
                       <div className="p-6 bg-slate-50 border border-slate-100 text-left space-y-4">

@@ -240,7 +240,7 @@ const Home = () => {
       </section>
 
       {/* 2. PROGRAM OVERVIEW */}
-      <section className="relative py-14 px-6 overflow-hidden bg-white">
+      <section  id="program-overview" className="relative py-14 px-6 overflow-hidden bg-white ">
         {/* Mesh Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
           <div className="absolute bottom-[5%] right-[-5%] w-[350px] h-[350px] rounded-full opacity-10 blur-[80px] bg-[#9667E0]" />

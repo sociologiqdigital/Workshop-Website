@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { programs } from "../data/courses";
 
 export default function Navbar({ onBookClick }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,43 +74,24 @@ export default function Navbar({ onBookClick }) {
 
         {/* DESKTOP NAV */}
         <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => {
-            if (link.dropdown) {
-              return (
-                <div key={link.label} className="relative group">
-                  <button
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    className="flex items-center gap-1 text-sm font-medium text-dark/80 hover:text-dark transition"
-                  >
-                    <span className="relative">
-                      {link.label}
-                      <span className="absolute left-0 -bottom-1 h-[1px] w-full bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </span>
-                  </button>
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={link.label}
-                to={link.to}
-                className="relative text-sm font-medium text-dark/80 hover:text-dark transition"
-              >
-                <span className="relative">
-                  {link.label}
-                  <span className="absolute left-0 -bottom-1 h-[1px] w-full bg-primary/60 opacity-0 hover:opacity-100 transition-opacity" />
-                </span>
-              </Link>
-            );
-          })}
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className="group relative text-base font-medium text-dark/80 hover:text-primary transition"
+            >
+              <span className="relative">
+                {link.label}
+                <span className="absolute left-0 -bottom-1 h-[1px] w-full bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </span>
+            </Link>
+          ))}
 
           {/* CTA */}
           <button
             type="button"
             onClick={() => onBookClick?.()}
-            className="rounded-full bg-primary/90 px-6 py-2.5 text-sm font-medium text-white hover:bg-primary transition shine-button"
+            className="rounded-full bg-primary/90 px-6 py-2.5 text-base font-medium text-white hover:bg-primary transition shine-button"
           >
             Let's Connect
           </button>
@@ -147,36 +127,16 @@ export default function Navbar({ onBookClick }) {
             "
           >
             <div className="px-6 py-6 flex flex-col gap-6">
-              {navLinks.map((link) => {
-                if (link.dropdown) {
-                  return (
-                    <div key={link.label} className="space-y-3">
-                      <p className="text-white font-medium">Workshops</p>
-                      {programs.map((program) => (
-                        <Link
-                          key={program.id}
-                          to={`/programs/${program.slug}`}
-                          className="block pl-3 text-white/80 hover:text-white transition"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {program.title}
-                        </Link>
-                      ))}
-                    </div>
-                  );
-                }
-
-                return (
-                  <Link
-                    key={link.label}
-                    to={link.to}
-                    className="text-white/90 hover:text-white transition"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className="text-white/90 hover:text-white transition"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
               <button
                 type="button"
