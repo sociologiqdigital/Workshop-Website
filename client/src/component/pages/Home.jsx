@@ -557,9 +557,9 @@ export default function Home({ onBookClick }) {
       </section>
 
       {/* Refined Stats Section */}
-      <section className="relative bg-background home-section overflow-hidden">
+      <section className="relative grid-bg home-section overflow-hidden">
         {/* soft ambient wash */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" />
+        {/* <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" /> */}
 
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-14 md:gap-y-0">
@@ -574,13 +574,13 @@ export default function Home({ onBookClick }) {
                 )}
 
                 {/* number container */}
-                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center">
+                <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center lining-nums">
                   <AnimatedCounter value={stat.value} />
-                  <span className="text-primary ml-1 lining-nums">+</span>
+                  <span className="text-primary ml-1 lining-nums font-bold">+</span>
                 </div>
 
                 {/* label */}
-                <p className="mt-2 text-[16px] font-bold md:text-[14px] italic text-muted-foreground max-w-[160px]">
+                <p className="mt-2 text-[16px] font-bold md:text-[14px]  text-dark max-w-[160px]">
                   {stat.label}
                 </p>
               </div>
@@ -613,7 +613,7 @@ export default function Home({ onBookClick }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="text-[#F6F1EB]/60 uppercase tracking-[0.2em] text-xs font-bold mb-8"
+                  className="text-white uppercase tracking-[0.2em] text-xs font-bold mb-8"
                 >
                   Currently
                 </motion.div>
@@ -626,7 +626,7 @@ export default function Home({ onBookClick }) {
                   transition={{ duration: 1, delay: 0.4 }}
                   className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.5rem)] leading-[1.1]"
                 >
-                  Where I'm showing up right now
+                  What I'm Doing Now
                 </motion.h2>
 
                 {/* Divider */}
@@ -641,12 +641,12 @@ export default function Home({ onBookClick }) {
               </div>
 
               {/* Texture Overlay */}
-              <div
+              {/* <div
                 className="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
                 }}
-              />
+              /> */}
             </motion.div>
 
             {/* RIGHT CARDS — Aligned to the vertical center of the slab */}
@@ -722,7 +722,6 @@ export default function Home({ onBookClick }) {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="border-l-4 border-primary pl-6 "
           >
             <span className="text-primary tracking-widest uppercase text-[10px] font-bold bg-primary/5 px-2 py-1">
               Timeline
