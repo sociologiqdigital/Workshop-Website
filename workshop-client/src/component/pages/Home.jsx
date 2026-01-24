@@ -147,7 +147,7 @@ const Home = () => {
       {/* 1. HERO SECTION */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative min-h-screen  flex items-center justify-center overflow-hidden bg-primary bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
+        className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
       >
         {/* --- ANIMATED MESH GRADIENT (Light & Airy Lavender) --- */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -178,7 +178,7 @@ const Home = () => {
         {/* --- THE TOP ILLUMINATING RING --- */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1400px] h-[400px] pointer-events-none">
           {/* Using white and very soft purple for the ring */}
-          <div className="absolute top-[-180px] left-0 right-0 h-[360px] border-[1.5px] border-white rounded-[100%] z-10 shadow-[0_0_40px_rgba(212,187,252,0.4)]" />
+          {/* <div className="absolute top-[-180px] left-0 right-0 h-[360px] border-[1.5px] border-white rounded-[100%] z-10 shadow-[0_0_40px_rgba(212,187,252,0.4)]" /> */}
           <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-gradient-to-b from-white via-white/80 to-transparent blur-[100px] z-0" />
         </div>
 
@@ -199,7 +199,7 @@ const Home = () => {
         </motion.div>
 
         {/* --- CONTENT --- */}
-        <div className="relative z-20 max-w-6xl mx-auto px-6 text-center pt-24">
+        <div className="relative z-20 max-w-6xl mx-auto px-6 text-center pt-12 md:pt-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -240,7 +240,10 @@ const Home = () => {
       </section>
 
       {/* 2. PROGRAM OVERVIEW */}
-      <section  id="program-overview" className="relative py-14 px-6 overflow-hidden bg-white ">
+      <section
+        id="program-overview"
+        className="relative py-14 px-6 overflow-hidden bg-white "
+      >
         {/* Mesh Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
           <div className="absolute bottom-[5%] right-[-5%] w-[350px] h-[350px] rounded-full opacity-10 blur-[80px] bg-[#9667E0]" />
@@ -305,8 +308,8 @@ const Home = () => {
                           program.status === "active"
                             ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
                             : program.status === "soon"
-                            ? "bg-[#FFF5D6] text-[#D98C12] border-[#F5D48B]"
-                            : "bg-gray-50 text-gray-400 border-gray-200"
+                              ? "bg-[#FFF5D6] text-[#D98C12] border-[#F5D48B]"
+                              : "bg-gray-50 text-gray-400 border-gray-200"
                         }`}
                       >
                         {program.statusLabel}
@@ -702,7 +705,6 @@ const Home = () => {
       {/* 5. BONUSES */}
       <section
         ref={bonusSectionRef}
-        /* UPDATED: Added linear gradient background from your index.css tokens */
         className="py-20 relative overflow-hidden"
         style={{
           background:
@@ -749,58 +751,72 @@ const Home = () => {
                 transition={{ delay: 0.5 + idx * 0.2 }}
                 className="relative group h-full"
               >
-                {/* --- THE NEON GLOW CONTAINER --- */}
-                <div className="relative p-[2px] rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(150,103,224,0.15)]">
-                  {/* 1. STATIC LAVENDER BORDER (Matches index.css accent) */}
-                  <div className="absolute inset-0 border-2 border-[rgb(var(--color-accent))]/30 rounded-[2.5rem] z-0 group-hover:shadow-[0_0_18px_rgba(150,103,224,0.45)] transition-shadow duration-500" />
+                {/* OUTER WRAPPER (NO overflow-hidden) so glow is not clipped */}
+                <div className="relative rounded-[2.5rem] transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(150,103,224,0.15)]">
+                  {/*  EXTRA OUTER GLOW  */}
+                  <div
+                    className="pointer-events-none absolute -inset-3 rounded-[2.8rem] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                    style={{
+                      background:
+                        "radial-gradient(closest-side, rgba(150,103,224,0.22), transparent 70%)",
+                    }}
+                  />
 
-                  {/* 2. ROTATING BORDER GLOW (MASKED TO EDGE) */}
-                  <div className="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0">
-                    <div
-                      className="absolute inset-0 p-[4px] rounded-[2.5rem] animate-[spin_4s_linear_infinite]"
-                      style={{
-                        background:
-                          "conic-gradient(from 0deg, transparent 0deg, transparent 130deg, rgba(150,103,224,0.9) 170deg, transparent 210deg, transparent 360deg)",
-                        WebkitMask:
-                          "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-                        WebkitMaskComposite: "xor",
-                        maskComposite: "exclude",
-                      }}
-                    />
+                  {/* ✅ INNER WRAPPER (overflow-hidden) keeps border effects clean */}
+                  <div className="relative p-[2px] rounded-[2.5rem] overflow-hidden">
+                    {/* 1. STATIC BORDER */}
+                    <div className="absolute inset-0 border-2 border-[rgb(var(--color-accent))]/30 rounded-[2.5rem] z-0 transition-shadow duration-500 group-hover:shadow-[0_0_18px_rgba(150,103,224,0.45)]" />
+
+                    {/* 2. ROTATING BORDER GLOW (masked to edge) */}
+                    <div className="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0">
+                      <div
+                        className="spinBorder absolute inset-0 rounded-[2.5rem]"
+                        style={{
+                          border: "6px solid transparent",
+                          background:
+                            "linear-gradient(transparent, transparent) padding-box, conic-gradient(from 0deg, transparent 0deg, transparent 90deg, rgba(160,110,255,1) 140deg, rgba(220,180,255,1) 175deg, rgba(160,110,255,1) 210deg, transparent 260deg, transparent 360deg) border-box",
+                          backgroundClip: "padding-box, border-box",
+                          backgroundOrigin: "padding-box, border-box",
+                          filter:
+                            "drop-shadow(0 0 18px rgba(160,110,255,0.75)) drop-shadow(0 0 28px rgba(160,110,255,0.45))",
+                          transformOrigin: "center",
+                          willChange: "transform",
+                        }}
+                      />
+                    </div>
+
+                    {/* 3. THE CARD CONTENT (unchanged) */}
+                    <div className="relative bg-white rounded-[2.4rem] p-8 h-full min-h-[300px] flex flex-col items-center justify-center z-10 border border-white/50">
+                      <motion.div
+                        animate={{
+                          boxShadow: [
+                            "0 0 0px rgba(150,103,224,0)",
+                            "0 0 20px rgba(150,103,224,0.3)",
+                            "0 0 0px rgba(150,103,224,0)",
+                          ],
+                        }}
+                        transition={{ repeat: Infinity, duration: 3 }}
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                        style={{
+                          backgroundColor: bonus.color,
+                          color: bonus.accent,
+                        }}
+                      >
+                        <bonus.Icon size={26} />
+                      </motion.div>
+
+                      <h3 className="text-xl font-bold text-dark mb-3 tracking-tight lining-nums">
+                        {bonus.title}
+                      </h3>
+
+                      <p className="text-muted/80 leading-relaxed font-light text-base lining-nums">
+                        {bonus.desc}
+                      </p>
+                    </div>
+
+                    {/* 4. EXTERNAL NEON FUZZ (still inside, not clipped now because outer glow exists) */}
+                    <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[rgb(var(--color-accent))]/10 blur-[2px] pointer-events-none" />
                   </div>
-
-                  {/* 3. THE CARD CONTENT (Inner Body) */}
-                  <div className="relative bg-white/90 backdrop-blur-sm rounded-[2.4rem] p-8 h-full min-h-[300px] flex flex-col items-center justify-center z-10 border border-white/50">
-                    {/* Pulsing Icon with Glow */}
-                    <motion.div
-                      animate={{
-                        boxShadow: [
-                          "0 0 0px rgba(150,103,224,0)",
-                          "0 0 20px rgba(150,103,224,0.3)",
-                          "0 0 0px rgba(150,103,224,0)",
-                        ],
-                      }}
-                      transition={{ repeat: Infinity, duration: 3 }}
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                      style={{
-                        backgroundColor: bonus.color,
-                        color: bonus.accent,
-                      }}
-                    >
-                      <bonus.Icon size={26} />
-                    </motion.div>
-
-                    <h3 className="text-xl font-bold text-dark mb-3 tracking-tight">
-                      {bonus.title}
-                    </h3>
-
-                    <p className="text-muted/80 leading-relaxed font-light text-base">
-                      {bonus.desc}
-                    </p>
-                  </div>
-
-                  {/* 4. EXTERNAL NEON FUZZ */}
-                  <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[rgb(var(--color-accent))]/10 blur-[2px] pointer-events-none" />
                 </div>
               </motion.div>
             ))}
@@ -810,11 +826,15 @@ const Home = () => {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-    `,
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        /* Run spin always (or you can trigger on hover only) */
+        .spinBorder { animation: none; }
+.group:hover .spinBorder { animation: spin 4s linear infinite; }
+
+      `,
           }}
         />
       </section>

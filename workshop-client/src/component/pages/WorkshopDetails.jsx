@@ -100,7 +100,7 @@ export default function WorkshopDetails() {
       {/* --- MAIN CONTENT & EXPANDED SIDEBAR --- */}
       <section className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-[1fr_420px] gap-12 items-start">
-          {/* LEFT CONTENT: WHAT YOU'LL MASTER */}
+          {/* LEFT CONTENT: WHAT YOU'LL Learn */}
           <div className="space-y-12">
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="p-6 rounded-3xl bg-white border border-purple-50 shadow-sm">
@@ -184,7 +184,8 @@ export default function WorkshopDetails() {
                   onClick={handleEnrollClick}
                   className="w-full py-4 rounded-2xl bg-[#9667E0] text-white font-bold text-lg shadow-[0_10px_30px_rgba(150,103,224,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                 >
-                  Enroll Now <ArrowRight size={20} />
+                  {program.status === "soon" ? "Join Waitlist" : "Enroll Now"}{" "}
+                  <ArrowRight size={20} />
                 </button>
 
                 <div className="pt-6 border-t border-purple-50">
