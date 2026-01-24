@@ -626,7 +626,7 @@ export default function Home({ onBookClick }) {
                   transition={{ duration: 1, delay: 0.4 }}
                   className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.5rem)] leading-[1.1]"
                 >
-                  What I'm Doing Now
+                  What I'm Doing Now 
                 </motion.h2>
 
                 {/* Divider */}

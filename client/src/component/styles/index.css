@@ -797,7 +797,7 @@
 }
 
 .about-orbit text {
-  font-size: 16px;
+  font-size: 14px;
   letter-spacing: 0.35em;
   fill: rgba(var(--color-primary), 0.75);
   font-weight: 600;
