@@ -1,7 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp, ChevronDown } from "lucide-react";
 
-export default function FAQItem({ index, question, answer, isOpen, onToggle }) {
+export default function FAQItem({
+  index,
+  question,
+  answer,
+  isOpen,
+  onToggle,
+  isAction,
+}) {
+  const hasAnswer = Boolean(answer);
   return (
     <div className="mb-4">
       {/* QUESTION */}
@@ -19,18 +27,20 @@ export default function FAQItem({ index, question, answer, isOpen, onToggle }) {
           </h3>
         </div>
 
-        <span className="shrink-0 text-primary">
-          {isOpen ? (
-            <ChevronUp className="w-5 h-5" />
-          ) : (
-            <ChevronDown className="w-5 h-5" />
-          )}
-        </span>
+        {hasAnswer && !isAction && (
+          <span className="shrink-0 text-primary">
+            {isOpen ? (
+              <ChevronUp className="w-5 h-5" />
+            ) : (
+              <ChevronDown className="w-5 h-5" />
+            )}
+          </span>
+        )}
       </button>
 
       {/* ANSWER */}
       <AnimatePresence initial={false}>
-        {isOpen && (
+        {hasAnswer && isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}

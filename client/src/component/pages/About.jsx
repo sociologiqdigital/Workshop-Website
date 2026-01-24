@@ -267,7 +267,7 @@ export default function About({ onBookClick }) {
           </div>
         </div>
       </section>
-      <FAQSection />
+      <FAQSection onBookClick={onBookClick} />
       {/* --- TESTIMONIAL SECTION --- */}
       <div className="py-20 md:py-28 border-t border-dark/5">
         <Testimonial />

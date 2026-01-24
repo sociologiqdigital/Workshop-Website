@@ -19,4 +19,8 @@ export const faqData = [
     answer:
       "Yes, the program includes group mentoring along with limited 1:1 guidance where required.",
   },
+  {
+    question: "More questions?",
+    action: "booking",
+  }
 ];

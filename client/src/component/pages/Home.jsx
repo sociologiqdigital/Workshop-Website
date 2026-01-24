@@ -16,9 +16,11 @@ import { upcomingEvents } from "../data/upcomingEvents";
 import AnimatedCounter from "../pages/AnimatedCounter";
 import { ImageWithFallback } from "../common/ImageWithFallback";
 // Images and Illustration imports
-import BenefitImage from "../styles/images/whoBenefitImg.jpg";
+
 import HeroImg from "../styles/images/HeroImg.png";
 import AchievementImg from "../styles/images/achivementImg.jpg";
+import AchievementImg2 from "../styles/images/achivementImg2.jpg"
+import AchievementImg3 from "../styles/images/achivementImg3.jpg";
 import SteamingCoffee from "../common/SteamingCoffee";
 
 import {
@@ -119,14 +121,14 @@ export default function Home({ onBookClick }) {
       tag: "Community",
       description:
         "Intimate cohorts for women-led businesses to get direction, accountability, and growth.",
-      image: galleryItems[2]?.image || BenefitImage,
+      image: AchievementImg2,
     },
     {
       title: "Stage & Media",
       tag: "Talks",
       description:
         "Panels, podcasts, and keynotes on sustainable digital strategy and confident execution.",
-      image: galleryItems[3]?.image || HeroImg,
+      image: AchievementImg3,
     },
   ];
   const roles = [
@@ -469,12 +471,12 @@ export default function Home({ onBookClick }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative hidden md:flex justify-end items-center md:pr-8 lg:pr-12"
+              className="relative flex justify-center md:justify-end items-center mt-8 md:mt-0 md:pr-8 lg:pr-12"
             >
               <div className="relative">
                 {/* Main Image Container */}
                 {/* <div className="relative z-10 w-[380px] h-[500px] lg:w-[420px] lg:h-[560px] rounded-[48px] overflow-hidden border-[12px] border-white shadow-soft"> */}
-                <div className="relative z-10 w-[340px] h-[460px] lg:w-[400px] lg:h-[520px] rounded-[40px] overflow-hidden">
+                <div className="relative z-10 w-[280px] h-[380px] sm:w-[320px] sm:h-[440px] lg:w-[400px] lg:h-[520px] rounded-[40px] overflow-hidden">
                   <ImageWithFallback
                     src={HeroImg}
                     alt="Ruchi Dorlikar"
@@ -889,7 +891,9 @@ export default function Home({ onBookClick }) {
                       <ImageWithFallback
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        className={`w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110 ${
+                          item.objectPosition ?? "object-center"
+                        }`}
                       />
 
                       {/* Gradient overlay */}

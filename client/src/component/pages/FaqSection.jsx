@@ -4,6 +4,7 @@ import FAQItem from "./FaqItem";
 
 export default function FAQSection({
   className = "bg-background py-14 md:py-16",
+  onBookClick,
 }) {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -14,15 +15,25 @@ export default function FAQSection({
           Frequently Asked Questions
         </h2>
 
-        {faqData.map((faq, index) => (
-          <FAQItem
-            key={index}
-            question={faq.question}
-            answer={faq.answer}
-            isOpen={openIndex === index}
-            onToggle={() => setOpenIndex(openIndex === index ? null : index)}
-          />
-        ))}
+        {faqData.map((faq, index) => {
+          const isBookingAction = faq.action === "booking";
+          return (
+            <FAQItem
+              key={index}
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={!isBookingAction && openIndex === index}
+              isAction={isBookingAction}
+              onToggle={() => {
+                if (isBookingAction) {
+                  onBookClick?.();
+                  return;
+                }
+                setOpenIndex(openIndex === index ? null : index);
+              }}
+            />
+          );
+        })}
       </div>
     </section>
   );
