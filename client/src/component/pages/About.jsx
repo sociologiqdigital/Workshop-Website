@@ -104,11 +104,11 @@ export default function About({ onBookClick }) {
                       d="M 100,20 a 80,80 0 1,1 -0.1,0"
                     />
                   </defs>
-                  <text>
+                  {/* <text>
                     <textPath href="#about-orbit-path" startOffset="0%">
                       Think • Digital • Act • Think • Digital • Act •
                     </textPath>
-                  </text>
+                  </text> */}
                 </svg>
               </div>
               <div className="relative z-10 w-full max-w-[400px] aspect-[4/5] rounded-[60px] overflow-hidden shadow-2xl">
