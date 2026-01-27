@@ -386,8 +386,6 @@ export default function Home({ onBookClick }) {
               >
                 Hello, I'm
               </motion.div>
-
-              {/* Name - Leading tight to remove extra space below */}
               <motion.h1
                 variants={{
                   hidden: { opacity: 0, y: 10 },
@@ -482,7 +480,7 @@ export default function Home({ onBookClick }) {
                   />
                 </div>
                 {/* Badge 1: Top Left - Professional Label */}
-                <motion.div
+                {/* <motion.div
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -492,10 +490,10 @@ export default function Home({ onBookClick }) {
                   <span className="text-[11px] font-bold text-dark uppercase tracking-wider">
                     Clarity Coach
                   </span>
-                </motion.div>
+                </motion.div> */}
 
                 {/* Badge 2: Mid Right  */}
-                <motion.div
+                {/* <motion.div
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.7 }}
@@ -512,10 +510,10 @@ export default function Home({ onBookClick }) {
                   <span className="text-[10px] font-bold text-dark tracking-tighter">
                     Google Certified
                   </span>
-                </motion.div>
+                </motion.div> */}
 
                 {/* Badge 3: Bottom Left - JCI President 2025 (Important Milestone from PDF) */}
-                <motion.div
+                {/* <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.9 }}
@@ -527,10 +525,10 @@ export default function Home({ onBookClick }) {
                   <span className="text-[9px] uppercase tracking-widest font-medium opacity-80">
                     LO President
                   </span>
-                </motion.div>
+                </motion.div> */}
 
                 {/* Badge 4: Bottom Right - Project Stats */}
-                <motion.div
+                {/* <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 1.1 }}
@@ -547,7 +545,7 @@ export default function Home({ onBookClick }) {
                       Digital Systems
                     </p>
                   </div>
-                </motion.div>
+                </motion.div> */}
               </div>
             </motion.div>
           </div>
@@ -556,9 +554,6 @@ export default function Home({ onBookClick }) {
 
       {/* Stats Section */}
       <section className="relative grid-bg home-section overflow-hidden">
-        {/* soft ambient wash */}
-        {/* <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" /> */}
-
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-y-14 md:gap-y-0">
             {stats.map((stat, index) => (
@@ -570,7 +565,6 @@ export default function Home({ onBookClick }) {
                 {index !== 0 && (
                   <span className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 h-10 w-px bg-primary/25" />
                 )}
-
                 {/* number container */}
                 <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center lining-nums">
                   <AnimatedCounter value={stat.value} />
@@ -578,7 +572,6 @@ export default function Home({ onBookClick }) {
                     +
                   </span>
                 </div>
-
                 {/* label */}
                 <p className="mt-2 text-[16px] font-bold md:text-[14px]  text-dark max-w-[160px]">
                   {stat.label}
@@ -751,19 +744,19 @@ export default function Home({ onBookClick }) {
             <ChevronRight size={14} />
           </button>
 
-          <div
-            ref={journeyScrollRef}
-            onPointerDown={handleJourneyPointerDown}
-            onPointerMove={handleJourneyPointerMove}
-            onPointerUp={handleJourneyPointerUp}
-            onPointerLeave={handleJourneyPointerUp}
-            className="relative overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing"
-          >
-            {/* Visual Wire */}
-            <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
+            <div
+              ref={journeyScrollRef}
+              onPointerDown={handleJourneyPointerDown}
+              onPointerMove={handleJourneyPointerMove}
+              onPointerUp={handleJourneyPointerUp}
+              onPointerLeave={handleJourneyPointerUp}
+              className="relative overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing px-4 sm:px-6 md:px-8 lg:px-10"
+            >
+              {/* Visual Wire */}
+              <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
 
-            {/* Flex Wrapper */}
-            <div className="flex flex-nowrap gap-6 md:gap-10 px-4 sm:px-6 md:px-[10%] min-w-max pt-6">
+              {/* Flex Wrapper */}
+              <div className="flex flex-nowrap gap-6 md:gap-10 min-w-max pt-6">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
@@ -829,7 +822,7 @@ export default function Home({ onBookClick }) {
       </section>
 
       {/* Gallery section */}
-      <section className="home-section px-6 sm:px-10 lg:px-20 max-w-[1440px] mx-auto bg-[#FAFAF8]">
+      <section className="home-section px-6 sm:px-10 lg:px-20 max-w-[1440px] mx-auto bg-surface">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
