@@ -69,14 +69,14 @@ export default function PremiumCarousel({ slides = [] }) {
   );
 
   return (
-    <section className="relative w-full py-20 bg-[#F9FAFB] overflow-hidden">
+    <section className="relative w-full py-12 md:py-14 bg-surface overflow-hidden">
       {/* Background Decorative Element */}
       <div className="pointer-events-none absolute -left-20 -top-20 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="relative mx-auto w-full max-w-[1100px]">
+        <div className="relative mx-auto w-full max-w-[1000px]">
           {/* Glassmorphic NAVIGATION & PEEKS */}
-          <div className="relative flex items-center justify-center gap-4 h-[450px]">
+          <div className="relative flex items-center justify-center gap-3 md:gap-4 h-[380px] md:h-[440px]">
             {/* LEFT PEEK + ARROW */}
             <div
               className="relative hidden md:block group cursor-pointer"
@@ -86,7 +86,7 @@ export default function PremiumCarousel({ slides = [] }) {
                 key={`prev-${active}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 0.4, x: 0 }}
-                className="h-[300px] w-[180px] overflow-hidden rounded-[40px] grayscale hover:grayscale-0 transition-all duration-500 shadow-lg"
+                className="h-[290px] w-[175px] overflow-hidden rounded-[36px] grayscale hover:grayscale-0 transition-all duration-500 shadow-lg"
               >
                 <img
                   src={prevSlide.image}
@@ -103,9 +103,9 @@ export default function PremiumCarousel({ slides = [] }) {
             </div>
 
             {/* MAIN STAGE */}
-            <div className="relative z-10 w-full max-w-[700px] h-full flex items-center">
+            <div className="relative z-10 w-full max-w-[760px] h-full flex items-center">
               {/* Decorative Organic Backdrop Shape */}
-              <div className="absolute inset-0 -m-8 opacity-50">
+              <div className="absolute inset-0 -m-6 opacity-50">
                 <svg
                   viewBox="0 0 200 200"
                   xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ export default function PremiumCarousel({ slides = [] }) {
                 </svg>
               </div>
 
-              <div className="relative w-full h-[400px] overflow-hidden rounded-[50px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)]">
+              <div className="relative w-full h-[330px] md:h-[380px] overflow-hidden rounded-[44px] shadow-[0_32px_80px_-24px_rgba(0,0,0,0.2)]">
                 <AnimatePresence
                   initial={false}
                   custom={direction}
@@ -153,7 +153,7 @@ export default function PremiumCarousel({ slides = [] }) {
                 key={`next-${active}`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 0.4, x: 0 }}
-                className="h-[300px] w-[180px] overflow-hidden rounded-[40px] grayscale hover:grayscale-0 transition-all duration-500 shadow-lg"
+                className="h-[290px] w-[175px] overflow-hidden rounded-[36px] grayscale hover:grayscale-0 transition-all duration-500 shadow-lg"
               >
                 <img
                   src={nextSlide.image}
@@ -171,7 +171,7 @@ export default function PremiumCarousel({ slides = [] }) {
           </div>
 
           {/* DYNAMIC PAGINATION */}
-          <div className="mt-12 flex justify-center items-center gap-3">
+          <div className="mt-8 flex justify-center items-center gap-3">
             {resolvedSlides.map((_, i) => (
               <button
                 key={i}

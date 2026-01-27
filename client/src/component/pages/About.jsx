@@ -25,19 +25,19 @@ export default function About({ onBookClick }) {
       <PremiumCarousel />
 
       {/* --- HERO SECTION --- */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      <section className="relative py-12 md:py-16 overflow-hidden grid-bg">
         <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* TEXT CONTENT */}
-            <div className="lg:col-span-6 space-y-8 order-2 lg:order-1">
-              <header className="space-y-4">
+            <div className="lg:col-span-6 space-y-6 order-2 lg:order-1">
+              <header className="space-y-3">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
                   className="flex items-center gap-3"
                 >
-                  <span className="h-px w-12 bg-primary/30" />
+                  {/* <span className="h-px w-12 bg-primary/30" /> */}
                 </motion.div>
 
                 <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-dark leading-[1.1] tracking-tight">
@@ -48,7 +48,7 @@ export default function About({ onBookClick }) {
                 </h1>
               </header>
 
-              <div className="space-y-6 text-base md:text-lg text-muted/90 max-w-lg leading-relaxed">
+              <div className="space-y-5 text-base md:text-lg text-muted/90 max-w-lg leading-relaxed">
                 <p>
                   Ruchi Dorlikar is a{" "}
                   <span className="text-dark font-semibold border-b border-primary/20">
@@ -65,7 +65,7 @@ export default function About({ onBookClick }) {
               </div>
 
               {/* WATER WAVE BUTTON */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -125,16 +125,16 @@ export default function About({ onBookClick }) {
       </section>
 
       {/* --- THE VISION SECTION --- */}
-      <section className="relative py-12 md:py-16 bg-[#F9F6F3] overflow-hidden">
+      <section className="relative py-8 md:py-10 bg-[#F9F6F3] overflow-hidden">
         {/* 1. Background Typography (The "V" for Vision) */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 select-none pointer-events-none">
+        {/* <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 select-none pointer-events-none">
           <span className="text-[40rem] font-serif  text-primary/5 leading-none">
             V
           </span>
-        </div>
+        </div> */}
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
             {/* LEFT COLUMN: THE VISION PORTAL */}
             <div className="lg:col-span-6 relative">
               <motion.div
@@ -206,7 +206,7 @@ export default function About({ onBookClick }) {
             </div>
 
             {/* RIGHT COLUMN: THE STORY */}
-            <div className="lg:col-span-6 space-y-12">
+            <div className="lg:col-span-6 space-y-8">
               <motion.div
                 initial={{ opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -214,15 +214,15 @@ export default function About({ onBookClick }) {
                 className="space-y-8"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-[1px] w-8 bg-primary/30" />
-                    <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-primary/80">
+                  {/* <div className="flex items-center gap-3"> */}
+                    {/* <div className="h-[1px] w-8 bg-primary/30" /> */}
+                    {/* <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-primary/80">
                       The Journey
-                    </span>
-                  </div>
-                  <h2 className="text-5xl md:text-7xl font-serif leading-[0.9] text-dark tracking-tighter">
-                    Corporate <br />
-                    <span className="text-primary italic font-light ml-8 md:ml-12">
+                    </span> */}
+                  {/* </div> */}
+                  <h2 className="text-4xl md:text-5xl font-serif leading-[0.9] text-dark tracking-tighter">
+                    Corporate{" "}
+                    <span className="text-primary italic font-light mx-3 md:mx-4">
                       to
                     </span>{" "}
                     Creativity
@@ -247,7 +247,7 @@ export default function About({ onBookClick }) {
               </motion.div>
 
               {/* MINIMAL STATS ROW */}
-              <div className="flex flex-wrap gap-12 pt-10">
+              <div className="flex flex-wrap gap-10 pt-6">
                 {[
                   { icon: <Eye size={18} />, label: "Seen" },
                   { icon: <Mic size={18} />, label: "Heard" },
@@ -269,7 +269,7 @@ export default function About({ onBookClick }) {
       </section>
       <FAQSection onBookClick={onBookClick} />
       {/* --- TESTIMONIAL SECTION --- */}
-      <div className="py-20 md:py-28 border-t border-dark/5">
+      <div className="py-10 md:py-14 border-t border-dark/5">
         <Testimonial />
       </div>
     </div>

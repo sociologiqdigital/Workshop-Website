@@ -363,7 +363,6 @@ export default function Home({ onBookClick }) {
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-background home-hero grid-bg pt-6 pb-6 md:pt-12 md:pb-10">
         {/* Background Accents */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-primary/10 rounded-[50%] blur-3xl " />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -471,20 +470,17 @@ export default function Home({ onBookClick }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative flex justify-center md:justify-end items-center mt-8 md:mt-0 md:pr-8 lg:pr-12"
+              className="relative flex justify-center md:justify-end items-center mt-10 md:mt-6 md:pr-8 lg:pr-12"
             >
-              <div className="relative">
+              <div className="relative md:pt-2">
                 {/* Main Image Container */}
-                {/* <div className="relative z-10 w-[380px] h-[500px] lg:w-[420px] lg:h-[560px] rounded-[48px] overflow-hidden border-[12px] border-white shadow-soft"> */}
-                <div className="relative z-10 w-[280px] h-[380px] sm:w-[320px] sm:h-[440px] lg:w-[400px] lg:h-[520px] rounded-[40px] overflow-hidden">
+                <div className="relative z-10 w-[340px] sm:w-[420px] lg:w-[480px]">
                   <ImageWithFallback
                     src={HeroImg}
                     alt="Ruchi Dorlikar"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-left"
                   />
                 </div>
-                {/* </div> */}
-
                 {/* Badge 1: Top Left - Professional Label */}
                 <motion.div
                   initial={{ x: -20, opacity: 0 }}
@@ -558,7 +554,7 @@ export default function Home({ onBookClick }) {
         </div>
       </section>
 
-      {/* Refined Stats Section */}
+      {/* Stats Section */}
       <section className="relative grid-bg home-section overflow-hidden">
         {/* soft ambient wash */}
         {/* <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[220px] bg-primary/10 blur-3xl rounded-full" /> */}
@@ -578,7 +574,9 @@ export default function Home({ onBookClick }) {
                 {/* number container */}
                 <div className="font-heading text-[32px] md:text-[38px] text-dark tracking-tight leading-none flex items-center lining-nums">
                   <AnimatedCounter value={stat.value} />
-                  <span className="text-primary ml-1 lining-nums font-bold">+</span>
+                  <span className="text-primary ml-1 lining-nums font-bold">
+                    +
+                  </span>
                 </div>
 
                 {/* label */}
@@ -628,7 +626,7 @@ export default function Home({ onBookClick }) {
                   transition={{ duration: 1, delay: 0.4 }}
                   className="text-[#FAFAF8] mb-8 font-heading text-[clamp(2.4rem,4vw,3.5rem)] leading-[1.1]"
                 >
-                  What I'm Doing Now 
+                  What I'm Doing Now
                 </motion.h2>
 
                 {/* Divider */}
@@ -729,7 +727,7 @@ export default function Home({ onBookClick }) {
               Timeline
             </span>
             <h2 className="font-heading text-3xl md:text-4xl text-dark mt-2 text-center">
-              My Story <span className="text-primary italic">In Frames</span>
+              The Journey <span className="text-primary italic">So Far</span>
             </h2>
           </motion.div>
         </div>
@@ -843,7 +841,7 @@ export default function Home({ onBookClick }) {
             Events & Moments
           </div>
           <h2 className="text-[#2A2A2A] text-3xl md:text-4xl sm:text-4xl lg:text-[3.5rem]">
-            Captured <span className="text-[#7B1E3A]">Experiences</span>
+            Moments From <span className="text-[#7B1E3A]"> the Journey</span>
           </h2>
         </motion.div>
 
@@ -958,7 +956,7 @@ export default function Home({ onBookClick }) {
               Great Achievements
             </p>
             <h2 className="font-heading  text-center text-3xl md:text-4xl text-dark leading-tight">
-              Wins that fuel the journey forward
+              Programs, Events & Milestones
             </h2>
           </div>
 
@@ -974,6 +972,8 @@ export default function Home({ onBookClick }) {
             >
               <img
                 src={achievements[active].image}
+                loading="lazy"
+                decoding="async"
                 alt={achievements[active].title}
                 className="w-full h-full object-cover"
               />
@@ -1031,6 +1031,8 @@ export default function Home({ onBookClick }) {
                       <img
                         src={item.image}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover"
                       />
                     </div>

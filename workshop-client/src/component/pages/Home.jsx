@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   motion,
-  useScroll,
   useTransform,
   AnimatePresence,
   useInView,
@@ -25,24 +24,18 @@ import {
   Layout,
   PhoneCall,
   CheckCircle2,
-  ShieldCheck,
   Zap,
   ArrowRight,
 } from "lucide-react";
 
 // Data Imports
 import { weeks } from "../data/Carriculum";
-import { curriculum } from "../data/learn";
 import { bonuses } from "../data/bonuses";
-import { startPayment } from "../data/offer";
-import { programs } from "../data/Workshop";
 
-// Component Imports
+// Components
 import TestimonialSection from "./Testimonial";
-import MarqueeNotice from "../common/MarqueeNotice";
 import FAQSection from "./FAQ";
 import CTASection from "./CTA";
-import BenefitImg from "../styles/images/BenefitImg.png";
 
 const iconMap = {
   Calendar,
@@ -58,17 +51,214 @@ const iconMap = {
   Zap,
 };
 
+const statusLabel = (status) => {
+  if (status === "active") return "Active Now";
+  if (status === "soon") return "Starting Soon";
+  if (status === "closed") return "Closed";
+  return "Active Now";
+};
+
+function normalizeOrigin(origin) {
+  if (!origin) return "";
+  return origin.endsWith("/") ? origin.slice(0, -1) : origin;
+}
+
+function statusBadgeClass(status) {
+  if (status === "active")
+    return "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20";
+  if (status === "soon") return "bg-[#FFF5D6] text-[#D98C12] border-[#F5D48B]";
+  return "bg-gray-50 text-gray-400 border-gray-200";
+}
+
+// ✅ FIX: hooks moved into component (no hooks inside .map)
+function WorkshopCard({ program, index, navigate }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Mouse values
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // ✅ Smoother + smaller tilt
+  const smoothX = useSpring(mouseX, { stiffness: 140, damping: 22, mass: 0.6 });
+  const smoothY = useSpring(mouseY, { stiffness: 140, damping: 22, mass: 0.6 });
+
+  // ✅ Reduce tilt intensity
+  const rotateX = useTransform(smoothY, [-200, 200], [3, -3]);
+  const rotateY = useTransform(smoothX, [-200, 200], [-3, 3]);
+
+  const handleMouseMove = (e) => {
+    if (!isHovered) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  };
+
+  const isClosed = program.status === "closed";
+  const badgeText = program.statusLabel || statusLabel(program.status);
+  const badgeClass = statusBadgeClass(program.status);
+
+  const desc = program.cardDescription || program.description || "";
+  const points = (
+    program.cardPoints?.length ? program.cardPoints : program.points || []
+  ).slice(0, 4);
+
+  return (
+    <div
+      className="relative group flex flex-col items-center"
+      style={{ perspective: "1500px" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+      onMouseMove={handleMouseMove}
+    >
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          scale: isHovered ? 1.02 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 140, damping: 22 }}
+        className="
+          relative z-20 w-full rounded-[1.8rem] p-6
+          border border-[#9667E0]/15 shadow-sm flex flex-col overflow-hidden
+          bg-white
+          transition-all duration-300 ease-out
+
+          group-hover:border-[#D4BBFC]
+          group-hover:shadow-[0_18px_50px_rgba(212,187,252,0.55)]
+
+          group-hover:bg-gradient-to-b
+          group-hover:from-[#D4BBFC]
+          group-hover:to-white
+        "
+      >
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-[8px] font-bold text-muted/30 uppercase tracking-widest">
+            Module 0{index + 1}
+          </span>
+          <span
+            className={`px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border ${badgeClass}`}
+          >
+            {badgeText}
+          </span>
+        </div>
+
+        <h3 className="text-xl font-bold text-dark mb-1.5 lining-nums">
+          {program.title}
+        </h3>
+
+        <p className="text-[#2F1E1E]/70 text-[13px] md:text-[14px] font-medium leading-relaxed mb-4 line-clamp-3 min-h-[52px]">
+          {desc}
+        </p>
+
+        <ul className="space-y-2 mb-2 min-h-[110px]">
+          {points.map((point, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-semibold text-[#2F1E1E]/80 leading-snug"
+            >
+              <Check size={14} className="text-[#9667E0] mt-[2px] shrink-0" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="h-10 w-full" />
+      </motion.div>
+
+      {/* ✅ Button: come up ONLY from bottom to its position */}
+      {!isClosed && (
+        <motion.div
+          initial={{ opacity: 0, y: 28, scale: 0.98 }}
+          animate={
+            isHovered
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 28, scale: 0.98 }
+          }
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          className="absolute bottom-8 left-0 right-0 z-30 w-[80%] max-w-[260px] mx-auto pointer-events-none group-hover:pointer-events-auto"
+        >
+          <button
+            onClick={() => navigate(`/programs/${program.slug}`)}
+            className="w-full py-3 bg-[#9667E0] text-white text-[12px] font-bold rounded-xl shadow-[0_15px_30px_rgba(150,103,224,0.35)] flex items-center justify-center gap-2 hover:bg-[#8554d1] transition-colors"
+          >
+            {program.status === "active" ? "Apply Now" : "Join Waitlist"}
+            <ArrowRight size={14} />
+          </button>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
+  // ✅ workshops from backend (keeps alignment + dynamic cards)
+  const [workshops, setWorkshops] = useState([]);
+
+  // Bonus/confetti
+  const [isOpen, setIsOpen] = useState(false);
   const bonusSectionRef = useRef(null);
   const confettiCanvasRef = useRef(null);
   const confettiInstanceRef = useRef(null);
   const bonusGiftRef = useRef(null);
   const isBonusInView = useInView(bonusSectionRef, { amount: 0.4, once: true });
+
+  // ✅ NEW: workshop cards section ref (for CTA scroll)
+  const workshopDetailsRef = useRef(null);
+
   const navigate = useNavigate();
+
+  const API_ORIGIN = useMemo(
+    () =>
+      normalizeOrigin(
+        import.meta.env.VITE_API_ORIGIN || "http://localhost:5000",
+      ),
+    [],
+  );
+
+  // ✅ Fetch workshops for cards
+  useEffect(() => {
+    let ignore = false;
+
+    const load = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${API_ORIGIN}/api/workshops`, {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error(`Failed: ${res.status}`);
+        const data = await res.json();
+        if (!ignore) setWorkshops(Array.isArray(data) ? data : []);
+      } catch (e) {
+        if (!ignore) setWorkshops([]);
+        console.error("Workshops fetch error:", e);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, [API_ORIGIN]);
+
+  // ✅ NEW: scroll to workshop details (cards)
+  const scrollToWorkshopDetails = () => {
+    if (!workshopDetailsRef.current) return;
+    workshopDetailsRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   // Mouse parallax physics for Hero
   const mouseX = useSpring(0, { stiffness: 50, damping: 20 });
@@ -82,6 +272,7 @@ const Home = () => {
     mouseY.set(y);
   };
 
+  // confetti init
   useEffect(() => {
     if (!confettiCanvasRef.current || confettiInstanceRef.current) return;
     confettiInstanceRef.current = confetti.create(confettiCanvasRef.current, {
@@ -93,6 +284,7 @@ const Home = () => {
   const triggerConfettiBurst = () => {
     if (!confettiInstanceRef.current) return;
     setIsOpen(true);
+
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 55, ticks: 80, zIndex: 50 };
@@ -113,7 +305,7 @@ const Home = () => {
       };
     };
 
-    const interval = setInterval(function () {
+    const interval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
       const particleCount = 24 * (timeLeft / duration);
@@ -129,7 +321,7 @@ const Home = () => {
 
   useEffect(() => {
     if (isBonusInView && !isOpen) triggerConfettiBurst();
-  }, [isBonusInView]);
+  }, [isBonusInView, isOpen]);
 
   const benefits = [
     "Those who want to launch a homegrown or digital business",
@@ -137,6 +329,7 @@ const Home = () => {
     "Offline business owners wanting to go digital",
     "Anyone with a skill but no digital structure",
   ];
+
   const bonusItems = bonuses.map((bonus) => ({
     ...bonus,
     Icon: iconMap[(bonus.icon || "").trim()] || Sparkles,
@@ -147,59 +340,41 @@ const Home = () => {
       {/* 1. HERO SECTION */}
       <section
         onMouseMove={handleMouseMove}
-        className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-primary bg-[radial-gradient(circle_at_20%_30%,_rgba(150,103,224,0.05)_0%,_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(244,182,176,0.08)_0%,_transparent_50%)]"
       >
-        {/* --- ANIMATED MESH GRADIENT (Light & Airy Lavender) --- */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Soft Lavender Glow - Top Right */}
           <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.4, 0.6, 0.4],
-            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             className="absolute -top-[15%] -right-[5%] w-[70%] h-[70%] rounded-full bg-[#D4BBFC]/40 blur-[130px]"
           />
-
-          {/* Subtle Blush/Lavender Mix - Bottom Left */}
           <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.3, 0.5, 0.3],
-            }}
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
             className="absolute -bottom-[10%] -left-[10%] w-[60%] h-[60%] rounded-full bg-[#EBDDEA]/60 blur-[110px]"
           />
-
-          {/* Center Glow to keep the content area clean */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_white_0%,_transparent_80%)] opacity-50" />
         </div>
 
-        {/* --- THE TOP ILLUMINATING RING --- */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1400px] h-[400px] pointer-events-none">
-          {/* Using white and very soft purple for the ring */}
-          {/* <div className="absolute top-[-180px] left-0 right-0 h-[360px] border-[1.5px] border-white rounded-[100%] z-10 shadow-[0_0_40px_rgba(212,187,252,0.4)]" /> */}
+          <div className="absolute top-[-180px] left-0 right-0 h-[360px] border-[1.5px] border-white rounded-[100%] z-10 shadow-[0_0_40px_rgba(212,187,252,0.4)]" />
           <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[120%] h-[600px] bg-gradient-to-b from-white via-white/80 to-transparent blur-[100px] z-0" />
         </div>
 
-        {/* --- FLOATING ELEMENTS (Light Glass) --- */}
         <motion.div
           style={{ x: mouseX, y: mouseY }}
           className="absolute inset-0 z-10 pointer-events-none"
         >
-          {/* Frosted Light Glass Card */}
           <div className="absolute top-[20%] left-[12%] w-36 h-48 bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl rotate-[-12deg] shadow-xl flex flex-col p-6 gap-3">
             <div className="w-10 h-10 rounded-full bg-[#D4BBFC]/40" />
             <div className="w-full h-2 bg-black/5 rounded-full" />
             <div className="w-2/3 h-2 bg-black/5 rounded-full" />
           </div>
-
           <div className="absolute top-[15%] right-[15%] w-32 h-32 border-[12px] border-white/60 rounded-full shadow-inner" />
           <div className="absolute bottom-[25%] left-[18%] w-16 h-16 bg-gradient-to-br from-[#D4BBFC] to-[#9667E0] rounded-full opacity-20 blur-sm" />
         </motion.div>
 
-        {/* --- CONTENT --- */}
-        <div className="relative z-20 max-w-6xl mx-auto px-6 text-center pt-12 md:pt-16">
+        <div className="relative z-20 max-w-6xl mx-auto px-6 text-center pt-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -220,7 +395,7 @@ const Home = () => {
                 >
                   <motion.path
                     d="M5 15Q150 5 295 15"
-                    stroke="#D4BBFC" /* Soft Lavender stroke */
+                    stroke="#D4BBFC"
                     strokeWidth="4"
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
@@ -241,10 +416,10 @@ const Home = () => {
 
       {/* 2. PROGRAM OVERVIEW */}
       <section
-        id="program-overview"
-        className="relative py-14 px-6 overflow-hidden bg-white "
+        id="workshop-details"
+        ref={workshopDetailsRef}
+        className="relative py-14 px-6 overflow-hidden bg-white"
       >
-        {/* Mesh Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
           <div className="absolute bottom-[5%] right-[-5%] w-[350px] h-[350px] rounded-full opacity-10 blur-[80px] bg-[#9667E0]" />
         </div>
@@ -260,145 +435,32 @@ const Home = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 items-start">
-            {programs.map((program, index) => {
-              const [isHovered, setIsHovered] = useState(false);
-              const mouseX = useMotionValue(0);
-              const mouseY = useMotionValue(0);
+            {loading && (
+              <div className="col-span-full text-center text-sm text-muted/70">
+                Loading workshops...
+              </div>
+            )}
 
-              const rotateX = useTransform(mouseY, [-100, 100], [5, -5]);
-              const rotateY = useTransform(mouseX, [-100, 100], [-5, 5]);
+            {!loading && workshops.length === 0 && (
+              <div className="col-span-full text-center text-sm text-muted/70">
+                No workshops available right now.
+              </div>
+            )}
 
-              const handleMouseMove = (e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                mouseX.set(e.clientX - rect.left - rect.width / 2);
-                mouseY.set(e.clientY - rect.top - rect.height / 2);
-              };
-
-              const isClosed = program.status === "closed";
-
-              return (
-                <div
-                  key={program.id}
-                  className="relative group flex flex-col items-center" // Centering container
-                  style={{ perspective: "1500px" }}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => {
-                    setIsHovered(false);
-                    mouseX.set(0);
-                    mouseY.set(0);
-                  }}
-                  onMouseMove={handleMouseMove}
-                >
-                  {/* 1. THE CARD */}
-                  <motion.div
-                    style={{
-                      rotateX: isHovered ? -10 : rotateX,
-                      rotateY,
-                      transformStyle: "preserve-3d",
-                    }}
-                    transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                    className="relative z-20 w-full bg-white rounded-[1.8rem] p-6 border border-[#9667E0]/15 shadow-sm flex flex-col overflow-hidden"
-                  >
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-[8px] font-bold text-muted/30 uppercase tracking-widest">
-                        Module 0{index + 1}
-                      </span>
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-[8px] font-bold uppercase border ${
-                          program.status === "active"
-                            ? "bg-[#9667E0]/10 text-[#9667E0] border-[#9667E0]/20"
-                            : program.status === "soon"
-                              ? "bg-[#FFF5D6] text-[#D98C12] border-[#F5D48B]"
-                              : "bg-gray-50 text-gray-400 border-gray-200"
-                        }`}
-                      >
-                        {program.statusLabel}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-dark mb-1.5 lining-nums">
-                      {program.title}
-                    </h3>
-                    <p className="text-muted/70 text-[11px] leading-relaxed mb-4 line-clamp-2">
-                      {program.description}
-                    </p>
-
-                    <ul className="space-y-1.5 mb-2">
-                      {program.points?.slice(0, 4).map((point, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 text-[11px] text-muted/80 leading-snug"
-                        >
-                          <Check
-                            size={11}
-                            className="text-[#9667E0] mt-0.5 shrink-0"
-                          />
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="h-10 w-full" />
-                  </motion.div>
-
-                  {/* 2. THE CIRCULAR ORBITING CTA  */}
-                  {!isClosed && (
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        scale: 0.5,
-                        x: -40, // Less extreme horizontal start
-                        y: 60,
-                        z: -200,
-                        rotate: -15,
-                      }}
-                      animate={
-                        isHovered
-                          ? {
-                              opacity: 1,
-                              scale: 1,
-                              x: 0,
-                              y: 0,
-                              z: 180,
-                              rotate: 0,
-                            }
-                          : {
-                              opacity: 0,
-                              scale: 0.5,
-                              x: -40,
-                              y: 60,
-                              z: -200,
-                              rotate: -15,
-                            }
-                      }
-                      transition={{
-                        type: "spring",
-                        stiffness: 180,
-                        damping: 15,
-                      }}
-                      // Slightly narrower to keep the CTA fully inside the card.
-                      className="absolute bottom-8 left-0 right-0 z-30 w-[80%] max-w-[260px] mx-auto pointer-events-none group-hover:pointer-events-auto"
-                    >
-                      <button
-                        onClick={() => navigate(`/programs/${program.slug}`)}
-                        className="w-full py-3 bg-[#9667E0] text-white text-[12px] font-bold rounded-xl shadow-[0_15px_30px_rgba(150,103,224,0.35)] flex items-center justify-center gap-2 hover:bg-[#8554d1] transition-colors"
-                      >
-                        {program.status === "active"
-                          ? "Apply Now"
-                          : "Join Waitlist"}
-                        <ArrowRight size={14} />
-                      </button>
-                    </motion.div>
-                  )}
-                </div>
-              );
-            })}
+            {workshops.map((program, index) => (
+              <WorkshopCard
+                key={program._id || program.slug || index}
+                program={program}
+                index={index}
+                navigate={navigate}
+              />
+            ))}
           </div>
         </div>
       </section>
+
       {/* 3. WHO BENEFITS */}
       <section className="py-20 bg-[#F2EBFB] relative overflow-hidden">
-        {/* Soft Lavender Background Glows */}
         <div className="absolute bottom-[10%] right-[-20%] w-[500px] h-[500px] bg-[#F9F7FF] rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-[-15%] right-[-5%] w-[500px] h-[500px] bg-[#F2EBFB]/50 rounded-full blur-[120px] -z-10" />
 
@@ -432,94 +494,31 @@ const Home = () => {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -5 }}
-                className="group relative overflow-hidden p-8 rounded-[2.5rem] bg-[#F9F7FF] border border-[#D4BBFC]/30 hover:border-[#9667E0] transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-[#9667E0]/5 flex items-start gap-6"
+                className="
+                  group relative overflow-hidden p-8
+                  rounded-[1.0rem]
+                  bg-[#F9F7FF]
+                  border border-[#D4BBFC]/30 hover:border-[#9667E0]
+                  transition-all duration-500
+                  shadow-sm hover:shadow-xl hover:shadow-[#9667E0]/5
+                  flex items-center gap-5
+                "
               >
-                {/* --- ENHANCED GLOWING SEMI-CIRCLES --- */}
-                <div className="absolute bottom-0 right-0 pointer-events-none z-0">
-                  <svg
-                    width="180"
-                    height="180"
-                    viewBox="0 0 180 180"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-700"
-                  >
-                    <defs>
-                      <filter id={`glow-${idx}`}>
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                        <feMerge>
-                          <feMergeNode in="coloredBlur" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-
-                    {/* Outer Semi-Circle */}
-                    <motion.circle
-                      cx="180"
-                      cy="180"
-                      r="140"
-                      stroke="#D4BBFC"
-                      strokeWidth="1.5"
-                      filter={`url(#glow-${idx})`}
-                      animate={{
-                        scale: [1, 1.05, 1],
-                        strokeOpacity: [0.2, 0.5, 0.2],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-
-                    {/* Middle Semi-Circle */}
-                    <motion.circle
-                      cx="180"
-                      cy="180"
-                      r="90"
-                      stroke="#9667E0"
-                      strokeWidth="2"
-                      filter={`url(#glow-${idx})`}
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        strokeOpacity: [0.3, 0.6, 0.3],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.5,
-                      }}
-                    />
-
-                    {/* Inner Semi-Circle (Filled Glow) */}
-                    <motion.circle
-                      cx="180"
-                      cy="180"
-                      r="50"
-                      fill="#9667E0"
-                      fillOpacity="0.1"
-                      stroke="#9667E0"
-                      strokeWidth="2"
-                      filter={`url(#glow-${idx})`}
-                      animate={{ scale: [1, 1.2, 1] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  </svg>
+                <div
+                  className="
+                    relative z-10 flex-shrink-0
+                    w-12 h-12
+                    rounded-lg
+                    bg-white flex items-center justify-center text-[#9667E0]
+                    shadow-sm
+                    group-hover:bg-[#9667E0] group-hover:text-white
+                    transition-all duration-500
+                  "
+                >
+                  <CheckCircle2 size={24} />
                 </div>
 
-                {/* Icon Container */}
-                <div className="relative z-10 flex-shrink-0 w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-[#9667E0] shadow-sm group-hover:bg-[#9667E0] group-hover:text-white transition-all duration-500">
-                  <CheckCircle2 size={28} />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 flex-grow pt-1">
+                <div className="relative z-10 flex-grow">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#9667E0]/60">
                       Target Group 0{idx + 1}
@@ -532,31 +531,6 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Bottom Trust Badge */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-16 flex flex-col items-center justify-center"
-          >
-            <div className="flex -space-x-3 mb-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full border-2 border-white bg-[#D4BBFC] flex items-center justify-center text-[10px] font-bold text-white shadow-sm"
-                >
-                  {String.fromCharCode(64 + i)}
-                </div>
-              ))}
-              <div className="w-10 h-10 rounded-full border-2 border-white bg-[#9667E0] flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
-                +
-              </div>
-            </div>
-            <p className="text-sm text-[#2F1E1E]/50 font-medium">
-              Join 500+ entrepreneurs building their digital future
-            </p>
-          </motion.div> */}
         </div>
       </section>
 
@@ -841,7 +815,8 @@ const Home = () => {
 
       <TestimonialSection />
       <FAQSection />
-      <CTASection />
+      {/* ✅ CHANGE: pass a click handler into CTA so "Register Now" scrolls to cards */}
+      <CTASection onRegisterNow={scrollToWorkshopDetails} />
     </div>
   );
 };

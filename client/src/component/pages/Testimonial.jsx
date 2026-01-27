@@ -23,7 +23,7 @@ export const Testimonial = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* LEFT SLIDER */}
-          <div className="relative min-h-[240px] md:min-h-[280px]">
+          <div className="relative min-h-[200px] md:min-h-[220px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTestimonial.id}
@@ -31,7 +31,7 @@ export const Testimonial = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-white p-8 shadow-soft relative max-w-md min-h-[220px] md:min-h-[260px] max-h-[320px] md:max-h-[360px] overflow-y-auto"
+                className="bg-white p-8 shadow-soft relative w-full max-w-md min-h-[180px] md:min-h-[210px]"
                 style={{
                   borderTopLeftRadius: "1.5rem",
                   borderBottomRightRadius: "1.5rem",
@@ -77,7 +77,7 @@ export const Testimonial = () => {
             </p>
 
             <h2 className="font-heading text-3xl md:text-4xl text-dark mb-5 tracking-tight">
-              What Our Community Is Saying
+              What People Say About Working With Us
             </h2>
 
             <p className="text-muted leading-relaxed mb-6 max-w-md">

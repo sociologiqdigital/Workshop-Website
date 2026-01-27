@@ -6,21 +6,28 @@ const ERROR_IMG_SRC =
 export function ImageWithFallback(props) {
   const [didError, setDidError] = useState(false);
 
-  const { src, alt, style, className, ...rest } = props;
+  const {
+    src,
+    alt,
+    style,
+    className,
+    onError,
+    loading = "lazy",
+    ...rest
+  } = props;
 
   if (didError) {
     return (
       <div
-        className={`inline-block bg-gray-100 text-center align-middle ${
-          className ?? ""
-        }`}
+        className={`inline-block bg-gray-100 ${className ?? ""}`}
         style={style}
       >
         <div className="flex items-center justify-center w-full h-full">
           <img
             src={ERROR_IMG_SRC}
-            alt="Error loading image"
-            {...rest}
+            alt={alt || "Image unavailable"}
+            decoding="async"
+            aria-hidden={!alt}
             data-original-url={src}
           />
         </div>
@@ -32,10 +39,15 @@ export function ImageWithFallback(props) {
     <img
       src={src}
       alt={alt}
+      loading={loading}
+      decoding="async"
       className={className}
       style={style}
       {...rest}
-      onError={() => setDidError(true)}
+      onError={(e) => {
+        setDidError(true);
+        onError?.(e);
+      }}
     />
   );
 }
