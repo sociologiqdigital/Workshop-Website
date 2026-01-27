@@ -19,18 +19,18 @@ export const faqData = [
     answer:
       "Yes. We focus on clarity-led strategy, simple systems, and sustainable growth so you can execute without overwhelm.",
   },
-  {
-    question: "How is this different from a typical marketing course?",
-    answer:
-      "This is not just tactics. It blends mindset, positioning, and execution so your digital efforts actually support business goals.",
-  },
+  // {
+  //   question: "How is this different from a typical marketing course?",
+  //   answer:
+  //     "This is not just tactics. It blends mindset, positioning, and execution so your digital efforts actually support business goals.",
+  // },
   {
     question: "Can I join if I already run a small business but feel stuck?",
     answer:
       "Absolutely. We help identify what is not working, rebuild the offer and messaging, and create a consistent growth routine.",
   },
   {
-    question: "More questions?",
+    question: "More ",
     action: "booking",
   },
 ];

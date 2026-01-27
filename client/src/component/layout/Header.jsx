@@ -8,7 +8,8 @@ export default function Navbar({ onBookClick }) {
   const [showHeader, setShowHeader] = useState(true);
 
   // useRef to avoid re-render loops
-  const lastScrollY = useRef(0);
+  const lastScrollY = useRef(0); // tracks last scroll position
+  const  scrollTimeout = useRef(null); //detects scroll stop
 
   const navLinks = [
     { label: "Home", to: "/" },
@@ -18,24 +19,39 @@ export default function Navbar({ onBookClick }) {
   ];
 
   /* ---------------- SCROLL LOGIC ---------------- */
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isOpen) return;
+ useEffect(() => {
+   const handleScroll = () => {
+     if (isOpen) return; // mobile menu guard
 
-      const currentScrollY = window.scrollY;
+     const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
+     // Clear any existing idle timer
+     if (scrollTimeout.current) {
+       clearTimeout(scrollTimeout.current);
+     }
 
-      lastScrollY.current = currentScrollY;
-    };
+     // If scrolling DOWN → hide header immediately
+     if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+       setShowHeader(false);
+     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
+     // Set idle timer → reveal header AFTER scroll stops
+     scrollTimeout.current = setTimeout(() => {
+       setShowHeader(true);
+     }, 180); 
+
+     lastScrollY.current = currentScrollY;
+   };
+
+   window.addEventListener("scroll", handleScroll, { passive: true });
+
+   return () => {
+     window.removeEventListener("scroll", handleScroll);
+     if (scrollTimeout.current) {
+       clearTimeout(scrollTimeout.current);
+     }
+   };
+ }, [isOpen]);
 
   return (
     <motion.header

@@ -744,19 +744,19 @@ export default function Home({ onBookClick }) {
             <ChevronRight size={14} />
           </button>
 
-            <div
-              ref={journeyScrollRef}
-              onPointerDown={handleJourneyPointerDown}
-              onPointerMove={handleJourneyPointerMove}
-              onPointerUp={handleJourneyPointerUp}
-              onPointerLeave={handleJourneyPointerUp}
-              className="relative overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing px-4 sm:px-6 md:px-8 lg:px-10"
-            >
-              {/* Visual Wire */}
-              <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
+          <div
+            ref={journeyScrollRef}
+            onPointerDown={handleJourneyPointerDown}
+            onPointerMove={handleJourneyPointerMove}
+            onPointerUp={handleJourneyPointerUp}
+            onPointerLeave={handleJourneyPointerUp}
+            className="relative overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing px-4 sm:px-6 md:px-8 lg:px-10"
+          >
+            {/* Visual Wire */}
+            <div className="absolute top-[30px] left-0 w-full h-[1px] bg-muted/20 z-0" />
 
-              {/* Flex Wrapper */}
-              <div className="flex flex-nowrap gap-6 md:gap-10 min-w-max pt-6">
+            {/* Flex Wrapper */}
+            <div className="flex flex-nowrap gap-6 md:gap-10 min-w-max pt-6">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
@@ -834,7 +834,8 @@ export default function Home({ onBookClick }) {
             Events & Moments
           </div>
           <h2 className="text-[#2A2A2A] text-3xl md:text-4xl sm:text-4xl lg:text-[3.5rem]">
-            Moments From <span className="text-[#7B1E3A]"> the Journey</span>
+            Photos From Our{" "}
+            <span className="text-[#7B1E3A]"> Events & Work</span>
           </h2>
         </motion.div>
 
