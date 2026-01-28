@@ -468,9 +468,9 @@ export default function Home({ onBookClick }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative flex justify-center md:justify-end items-center mt-10 md:mt-6 md:pr-8 lg:pr-12"
+              className="relative flex justify-center md:justify-end items-center mt-10 md:mt-10 md:pr-8 lg:pr-12"
             >
-              <div className="relative md:pt-2">
+              <div className="relative md:pt-4">
                 {/* Main Image Container */}
                 <div className="relative z-10 w-[340px] sm:w-[420px] lg:w-[480px]">
                   <ImageWithFallback
