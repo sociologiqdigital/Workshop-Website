@@ -33,7 +33,7 @@ export default function About({ onBookClick }) {
     >
       <PremiumCarousel />
 
-      {/* --- HERO SECTION (Remains consistent) --- */}
+      {/* HERO SECTION */}
       <motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
