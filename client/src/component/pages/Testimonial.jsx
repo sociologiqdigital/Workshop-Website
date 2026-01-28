@@ -23,7 +23,7 @@ export const Testimonial = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* LEFT SLIDER */}
-          <div className="relative min-h-[200px] md:min-h-[220px]">
+          <div className="relative h-[260px] md:h-[300px] flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTestimonial.id}
@@ -31,7 +31,7 @@ export const Testimonial = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-white p-8 shadow-soft relative w-full max-w-md min-h-[180px] md:min-h-[210px]"
+                className="bg-white p-8 shadow-soft relative w-full max-w-md h-full overflow-hidden"
                 style={{
                   borderTopLeftRadius: "1.5rem",
                   borderBottomRightRadius: "1.5rem",
@@ -57,7 +57,7 @@ export const Testimonial = () => {
             </AnimatePresence>
 
             {/* Pagination dots */}
-            <div className="flex gap-2 mt-6">
+            <div className="flex gap-2 mt-6 justify-center w-full">
               {testimonialsData.map((_, index) => (
                 <button
                   key={index}
@@ -85,7 +85,6 @@ export const Testimonial = () => {
               working with us. Their stories reflect clarity, confidence, and
               sustainable growth.
             </p>
-
             {/* <button className="btn btn-secondary">Read More Reviews</button> */}
           </div>
         </div>
