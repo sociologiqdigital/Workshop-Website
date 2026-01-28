@@ -123,7 +123,7 @@ function WorkshopCard({ program, index, navigate }) {
         }}
         transition={{ type: "spring", stiffness: 140, damping: 22 }}
         className="
-          relative z-20 w-full rounded-[1.8rem] p-6
+          relative z-20 w-full rounded-[1.8rem] p-6 min-h-[420px]
           border border-[#9667E0]/15 shadow-sm flex flex-col overflow-hidden
           bg-white
           transition-all duration-300 ease-out
@@ -167,7 +167,7 @@ function WorkshopCard({ program, index, navigate }) {
           ))}
         </ul>
 
-        <div className="h-10 w-full" />
+        <div className="mt-auto h-10 w-full" />
       </motion.div>
 
       {/* ✅ Button: come up ONLY from bottom to its position */}
@@ -251,7 +251,7 @@ const Home = () => {
     };
   }, [API_ORIGIN]);
 
-  // ✅ NEW: scroll to workshop details (cards)
+ 
   const scrollToWorkshopDetails = () => {
     if (!workshopDetailsRef.current) return;
     workshopDetailsRef.current.scrollIntoView({

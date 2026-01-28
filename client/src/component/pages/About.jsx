@@ -32,23 +32,22 @@ export default function About({ onBookClick }) {
       ref={containerRef}
     >
       <PremiumCarousel />
-
       {/* HERO SECTION */}
       <motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.2 }}
-        className="relative py-12 md:py-24 overflow-hidden "
+        className="relative py-8 md:py-12 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center">
-            <div className="lg:col-span-6 space-y-8 order-2 lg:order-1">
-              <header className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6 space-y-6 order-2 lg:order-1">
+              <header className="space-y-3">
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  className="font-heading text-5xl md:text-7xl text-dark leading-[1] tracking-tight"
+                  className="font-heading text-6xl md:text-7xl text-dark leading-[1] tracking-tight"
                 >
                   About <br />
                   <span className="text-primary italic font-medium">
@@ -56,8 +55,7 @@ export default function About({ onBookClick }) {
                   </span>
                 </motion.h1>
               </header>
-
-              <div className="space-y-6 text-lg md:text-xl text-muted/90 max-w-lg leading-relaxed font-light">
+              <div className="space-y-4 text-lg md:text-xl text-muted/90 max-w-lg leading-relaxed font-light">
                 <p>
                   Ruchi Dorlikar is a{" "}
                   <span className="text-dark font-medium border-b-2 border-primary/10">
@@ -68,7 +66,7 @@ export default function About({ onBookClick }) {
                 </p>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -76,7 +74,7 @@ export default function About({ onBookClick }) {
                   className="wave-button group relative h-[64px] min-w-[240px] overflow-hidden bg-white text-primary px-10 py-4 text-[12px] font-bold rounded-full transition-all shadow-xl border border-primary/10"
                 >
                   <span className="wave-text relative z-10 flex items-center gap-3 tracking-[0.2em] uppercase text-primary group-hover:text-white transition-colors duration-500">
-                    Book 1 to 1 call
+                    Book 1:1 call
                     <ArrowRight
                       size={20}
                       className="group-hover:translate-x-2 transition-transform duration-500"
@@ -114,7 +112,7 @@ export default function About({ onBookClick }) {
       {/* --- THE VISION SECTION (RE-DESIGNED) --- */}
       <motion.section
         ref={visionRef}
-        className="relative py-10 md:py-12 bg-[#F9F6F3] overflow-hidden"
+        className="relative py-8 md:py-10 bg-[#F9F6F3] overflow-hidden"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -131,7 +129,7 @@ export default function About({ onBookClick }) {
         </motion.div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* LEFT COLUMN: THE ARCH PORTAL */}
             <div className="lg:col-span-6 relative">
               <motion.div
@@ -206,15 +204,15 @@ export default function About({ onBookClick }) {
             </div>
 
             {/* RIGHT COLUMN: THE STORY */}
-            <div className="lg:col-span-6 space-y-12">
+            <div className="lg:col-span-6 space-y-8">
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="space-y-10"
+                className="space-y-6"
               >
-                <div className="space-y-6">
-                  <h2 className="text-6xl md:text-8xl font-serif leading-[0.8] text-dark tracking-tighter">
+                <div className="space-y-4">
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[0.9] text-dark tracking-tighter">
                     Corporate <br />
                     <span className="text-primary italic font-light ml-6">
                       to
@@ -225,7 +223,7 @@ export default function About({ onBookClick }) {
                   <div className="h-1 w-24 bg-primary" />
                 </div>
 
-                <div className="space-y-8 max-w-lg">
+                <div className="space-y-6 max-w-lg">
                   <p className="text-2xl text-muted font-light leading-relaxed">
                     Ruchi took a bold step: leaving her corporate stability to
                     give herself
@@ -272,7 +270,7 @@ export default function About({ onBookClick }) {
 
       <FAQSection onBookClick={onBookClick} />
 
-      <div className="py-20 border-t border-dark/5 bg-white">
+      <div className="py-8 md:py-10 border-t border-dark/5 bg-transparent">
         <Testimonial />
       </div>
     </div>

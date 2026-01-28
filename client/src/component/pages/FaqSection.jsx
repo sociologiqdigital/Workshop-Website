@@ -3,7 +3,7 @@ import { faqData } from "../data/FaqData";
 import FAQItem from "./FaqItem";
 
 export default function FAQSection({
-  className = "bg-surface py-14 md:py-16 grid-bg",
+  className = "bg-background py-14 md:py-16 grid-bg",
   onBookClick,
 }) {
   const [openIndex, setOpenIndex] = useState(null);

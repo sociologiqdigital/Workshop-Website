@@ -19,7 +19,7 @@ import { ImageWithFallback } from "../common/ImageWithFallback";
 
 import HeroImg from "../styles/images/HeroImg.png";
 import AchievementImg from "../styles/images/achivementImg.jpg";
-import AchievementImg2 from "../styles/images/achivementImg2.jpg"
+import AchievementImg2 from "../styles/images/achivementImg2.jpg";
 import AchievementImg3 from "../styles/images/achivementImg3.jpg";
 import SteamingCoffee from "../common/SteamingCoffee";
 
@@ -285,7 +285,7 @@ export default function Home({ onBookClick }) {
 
     const count = useMotionValue(alreadyAnimated ? value : 0);
     const rounded = useTransform(count, (latest) =>
-      Math.round(latest).toLocaleString()
+      Math.round(latest).toLocaleString(),
     );
 
     useEffect(() => {
@@ -323,7 +323,7 @@ export default function Home({ onBookClick }) {
           <span className="text-primary text-lg font-medium">+</span>
         </div>
 
-        <p className="mt-1 text-[13px] md:text-[14px] italic text-muted">
+        <p className="mt-1 text-[12px] md:text-[13px] italic text-muted whitespace-nowrap">
           {label}
         </p>
       </motion.div>
@@ -402,7 +402,7 @@ export default function Home({ onBookClick }) {
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex items-center gap-3 mb-6"
+              className="flex items-center gap-3 mb-4"
               >
                 {/* <span className="text-[14px] sm:text-[16px] md:text-[18px] text-muted whitespace-nowrap font-medium">
                   And I am
@@ -421,7 +421,7 @@ export default function Home({ onBookClick }) {
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="text-[16px] sm:text-[17px] md:text-[18px] text-muted leading-relaxed mb-8 max-w-[520px]"
+                className="text-[16px] sm:text-[17px] md:text-[18px] text-muted leading-relaxed mb-5 max-w-[520px]"
               >
                 Creating digital paths with clarity,{" "}
                 <span className="text-dark font-semibold">
@@ -439,13 +439,12 @@ export default function Home({ onBookClick }) {
                   </Link>
                 </span>
               </motion.p>
-
               <motion.div
                 variants={{
                   hidden: { opacity: 0, width: 0 },
                   visible: { opacity: 1, width: "60px" },
                 }}
-                className="h-[3px] bg-primary mb-8"
+                className="h-[3px] bg-primary mb-5"
               />
 
               <motion.button
@@ -573,7 +572,7 @@ export default function Home({ onBookClick }) {
                   </span>
                 </div>
                 {/* label */}
-                <p className="mt-2 text-[16px] font-bold md:text-[14px]  text-dark max-w-[160px]">
+                <p className="mt-2 text-[24px] font-bold md:text-[16px]  text-dark max-w-[160px]">
                   {stat.label}
                 </p>
               </div>
@@ -716,7 +715,7 @@ export default function Home({ onBookClick }) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-primary tracking-widest uppercase text-[10px] font-bold bg-primary/5 px-2 py-1">
+            <span className="text-[#C9A24D] tracking-widest uppercase text-[10px] font-bold bg-primary/5 px-2 py-1">
               Timeline
             </span>
             <h2 className="font-heading text-3xl md:text-4xl text-dark mt-2 text-center">
@@ -724,7 +723,6 @@ export default function Home({ onBookClick }) {
             </h2>
           </motion.div>
         </div>
-
         {/* Scrollable Container */}
         <div className="relative">
           <button
@@ -803,9 +801,9 @@ export default function Home({ onBookClick }) {
                     </div>
 
                     {/* The Year */}
-                    <div className="text-center font-heading text-xl text-dark group-hover:text-primary transition-colors lining-nums">
+                    {/* <div className="text-center font-heading text-xl text-dark group-hover:text-primary transition-colors lining-nums">
                       {milestone.year}
-                    </div>
+                    </div> */}
                   </motion.div>
                 </motion.div>
               ))}
@@ -1212,6 +1210,3 @@ export default function Home({ onBookClick }) {
     </>
   );
 }
-
-
-
