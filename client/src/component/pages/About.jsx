@@ -6,6 +6,7 @@ import { Sparkles, Eye, Mic, BookmarkCheck, ArrowRight } from "lucide-react";
 import FAQSection from "./FaqSection";
 import { Testimonial } from "./Testimonial";
 import AboutImg from "../styles/images/AboutImg.png";
+import AboutBackground from "../styles/images/AboutBackground.jpg";
 import OurPurposeImg from "../styles/images/OurPurpose.webp";
 import PremiumCarousel from "./PremiumCarousel";
 import FoundersLetter from "../layout/FoundersLetter";
@@ -138,27 +139,10 @@ export default function About({ onBookClick }) {
                   </div>
                 </div>
               </div>
-
             </div>
 
             {/* POLAROID COLUMN */}
             <div className="lg:col-span-5 flex flex-col items-center order-1 lg:order-2 relative h-full">
-              {/* Tilted "Impact Note" (Incorporate Industry Experience) */}
-              {/* <motion.div
-                initial={{ opacity: 0, rotate: 0, y: 20 }}
-                whileInView={{ opacity: 1, rotate: 0, y: 0 }}
-                className="absolute -bottom-10 -left-6 md:-left-12 bg-white p-5 shadow-xl border border-dark/5 z-20 max-w-[280px] hidden md:block"
-                style={{ clipPath: "polygon(1% 1%, 100% 0, 98% 98%, 0 100%)" }}
-              >
-                <PushPin />
-                
-                <p className="font-serif italic text-sm text-dark/70 leading-relaxed pt-2">
-                  "Leading SociologiQ to serve industries in Real Estate,
-                  Healthcare, Jewelry, and Hospitality."
-                </p>
-               
-              </motion.div> */}
-
               <motion.div
                 style={{ y: polaroidY }}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -167,9 +151,10 @@ export default function About({ onBookClick }) {
                 whileHover={{ rotate: 0, scale: 1.02 }}
                 className="relative bg-surface p-4 pb-24 shadow-[20px_40px_80px_rgba(0,0,0,0.12)] z-10 border border-dark/20 w-full max-w-[420px] rounded-2xl"
               >
+                {/* PAPERCLIP - Adjusted to be a bit more subtle */}
                 <div className="absolute -top-7 right-10 z-30 drop-shadow-md">
                   <svg
-                    className="text-primary"
+                    className="text-[#C9A24D]"
                     width="45"
                     height="65"
                     viewBox="0 0 40 60"
@@ -184,14 +169,38 @@ export default function About({ onBookClick }) {
                   </svg>
                 </div>
 
-                <div className="aspect-[4/5] overflow-hidden bg-surface border border-dark/10 rounded-xl">
+                {/* IMAGE CONTAINER WITH CUSTOM GRADIENT */}
+                <div className="aspect-[4/5] overflow-hidden border border-dark/10 rounded-xl relative bg-[#1a1a1a]">
+                  {/* 1. Enhancement Gradient Background */}
+                  {/* Using a radial gradient: Warm Amber core to a Bronze/Chocolate outer to lift the subject's features */}
+                  {/* <div
+                    className="absolute inset-0 z-0"
+                    style={{
+                      background: `radial-gradient(circle at 50% 40%, #eab308 0%, #78350f 40%, #292524 100%)`,
+                      opacity: 0.4,
+                    }}
+                  /> */}
+
+                  {/* 2. Subject Image with CSS "Retouching" */}
                   <img
                     src={AboutImg}
                     alt="Ruchi Dorlikar"
-                    className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
+                    className="relative z-10 w-full h-full object-cover transition-all duration-700 transform hover:scale-105"
+                    style={{
+                      brightness: 1.1, // slight lift
+                      filter:
+                        "brightness(1.1) contrast(1.05) saturate(1.1) drop-shadow(0 10px 20px rgba(0,0,0,0.4))",
+                    }}
                   />
+
+                  {/* 3. Lighting Overlay: Simulating a soft studio light from the top-left */}
+                  <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-br from-white/10 via-transparent to-transparent" />
+
+                  {/* 4. Vignette: Keeps the focus on the face */}
+                  <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
                 </div>
 
+                {/* POLAROID CAPTION */}
                 <div className="absolute bottom-8 left-6 right-6">
                   <p className="font-starlight text-2xl text-primary leading-[0.9] tracking-wide whitespace-nowrap flex items-center gap-2">
                     The journey begins...{" "}
@@ -207,6 +216,8 @@ export default function About({ onBookClick }) {
                   </div>
                 </div>
               </motion.div>
+
+              {/* Background Glow */}
               <div className="absolute inset-0 bg-primary/5 blur-[120px] scale-150 -z-10 translate-y-10" />
             </div>
           </div>

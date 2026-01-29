@@ -43,6 +43,7 @@ import {
   Facebook,
   Twitter,
   Briefcase,
+  Star
 } from "lucide-react";
 import { galleryItems } from "../data/galleryItem";
 const socialContainer = {
@@ -62,22 +63,7 @@ const socialItem = {
     transition: { duration: 0.3, ease: "easeOut" },
   },
 };
-const tooltipClass = `
-  absolute -top-8 left-1/2 -translate-x-1/2
-  whitespace-nowrap
-  rounded-md
-  bg-dark
-  px-2 py-1
-  text-[11px]
-  text-white
-  opacity-0
-  translate-y-1
-  transition-all
-  duration-200
-  group-hover:opacity-100
-  group-hover:translate-y-0
-  pointer-events-none
-`;
+
 const animatedStatLabels = new Set();
 //import {star_bg} from "../styles/images/star_bg.svg"
 export default function Home({ onBookClick }) {
@@ -179,6 +165,30 @@ export default function Home({ onBookClick }) {
     { value: 5, label: "years of experience" },
     { value: 8000, label: "students & attendees" },
   ];
+  const heroStripWords = [
+    "Digital Strategy",
+    "Performance Marketing",
+    "SEO & Growth",
+    "Content & Branding",
+    "Creative Production",
+    "Social Media",
+    "Google Ads",
+    "Website Systems",
+    "Workshops",
+    "Mentorship",
+  ];
+
+  // Strip content
+  const stripItems = [
+    "DESIGN",
+    "BRANDING",
+    "DEVELOPMENT",
+    "STRATEGY",
+    "PRODUCT DESIGN",
+    "MOTION GRAPHICS",
+    "ART DIRECTION",
+  ];
+  const heroStripItems = [...heroStripWords, ...heroStripWords];
   const heroAchievementImage = achievements[active]?.image || AchievementImg;
   // Form handler
   const handleChange = (e) => {
@@ -360,13 +370,10 @@ export default function Home({ onBookClick }) {
 
   return (
     <>
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-background home-hero grid-bg pt-6 pb-6 md:pt-12 md:pb-10">
-        {/* Background Accents */}
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <section className="relative min-h-[90vh] flex items-center pt-6 pb-20 md:pt-12 md:pb-24 grid-bg">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* LEFT CONTENT */}
+            {/* LEFT CONTENT - UNCHANGED */}
             <motion.div
               className="relative max-w-[520px] text-left md:pl-8 lg:pl-12"
               initial="hidden"
@@ -376,7 +383,6 @@ export default function Home({ onBookClick }) {
                 visible: { transition: { staggerChildren: 0.1 } },
               }}
             >
-              {/* Greeting - Tight gap */}
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 5 },
@@ -396,17 +402,13 @@ export default function Home({ onBookClick }) {
                 Ruchi <span className="text-primary">Dorlikar</span>
               </motion.h1>
 
-              {/* Single Line Title Section */}
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 10 },
                   visible: { opacity: 1, y: 0 },
                 }}
-              className="flex items-center gap-3 mb-4"
+                className="flex items-center gap-3 mb-4"
               >
-                {/* <span className="text-[14px] sm:text-[16px] md:text-[18px] text-muted whitespace-nowrap font-medium">
-                  And I am
-                </span> */}
                 <span className="text-primary text-[20px] sm:text-[26px] md:text-[32px] font-bold tracking-tight leading-none">
                   <span className="relative">
                     {typedWord}
@@ -415,7 +417,6 @@ export default function Home({ onBookClick }) {
                 </span>
               </motion.div>
 
-              {/* Description */}
               <motion.p
                 variants={{
                   hidden: { opacity: 0, y: 10 },
@@ -439,6 +440,7 @@ export default function Home({ onBookClick }) {
                   </Link>
                 </span>
               </motion.p>
+
               <motion.div
                 variants={{
                   hidden: { opacity: 0, width: 0 },
@@ -462,94 +464,61 @@ export default function Home({ onBookClick }) {
               </motion.button>
             </motion.div>
 
-            {/* RIGHT IMAGE  */}
+            {/* RIGHT IMAGE - UPDATED TO MATTE CIRCLE STYLE */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative flex justify-center md:justify-end items-center mt-10 md:mt-10 md:pr-8 lg:pr-12"
+              className="relative flex justify-center md:justify-end items-center mt-10 md:mt-0 md:pr-8 lg:pr-12"
             >
-              <div className="relative md:pt-4">
-                {/* Main Image Container */}
-                <div className="relative z-10 w-[340px] sm:w-[420px] lg:w-[480px]">
+              <div className="relative w-[340px]  sm:w-[420px]  lg:w-[480px] h-[480px]">
+                {/* 1. Background Enhancement */}
+                <div
+                  className="absolute inset-0 rounded-full z-0 scale-95"
+                  style={{
+                    background: `radial-gradient(circle at center, #eab308 0%, #78350f 50%, #1a1a1a 100%)`,
+                    opacity: 0.2,
+                  }}
+                />
+
+                {/* 2. Decorative Cross from Reference */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+                  <div className="absolute w-full h-8 bg-primary rotate-45 rounded-full" />
+                  <div className="absolute w-full h-8 bg-primary -rotate-45 rounded-full" />
+                </div>
+
+                {/* 3. Main Circular Image */}
+                <div className="relative z-10 w-full h-full rounded-full overflow-hidden border-[8px] border-white shadow-2xl">
                   <ImageWithFallback
                     src={HeroImg}
                     alt="Ruchi Dorlikar"
-                    className="w-full h-full object-cover object-left"
+                    className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+                    style={{
+                      filter: "brightness(1.08) contrast(1.02) saturate(1.1)",
+                    }}
                   />
                 </div>
-                {/* Badge 1: Top Left - Professional Label */}
-                {/* <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-white px-4 py-2.5 rounded-full shadow-md border border-primary/5"
-                >
-                  <Compass className="w-4 h-4 text-primary" />
-                  <span className="text-[11px] font-bold text-dark uppercase tracking-wider">
-                    Clarity Coach
-                  </span>
-                </motion.div> */}
-
-                {/* Badge 2: Mid Right  */}
-                {/* <motion.div
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.7 }}
-                  className="absolute top-6 right-6 z-20 bg-white/90 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-primary/10 flex flex-col items-center"
-                >
-                  <div className="flex -space-x-2 mb-1">
-                    <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-[8px] text-white font-bold border-2 border-white">
-                      G
-                    </div>
-                    <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-[8px] text-white font-bold border-2 border-white">
-                      A
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-bold text-dark tracking-tighter">
-                    Google Certified
-                  </span>
-                </motion.div> */}
-
-                {/* Badge 3: Bottom Left - JCI President 2025 (Important Milestone from PDF) */}
-                {/* <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.9 }}
-                  className="absolute bottom-6 left-6 z-20 bg-white text-dark px-5 py-3 rounded-2xl shadow-md border border-primary/5 flex flex-col items-start"
-                >
-                  <span className="text-[18px] font-heading font-bold text-primary leading-none">
-                    2025
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest font-medium opacity-80">
-                    LO President
-                  </span>
-                </motion.div> */}
-
-                {/* Badge 4: Bottom Right - Project Stats */}
-                {/* <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 1.1 }}
-                  className="absolute bottom-6 right-6 z-20 flex items-center gap-3 bg-white px-5 py-4 rounded-3xl shadow-md border border-primary/5"
-                >
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                    <Layers size={18} />
-                  </div>
-                  <div className="leading-tight">
-                    <p className="text-sm font-bold text-dark tracking-tight">
-                      217+ Builds
-                    </p>
-                    <p className="text-[10px] text-muted font-medium uppercase tracking-tighter">
-                      Digital Systems
-                    </p>
-                  </div>
-                </motion.div> */}
               </div>
             </motion.div>
           </div>
         </div>
+
+        {/* --- SCROLLING MARQUEE STRIP --- */}
+        <div className="absolute bottom-0 left-0 w-[110%] -translate-x-2 overflow-hidden h-14 bg-primary z-20 flex items-center -rotate-2 origin-left translate-y-2">
+          <div className="flex whitespace-nowrap animate-marquee">
+            {[...stripItems, ...stripItems].map((item, idx) => (
+              <div key={idx} className="flex items-center mx-8">
+                <span className="text-white font-bold tracking-[0.15em] text-[12px] uppercase">
+                  {item}
+                </span>
+                <Star className="ml-8 text-primary fill-white w-3 h-3" />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
+
+      
 
       {/* Stats Section */}
       <section className="relative grid-bg home-section overflow-hidden">

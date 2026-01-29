@@ -273,6 +273,136 @@
 .animate-marquee{
   animation: marquee 18s linear infinite;
 }
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+    transform: translate(0%);
+  }
+}
+.hero-strip {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--color-primary)) 0%,
+    rgb(92 18 33) 50%,
+    rgb(var(--color-primary)) 100%
+  );
+  color: #ffffff;
+  padding: 0.6rem 0;
+  box-shadow: 0 14px 28px rgba(31, 31, 31, 0.22);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+.hero-strip-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+}
+.hero-strip-track {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  width: max-content;
+}
+.hero-strip-row {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0 1.5rem;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.hero-strip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.hero-strip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgb(var(--color-accent));
+  box-shadow: 0 0 0 3px rgba(var(--color-accent), 0.12);
+}
+.hero-portrait-ring {
+  border-radius: 9999px;
+  padding: clamp(10px, 1.8vw, 14px);
+  background:
+    radial-gradient(circle at 45% 35%, #ffffff 0 58%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.08) 0 62%, transparent 64%),
+    #fff;
+  box-shadow:
+    0 28px 60px rgba(31, 31, 31, 0.2),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+.hero-portrait-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 9999px;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+}
+.hero-portrait-shape {
+  position: absolute;
+  width: clamp(220px, 28vw, 360px);
+  height: clamp(220px, 28vw, 360px);
+  right: clamp(30px, 6vw, 60px);
+  top: clamp(10px, 2vw, 24px);
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 40% 40%, rgba(var(--color-accent), 0.9), transparent 65%),
+    radial-gradient(circle at 60% 60%, rgba(var(--color-primary), 0.12), transparent 70%);
+  z-index: 0;
+}
+.hero-portrait-cross {
+  position: absolute;
+  width: clamp(120px, 15vw, 180px);
+  height: clamp(120px, 15vw, 180px);
+  right: clamp(20px, 5vw, 50px);
+  top: clamp(10px, 3vw, 40px);
+  z-index: 3;
+  opacity: 0.95;
+}
+.hero-portrait-cross::before,
+.hero-portrait-cross::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(var(--color-primary), 0.9);
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(122, 30, 45, 0.15);
+}
+.hero-portrait-cross::before {
+  transform: rotate(0deg);
+}
+.hero-portrait-cross::after {
+  transform: rotate(90deg);
+}
+@media (max-width: 768px) {
+  .hero-portrait-shape {
+    right: 10px;
+    top: 10px;
+  }
+  .hero-portrait-cross {
+    right: 0;
+    top: 24px;
+  }
+}
 @keyframes spinSlow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -835,4 +965,19 @@
     /* Precise asymmetrical wing shape coordinates */
     clip-path: url(#wing-portal-full);
   }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+/* Stop marquee on hover */
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
