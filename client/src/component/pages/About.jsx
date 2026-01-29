@@ -53,13 +53,11 @@ export default function About({ onBookClick }) {
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
-
       <PremiumCarousel />
-
       {/* --- About SECTION --- */}
       <section className="relative py-12 md:py-16 overflow-hidden bg-surface">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-          <header className="relative mb-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 relative z-10">
+          <header className="relative mb-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -74,74 +72,101 @@ export default function About({ onBookClick }) {
             </motion.div>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             {/* CONTENT COLUMN */}
-            <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
-              <div className="bg-accent rounded-2xl border border-primary/10 shadow-[0_6px_30px_rgba(0,0,0,0.05)] p-8 md:p-10 lg:p-12 space-y-6 text-lg text-muted/90 leading-relaxed font-light">
+            <div className="lg:col-span-7 flex flex-col order-2 lg:order-1 h-full">
+              <div className="bg-accent rounded-2xl border border-primary/10 shadow-[0_6px_30px_rgba(0,0,0,0.05)] p-8 md:p-10 space-y-6 text-lg text-muted/90 leading-relaxed font-light flex-1">
                 <p className="text-xl">
                   <span className="text-dark font-semibold border-b-2 border-primary/10">
                     Founder &amp; CEO{" "}
-                    <a href="https://sociologiq.in/" target="blank">
-                      SociologiQ Digital Solutions Pvt. Ltd.
+                    <a
+                      href="https://sociologiq.in/"
+                      target="blank"
+                      className="hover:text-primary transition-colors"
+                    >
+                      SociologiQ Digital Solutions
                     </a>{" "}
                   </span>
                 </p>
                 <p>
-                  Ruchi Dorlikar is a tech-savvy digital strategist who moved
-                  from IT to digital marketing to build something meaningful and
-                  her own. She began in 2018 at Tech Mahindra as a Database
-                  Administrator, explored systems and networking, and in 2019
-                  joined Capgemini as Technical Support Head.
+                  Ruchi Dorlikar is a tech-savvy digital strategist who
+                  transitioned from an IT background to build a meaningful
+                  agency of her own. With a foundation at Tech Mahindra and
+                  Capgemini, she blends technical precision with a deep
+                  understanding of digital ecosystems.
                 </p>
-                <p>
-                  After leaving corporate life, she spent 8-9 months upskilling
-                  and launched her freelance journey in June 2019. Her momentum
-                  became her first agency unit, SocialBuzz, later named{" "}
-                  <a href="https://sociologiq.in/" target="blank">
-                    SociologiQ Digital Solutions Pvt. Ltd.
-                  </a>
+                <p className="pt-4 italic text-dark">
+                  Ruchi believes in blending strategy with soul—because every
+                  brand has a story worth telling, and she’s here to help them
+                  tell it better.
                 </p>
+              </div>
+              {/* NEW SPECIALIZATION GRID */}
+              <div className="mt-6 rounded-2xl bg-surface/70 border border-dark/10 px-5 py-5">
+                <h4 className="text-xs font-mono uppercase tracking-[0.3em] text-primary font-bold mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Specializing In
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] font-normal text-dark/80">
+                  <div className="flex items-center gap-2 group cursor-default">
+                    <BookmarkCheck
+                      size={16}
+                      className="text-primary group-hover:scale-110 transition-transform"
+                    />
+                    <span>Performance Marketing</span>
+                  </div>
+                  <div className="flex items-center gap-2 group cursor-default">
+                    <BookmarkCheck
+                      size={16}
+                      className="text-primary group-hover:scale-110 transition-transform"
+                    />
+                    <span>Content & Branding</span>
+                  </div>
+                  <div className="flex items-center gap-2 group cursor-default">
+                    <BookmarkCheck
+                      size={16}
+                      className="text-primary group-hover:scale-110 transition-transform"
+                    />
+                    <span>SEO & Google Ads</span>
+                  </div>
+                  <div className="flex items-center gap-2 group cursor-default">
+                    <BookmarkCheck
+                      size={16}
+                      className="text-primary group-hover:scale-110 transition-transform"
+                    />
+                    <span>Creative Production</span>
+                  </div>
+                </div>
               </div>
 
-              {/* CTA - Retaining your original wave animation button */}
-              <div className="flex items-start mt-8">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  onClick={onBookClick}
-                  className="wave-button group relative h-[64px] min-w-[260px] overflow-hidden bg-white text-primary px-10 py-4 rounded-full transition-all shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-primary/10"
-                >
-                  <span className="wave-text relative z-10 flex items-center justify-center gap-3 tracking-[0.2em] uppercase text-[12px] font-bold group-hover:text-white transition-colors duration-500">
-                    Book 1 to 1 call
-                    <ArrowRight
-                      size={18}
-                      className="group-hover:translate-x-2 transition-transform duration-500"
-                    />
-                  </span>
-                  <svg
-                    className="wave-fill absolute left-0 top-0 h-full w-full pointer-events-none z-0"
-                    viewBox="0 0 1440 600"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      className="animate-wave-path fill-primary"
-                      d="M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"
-                    />
-                  </svg>
-                </motion.button>
-              </div>
             </div>
 
-            {/* POLAROID COLUMN - Cleaned up alignment and Dime-inspired details */}
-            <div className="lg:col-span-5 flex justify-center order-1 lg:order-2 relative">
+            {/* POLAROID COLUMN */}
+            <div className="lg:col-span-5 flex flex-col items-center order-1 lg:order-2 relative h-full">
+              {/* Tilted "Impact Note" (Incorporate Industry Experience) */}
+              {/* <motion.div
+                initial={{ opacity: 0, rotate: 0, y: 20 }}
+                whileInView={{ opacity: 1, rotate: 0, y: 0 }}
+                className="absolute -bottom-10 -left-6 md:-left-12 bg-white p-5 shadow-xl border border-dark/5 z-20 max-w-[280px] hidden md:block"
+                style={{ clipPath: "polygon(1% 1%, 100% 0, 98% 98%, 0 100%)" }}
+              >
+                <PushPin />
+                
+                <p className="font-serif italic text-sm text-dark/70 leading-relaxed pt-2">
+                  "Leading SociologiQ to serve industries in Real Estate,
+                  Healthcare, Jewelry, and Hospitality."
+                </p>
+               
+              </motion.div> */}
+
               <motion.div
                 style={{ y: polaroidY }}
-                initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
                 whileHover={{ rotate: 0, scale: 1.02 }}
                 className="relative bg-surface p-4 pb-24 shadow-[20px_40px_80px_rgba(0,0,0,0.12)] z-10 border border-dark/20 w-full max-w-[420px] rounded-2xl"
               >
-                {/* YELLOW PAPERCLIP (Dime reference) */}
                 <div className="absolute -top-7 right-10 z-30 drop-shadow-md">
                   <svg
                     className="text-primary"
@@ -159,7 +184,6 @@ export default function About({ onBookClick }) {
                   </svg>
                 </div>
 
-                {/* IMAGE CONTAINER */}
                 <div className="aspect-[4/5] overflow-hidden bg-surface border border-dark/10 rounded-xl">
                   <img
                     src={AboutImg}
@@ -168,13 +192,10 @@ export default function About({ onBookClick }) {
                   />
                 </div>
 
-                {/* POLAROID CAPTION (Handwritten) */}
                 <div className="absolute bottom-8 left-6 right-6">
-                  <p className="font-handwriting text-4xl text-primary leading-[0.9] mb-2 tracking-wide">
-                    <span className="block">the journey</span>
-                    <span className="block text-primary/80">
-                      begins... ✨
-                    </span>
+                  <p className="font-starlight text-2xl text-primary leading-[0.9] tracking-wide whitespace-nowrap flex items-center gap-2">
+                    The journey begins...{" "}
+                    <Sparkles className="w-5 h-5 text-primary/80" />
                   </p>
                   <div className="flex justify-between items-center border-t border-dark/10 pt-3">
                     <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-muted/40 font-bold">
@@ -186,42 +207,46 @@ export default function About({ onBookClick }) {
                   </div>
                 </div>
               </motion.div>
-
-              {/* HANDWRITTEN ANNOTATION - Fills the empty corner space */}
-              {/* <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
-                className="absolute -bottom-6 -right-4 z-20 hidden md:flex flex-col items-center"
-              >
-                <svg
-                  width="80"
-                  height="50"
-                  viewBox="0 0 100 60"
-                  className="text-dark/20 -rotate-12 translate-y-4"
-                >
-                  <path
-                    d="M10 10 Q 50 5, 80 50"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeWidth="2"
-                    strokeDasharray="4 4"
-                  />
-                  <path
-                    d="M72 45 L 80 50 L 75 55"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeWidth="2"
-                  />
-                </svg>
-                <span className="font-handwriting text-2xl text-dark/60 -rotate-6">
-                  That's me!
-                </span>
-              </motion.div> */}
-
-              {/* BACKGROUND GLOW - Soft fill */}
               <div className="absolute inset-0 bg-primary/5 blur-[120px] scale-150 -z-10 translate-y-10" />
             </div>
+          </div>
+
+          {/* CTA */}
+          <div className="flex flex-col items-center text-center mt-12 md:mt-16 w-full">
+            {/* WAVE BUTTON - Animation Intact */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="mt-2 w-full flex justify-center"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onBookClick}
+                className="wave-button group relative h-[70px] min-w-[300px] mx-auto overflow-hidden bg-white text-primary px-12 py-4 rounded-full transition-all shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] border border-primary/10"
+              >
+                <span className="wave-text relative z-10 flex items-center justify-center gap-3 tracking-[0.25em] uppercase text-[14px] font-extrabold group-hover:text-white transition-colors duration-500">
+                  Book 1:1 Coffee
+                  <ArrowRight
+                    size={20}
+                    className="group-hover:translate-x-2 transition-transform duration-500"
+                  />
+                </span>
+
+                {/* Wave SVG Animation Path */}
+                <svg
+                  className="wave-fill absolute left-0 top-0 h-full w-full pointer-events-none z-0"
+                  viewBox="0 0 1440 600"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    className="animate-wave-path fill-primary"
+                    d="M 0,600 L 0,112 C 106.4,124.7 212.9,137.5 280,144 C 347,150.4 374.5,150.5 437,150 C 499.4,149.4 596.6,148.2 678,124 C 759.3,99.7 824.7,52.3 916,63 C 1007.2,73.6 1124.3,142.1 1216,160 C 1307.6,177.8 1373.8,144.9 1440,112 L 1440,600 L 0,600 Z"
+                  />
+                </svg>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -290,7 +315,6 @@ export default function About({ onBookClick }) {
           </motion.div>
         </div>
       </section>
-
       {/* --- STORY SECTION (commented for now) --- */}
       {/*
       <section className="relative py-16 md:py-20 overflow-hidden">
@@ -371,7 +395,7 @@ export default function About({ onBookClick }) {
       */}
       <FoundersLetter />
       <FAQSection onBookClick={onBookClick} />
-      <div className="py-20 border-t border-dark/5 bg-white relative z-10">
+      <div className="py-20 border-t border-dark/5 bg-background relative z-10">
         <Testimonial />
       </div>
     </div>

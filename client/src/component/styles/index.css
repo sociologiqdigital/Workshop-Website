@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Starlight Romance";
+  src:
+    url("./fonts/StarlightRomance.woff2") format("woff2"),
+    url("./fonts/StarlightRomance.woff") format("woff"),
+    url("./fonts/StarlightRomance.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===============================
    BRAND COLOR TOKENS (RGB)
    =============================== */
@@ -381,6 +392,11 @@
 
   /* Soft richness */
   text-shadow: 0 3px 14px rgba(123, 30, 58, 0.25);
+}
+
+/* Polaroid caption script */
+.font-starlight {
+  font-family: "Starlight Romance", "Pacifico", cursive;
 }
 
 /* Responsive tuning */

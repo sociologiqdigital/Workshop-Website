@@ -12,7 +12,7 @@ const FoundersMessage = () => {
   };
 
   const letterVariants = {
-    closed: { y: 0, opacity: 0 },
+    closed: { y: 70, opacity: 0 },
     open: { 
       y: -220, 
       opacity: 1, 
@@ -89,9 +89,11 @@ const FoundersMessage = () => {
               understanding people, solving real problems, and staying
               consistent with purpose.”
             </p>
-            <div className="pt-4">
+            <div className="pb-24">
               <p className="font-handwriting text-xl text-primary">
                 — Ruchi Dorlikar
+                <p>Founder & CEO</p>
+
               </p>
             </div>
           </div>
