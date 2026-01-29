@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+﻿import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Sparkles, Eye, Mic, BookmarkCheck, ArrowRight } from "lucide-react";
 
@@ -6,77 +6,114 @@ import { Sparkles, Eye, Mic, BookmarkCheck, ArrowRight } from "lucide-react";
 import FAQSection from "./FaqSection";
 import { Testimonial } from "./Testimonial";
 import AboutImg from "../styles/images/AboutImg.png";
+import OurPurposeImg from "../styles/images/OurPurpose.webp";
 import PremiumCarousel from "./PremiumCarousel";
+import FoundersLetter from "../layout/FoundersLetter";
+
+// CSS Component for Realistic Tape
+const MaskingTape = ({ className }) => (
+  <div
+    className={`absolute h-8 w-24 bg-surface opacity-90 shadow-sm ${className}`}
+    style={{
+      clipPath: "polygon(2% 0, 98% 1%, 100% 95%, 0% 100%)",
+      backgroundImage:
+        "linear-gradient(to bottom right, rgba(0,0,0,0.02), transparent)",
+    }}
+  />
+);
+
+// CSS Component for Realistic Pushpin
+const PushPin = () => (
+  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 filter drop-shadow-md">
+    <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-dark/20 via-surface to-white border-[0.5px] border-dark/20 relative">
+      <div className="absolute inset-1 rounded-full bg-gradient-to-br from-transparent to-dark/20"></div>
+    </div>
+  </div>
+);
 
 export default function About({ onBookClick }) {
   const containerRef = useRef(null);
-  const visionRef = useRef(null);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const { scrollYProgress: visionScroll } = useScroll({
-    target: visionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-  const visionTextX = useTransform(visionScroll, [0, 1], ["10%", "-10%"]);
-  const floatY = useTransform(visionScroll, [0, 1], ["0%", "-15%"]);
+  const polaroidY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const paperY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
     <div
-      className="bg-background selection:bg-primary/20 font-body overflow-x-hidden"
+      className="bg-background selection:bg-primary/20 font-body overflow-x-hidden relative"
       ref={containerRef}
     >
+      {/* Subtle paper texture overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
       <PremiumCarousel />
-      {/* HERO SECTION */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="relative py-8 md:py-12 overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6 order-2 lg:order-1">
-              <header className="space-y-3">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  className="font-heading text-6xl md:text-7xl text-dark leading-[1] tracking-tight"
-                >
-                  About <br />
-                  <span className="text-primary italic font-medium">
-                    Ruchi Dorlikar
+
+      {/* --- About SECTION --- */}
+      <section className="relative py-12 md:py-16 overflow-hidden bg-surface">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+          <header className="relative mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-center gap-6 md:gap-10"
+            >
+              <span className="hidden md:block h-px flex-1 border-t border-dashed border-dark/30" />
+              <h1 className="font-sans text-4xl sm:text-5xl md:text-6xl text-dark font-extrabold tracking-tight text-center whitespace-nowrap px-3">
+                About{" "}
+                <span className="text-dark font-extrabold">Ruchi Dorlikar</span>
+              </h1>
+              <span className="hidden md:block h-px flex-1 border-t border-dashed border-dark/30" />
+            </motion.div>
+          </header>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            {/* CONTENT COLUMN */}
+            <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
+              <div className="bg-accent rounded-2xl border border-primary/10 shadow-[0_6px_30px_rgba(0,0,0,0.05)] p-8 md:p-10 lg:p-12 space-y-6 text-lg text-muted/90 leading-relaxed font-light">
+                <p className="text-xl">
+                  <span className="text-dark font-semibold border-b-2 border-primary/10">
+                    Founder &amp; CEO{" "}
+                    <a href="https://sociologiq.in/" target="blank">
+                      SociologiQ Digital Solutions Pvt. Ltd.
+                    </a>{" "}
                   </span>
-                </motion.h1>
-              </header>
-              <div className="space-y-4 text-lg md:text-xl text-muted/90 max-w-lg leading-relaxed font-light">
+                </p>
                 <p>
-                  Ruchi Dorlikar is a{" "}
-                  <span className="text-dark font-medium border-b-2 border-primary/10">
-                    tech-driven digital strategist
-                  </span>{" "}
-                  who transitioned from corporate IT into entrepreneurship with
-                  a bold creative leap.
+                  Ruchi Dorlikar is a tech-savvy digital strategist who moved
+                  from IT to digital marketing to build something meaningful and
+                  her own. She began in 2018 at Tech Mahindra as a Database
+                  Administrator, explored systems and networking, and in 2019
+                  joined Capgemini as Technical Support Head.
+                </p>
+                <p>
+                  After leaving corporate life, she spent 8-9 months upskilling
+                  and launched her freelance journey in June 2019. Her momentum
+                  became her first agency unit, SocialBuzz, later named{" "}
+                  <a href="https://sociologiq.in/" target="blank">
+                    SociologiQ Digital Solutions Pvt. Ltd.
+                  </a>
                 </p>
               </div>
 
-              <div className="pt-2">
+              {/* CTA - Retaining your original wave animation button */}
+              <div className="flex items-start mt-8">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={onBookClick}
-                  className="wave-button group relative h-[64px] min-w-[240px] overflow-hidden bg-white text-primary px-10 py-4 text-[12px] font-bold rounded-full transition-all shadow-xl border border-primary/10"
+                  className="wave-button group relative h-[64px] min-w-[260px] overflow-hidden bg-white text-primary px-10 py-4 rounded-full transition-all shadow-[0_20px_40px_rgba(0,0,0,0.06)] border border-primary/10"
                 >
-                  <span className="wave-text relative z-10 flex items-center gap-3 tracking-[0.2em] uppercase text-primary group-hover:text-white transition-colors duration-500">
-                    Book 1:1 call
+                  <span className="wave-text relative z-10 flex items-center justify-center gap-3 tracking-[0.2em] uppercase text-[12px] font-bold group-hover:text-white transition-colors duration-500">
+                    Book 1 to 1 call
                     <ArrowRight
-                      size={20}
+                      size={18}
                       className="group-hover:translate-x-2 transition-transform duration-500"
                     />
                   </span>
@@ -94,183 +131,247 @@ export default function About({ onBookClick }) {
               </div>
             </div>
 
-            <div className="lg:col-span-6 flex justify-center order-1 lg:order-2 relative">
-              <div className="absolute inset-0 bg-primary/5 rounded-full blur-[120px] scale-110 -z-10" />
-              <div className="relative z-10 w-full max-w-[420px] aspect-[4/5] rounded-[100px_100px_20px_20px] overflow-hidden shadow-[0_40px_80px_-15px_rgba(122,30,45,0.2)]">
-                <motion.img
-                  style={{ y: imageY }}
-                  src={AboutImg}
-                  alt="Ruchi Dorlikar"
-                  className="w-full h-[120%] object-cover scale-110"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* --- THE VISION SECTION (RE-DESIGNED) --- */}
-      <motion.section
-        ref={visionRef}
-        className="relative py-8 md:py-10 bg-[#F9F6F3] overflow-hidden"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {/* Background Large Text Parallax */}
-        <motion.div
-          style={{ x: visionTextX }}
-          className="absolute top-1/2 left-0 -translate-y-1/2 select-none pointer-events-none z-0 opacity-[0.04]"
-        >
-          <span className="text-[8rem] md:text-[14rem] lg:text-[20rem] font-serif font-bold text-primary leading-none whitespace-nowrap">
-            Visionary
-          </span>
-        </motion.div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* LEFT COLUMN: THE ARCH PORTAL */}
-            <div className="lg:col-span-6 relative">
+            {/* POLAROID COLUMN - Cleaned up alignment and Dime-inspired details */}
+            <div className="lg:col-span-5 flex justify-center order-1 lg:order-2 relative">
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative w-full max-w-[440px] aspect-[3/4] mx-auto"
-              >
-                {/* Rotating Text Orbit */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute -inset-12 z-20 pointer-events-none"
-                >
-                  {/* <svg viewBox="0 0 200 200" className="w-full h-full">
-                    <path
-                      id="circlePath"
-                      d="M 100, 100 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
-                      fill="transparent"
-                    />
-                    <text className="text-[9px] md:text-[10px] uppercase tracking-[0.7em] font-bold fill-primary/40">
-                      <textPath href="#circlePath">
-                        Think • Digital • Act • Think • Digital • Act •
-                      </textPath>
-                    </text>
-                  </svg> */}
-                </motion.div>
-
-                {/* THE ARCH CARD */}
-                <div
-                  className="relative h-full w-full bg-white shadow-[0_50px_100px_-20px_rgba(122,30,45,0.1)] border border-white/50 overflow-hidden flex flex-col items-center justify-center p-8 md:p-10 text-center"
-                  style={{ borderRadius: "220px 220px 40px 40px" }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] to-transparent" />
-
-                  <div className="relative z-10 space-y-8">
-                    <div className="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Sparkles className="text-primary w-6 h-6 animate-pulse" />
-                    </div>
-
-                    <h3 className="font-serif italic text-3xl md:text-4xl lg:text-5xl text-dark leading-[1.2]">
-                      Creating{" "}
-                      <span className="text-primary not-italic font-medium border-b-2 border-primary/5">
-                        clarity-led
-                      </span>{" "}
-                      systems that empower growth.
-                    </h3>
-
-                    <div className="pt-8 border-t border-primary/10">
-                      <a
-                        href="https://sociologiq.in/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-[11px] font-bold tracking-[0.5em] uppercase text-primary/60 hover:text-primary transition-colors"
-                      >
-                        SociologiQ Leadership
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Parallax Floating Accent */}
-                <motion.div
-                  style={{ y: floatY }}
-                  className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full border border-primary/10 backdrop-blur-[2px] -z-10 hidden md:block"
-                />
-              </motion.div>
-            </div>
-
-            {/* RIGHT COLUMN: THE STORY */}
-            <div className="lg:col-span-6 space-y-8">
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                style={{ y: polaroidY }}
+                initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
                 transition={{ duration: 0.8 }}
-                className="space-y-6"
+                whileHover={{ rotate: 0, scale: 1.02 }}
+                className="relative bg-surface p-4 pb-24 shadow-[20px_40px_80px_rgba(0,0,0,0.12)] z-10 border border-dark/20 w-full max-w-[420px] rounded-2xl"
               >
-                <div className="space-y-4">
-                  <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[0.9] text-dark tracking-tighter">
-                    Corporate <br />
-                    <span className="text-primary italic font-light ml-6">
-                      to
-                    </span>{" "}
-                    <br />
-                    Creativity
-                  </h2>
-                  <div className="h-1 w-24 bg-primary" />
+                {/* YELLOW PAPERCLIP (Dime reference) */}
+                <div className="absolute -top-7 right-10 z-30 drop-shadow-md">
+                  <svg
+                    className="text-primary"
+                    width="45"
+                    height="65"
+                    viewBox="0 0 40 60"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 15V45C12 51.6 17.4 57 24 57C30.6 57 36 51.6 36 45V12C36 7.6 32.4 4 28 4C23.6 4 20 7.6 20 12V42C20 44.2 21.8 46 24 46C26.2 46 28 44.2 28 42V15"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </div>
 
-                <div className="space-y-6 max-w-lg">
-                  <p className="text-2xl text-muted font-light leading-relaxed">
-                    Ruchi took a bold step: leaving her corporate stability to
-                    give herself
-                    <span className="text-dark font-medium italic mx-2 underline decoration-primary/30 underline-offset-8">
-                      one day
-                    </span>
-                    to define her future.
-                  </p>
+                {/* IMAGE CONTAINER */}
+                <div className="aspect-[4/5] overflow-hidden bg-surface border border-dark/10 rounded-xl">
+                  <img
+                    src={AboutImg}
+                    alt="Ruchi Dorlikar"
+                    className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
+                  />
+                </div>
 
-                  <div className="relative pl-10 border-l border-primary/20">
-                    <p className="text-xl text-dark/80 italic font-light leading-relaxed">
-                      "The answer was a silent, powerful whisper: to build
-                      something of my own."
-                    </p>
+                {/* POLAROID CAPTION (Handwritten) */}
+                <div className="absolute bottom-8 left-6 right-6">
+                  <p className="font-handwriting text-4xl text-primary leading-[0.9] mb-2 tracking-wide">
+                    <span className="block">the journey</span>
+                    <span className="block text-primary/80">
+                      begins... ✨
+                    </span>
+                  </p>
+                  <div className="flex justify-between items-center border-t border-dark/10 pt-3">
+                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-muted/40 font-bold">
+                      EST. 2018
+                    </span>
+                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-muted/40 font-bold">
+                      NAGPUR, IN
+                    </span>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* PREMIUM STATS PIPS */}
-                {/* <div className="flex flex-wrap gap-8 pt-8">
-                  {[
-                    { icon: <Eye size={20} />, label: "Seen" },
-                    { icon: <Mic size={20} />, label: "Heard" },
-                    { icon: <BookmarkCheck size={20} />, label: "Remembered" },
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ y: -5 }}
-                      className="flex items-center gap-4 group cursor-default"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:shadow-md transition-all duration-300">
-                        {item.icon}
-                      </div>
-                      <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-muted/60 group-hover:text-dark transition-colors">
-                        {item.label}
+              {/* HANDWRITTEN ANNOTATION - Fills the empty corner space */}
+              {/* <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="absolute -bottom-6 -right-4 z-20 hidden md:flex flex-col items-center"
+              >
+                <svg
+                  width="80"
+                  height="50"
+                  viewBox="0 0 100 60"
+                  className="text-dark/20 -rotate-12 translate-y-4"
+                >
+                  <path
+                    d="M10 10 Q 50 5, 80 50"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                  />
+                  <path
+                    d="M72 45 L 80 50 L 75 55"
+                    stroke="currentColor"
+                    fill="none"
+                    strokeWidth="2"
+                  />
+                </svg>
+                <span className="font-handwriting text-2xl text-dark/60 -rotate-6">
+                  That's me!
+                </span>
+              </motion.div> */}
+
+              {/* BACKGROUND GLOW - Soft fill */}
+              <div className="absolute inset-0 bg-primary/5 blur-[120px] scale-150 -z-10 translate-y-10" />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* --- VISION SECTION --- */}
+      <section className="relative py-12 md:py-16 overflow-hidden bg-background">
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <motion.div
+            style={{ y: paperY }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative px-6 py-10 md:px-14 md:py-16 text-center flex items-center justify-center min-h-[320px]"
+          >
+            {/* PURPOSE SHAPE IMAGE */}
+            <img
+              src={OurPurposeImg}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+            />
+
+            {/* CONTENT */}
+            <div className="relative z-10 max-w-4xl mx-auto">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-5xl mb-4 tracking-tight"
+                style={{ fontWeight: 700 }}
+              >
+                Our Purpose
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="text-lg leading-relaxed text-muted"
+                style={{ fontSize: "1.125rem", lineHeight: "1.75" }}
+              >
+                "To craft meaningful strategies that drive real business
+                results—because every brand deserves to be{" "}
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                  style={{ fontWeight: 700 }}
+                  className="text-dark"
+                >
+                  seen, heard, and remembered."
+                </motion.span>
+              </motion.p>
+              {/* Decorative animated elements */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 0.12 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-primary/30 to-accent/60 rounded-full blur-3xl"
+              />
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 0.12 }}
+                transition={{ duration: 1, delay: 1 }}
+                className="absolute -bottom-8 -right-8 w-40 h-40 bg-gradient-to-br from-accent/60 to-primary/30 rounded-full blur-3xl"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* --- STORY SECTION (commented for now) --- */}
+      {/*
+      <section className="relative py-16 md:py-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-0 items-start">
+            <div className="lg:col-span-7 lg:-ml-12 relative z-10">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="bg-white/60 backdrop-blur-md p-10 md:p-16 lg:pl-24 shadow-sm border-l border-white rounded-r-[40px]"
+              >
+                <div className="space-y-10">
+                  <div className="space-y-6">
+                    <h2 className="text-6xl md:text-8xl font-serif leading-[0.8] text-dark tracking-tighter relative">
+                      Corporate <br />
+                      <span className="text-primary italic font-light ml-6 relative inline-block">
+                        to
+                        <motion.svg
+                          className="absolute top-1/2 left-full w-32 h-32 text-primary/40 -translate-y-1/4 ml-4 pointer-events-none overflow-visible"
+                          viewBox="0 0 100 100"
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true }}
+                        >
+                          <motion.path
+                            d="M 5 20 C 40 20, 55 40, 25 85 M 15 75 L 25 85 L 40 80"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            variants={{
+                              hidden: { pathLength: 0, opacity: 0 },
+                              visible: {
+                                pathLength: 1,
+                                opacity: 1,
+                                transition: {
+                                  pathLength: {
+                                    duration: 1.4,
+                                    ease: "easeInOut",
+                                    delay: 0.6,
+                                  },
+                                  opacity: { duration: 0.2, delay: 0.6 },
+                                },
+                              },
+                            }}
+                          />
+                        </motion.svg>
+                      </span>{" "}
+                      <br />
+                      Creativity
+                    </h2>
+                  </div>
+
+                  <div className="space-y-8 max-w-lg">
+                    <p className="text-2xl text-muted font-light leading-relaxed">
+                      Ruchi took a bold step: leaving her corporate stability to
+                      give herself
+                      <span className="text-dark font-medium italic mx-2 border-b-2 border-dashed border-primary/30">
+                        one day
                       </span>
-                    </motion.div>
-                  ))}
-                </div> */}
+                      to define her future.
+                    </p>
+                    <div className="relative pl-10 bg-accent p-6 border-l-4 border-primary/20 shadow-sm rotate-1">
+                      <p className="text-xl text-dark/80 italic font-light leading-relaxed">
+                        "The answer was a silent, powerful whisper: to build
+                        something of my own."
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
         </div>
-      </motion.section>
-
+      </section>
+      */}
+      <FoundersLetter />
       <FAQSection onBookClick={onBookClick} />
-
-      <div className="py-8 md:py-10 border-t border-dark/5 bg-transparent">
+      <div className="py-20 border-t border-dark/5 bg-white relative z-10">
         <Testimonial />
       </div>
     </div>

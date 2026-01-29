@@ -572,7 +572,7 @@ export default function Home({ onBookClick }) {
                   </span>
                 </div>
                 {/* label */}
-                <p className="mt-2 text-[24px] font-bold md:text-[16px]  text-dark max-w-[160px]">
+                <p className="mt-2 text-[12px] sm:text-[13px] md:text-[14px] font-bold text-dark whitespace-nowrap">
                   {stat.label}
                 </p>
               </div>
