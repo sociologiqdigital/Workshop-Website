@@ -13,16 +13,21 @@ const FoundersMessage = () => {
 
   const letterVariants = {
     closed: {
-      y: 130,
+      y: 150,
       opacity: 0,
+      zIndex: 0,
+      display: "block",
+      transitionEnd: { display: "none" },
       transition: {
         y: { delay: 0.1, duration: 0.6, ease: "easeInOut" },
-        opacity: { duration: 0.1 },
+        opacity: { duration: 0 },
       },
     },
     open: {
       y: -220,
       opacity: 1,
+      zIndex: 10,
+      display: "block",
       transition: {
         delay: 0.6,
         y: { duration: 0.8, ease: "easeOut" },
@@ -65,7 +70,7 @@ const FoundersMessage = () => {
         {/* 1. THE LETTER (RD Wreath Logo at Top) */}
         <motion.div
           variants={letterVariants}
-          className="absolute left-[5%] w-[90%] bg-white shadow-2xl border border-gray-100 rounded-sm z-10 p-8 h-85"
+          className="absolute left-[5%] w-[90%] bg-white shadow-2xl border border-gray-100 rounded-sm p-8 h-85"
           style={{
             backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
           }}
@@ -160,7 +165,7 @@ const FoundersMessage = () => {
         </motion.div>
 
         {/* 4. ENVELOPE INTERIOR */}
-        <div className="absolute inset-0 bg-[#F8F1EA] rounded-b-xl z-0 shadow-inner" />
+        <div className="absolute inset-0 bg-[#F8F1EA] rounded-b-xl z-0" />
       </motion.div>
     </section>
   );

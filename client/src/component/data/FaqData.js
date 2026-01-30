@@ -10,7 +10,7 @@ export const faqData = [
       "Yes. The guidance is beginner-friendly and focuses on confidence, clarity, and practical steps for women and students building their first digital business.",
   },
   {
-    question: "I want to learn digital marketing but do not know where to start. What is the first step?",
+    question: "I want to learn digital marketing but do not know where to start.",
     answer:
       "Learn the basics of positioning, content, and one platform. We help you pick the right channel and create a simple, repeatable plan.",
   },

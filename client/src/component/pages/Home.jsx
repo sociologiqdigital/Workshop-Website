@@ -180,13 +180,14 @@ export default function Home({ onBookClick }) {
 
   // Strip content
   const stripItems = [
-    "DESIGN",
-    "BRANDING",
-    "DEVELOPMENT",
-    "STRATEGY",
-    "PRODUCT DESIGN",
-    "MOTION GRAPHICS",
-    "ART DIRECTION",
+    "DIGITAL STRATEGY",
+    "BRAND POSITIONING",
+    "CONTENT SYSTEMS",
+    "PERFORMANCE MARKETING",
+    "WEBSITE LAUNCH",
+    "OFFER CLARITY",
+    "WORKSHOPS",
+    "MENTORSHIP",
   ];
   const heroStripItems = [...heroStripWords, ...heroStripWords];
   const heroAchievementImage = achievements[active]?.image || AchievementImg;
@@ -480,7 +481,6 @@ export default function Home({ onBookClick }) {
                     opacity: 0.2,
                   }}
                 />
-
                 {/* 2. Decorative Cross from Reference */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
                   <div className="absolute w-full h-8 bg-primary rotate-45 rounded-full" />
@@ -517,8 +517,6 @@ export default function Home({ onBookClick }) {
           </div>
         </div>
       </section>
-
-      
 
       {/* Stats Section */}
       <section className="relative grid-bg home-section overflow-hidden">
@@ -574,7 +572,7 @@ export default function Home({ onBookClick }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="text-white uppercase tracking-[0.2em] text-xs font-bold mb-8"
+                  className="text-white uppercase tracking-[0.2em] text-lg font-bold mb-3"
                 >
                   Currently
                 </motion.div>
@@ -914,10 +912,10 @@ export default function Home({ onBookClick }) {
           {/* Header */}
           <div className="max-w-2xl mx-auto mb-14 text-center">
             <p className="text-xs text-center uppercase tracking-[0.4em] text-[#C9A24D] mb-5">
-              Great Achievements
+              Highlights
             </p>
-            <h2 className="font-heading  text-center text-3xl md:text-4xl text-dark leading-tight">
-              Programs, Events & Milestones
+            <h2 className="mt-4 font-heading text-3xl md:text-4xl lg:text-6xl leading-[1.1]">
+              Great <span className="text-primary">Achievements</span>
             </h2>
           </div>
 

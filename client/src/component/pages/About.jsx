@@ -170,31 +170,20 @@ export default function About({ onBookClick }) {
                 </div>
 
                 {/* IMAGE CONTAINER WITH CUSTOM GRADIENT */}
-                <div className="aspect-[4/5] overflow-hidden border border-dark/10 rounded-xl relative bg-[#1a1a1a]">
-                  {/* 1. Enhancement Gradient Background */}
-                  {/* Using a radial gradient: Warm Amber core to a Bronze/Chocolate outer to lift the subject's features */}
-                  {/* <div
-                    className="absolute inset-0 z-0"
-                    style={{
-                      background: `radial-gradient(circle at 50% 40%, #eab308 0%, #78350f 40%, #292524 100%)`,
-                      opacity: 0.4,
-                    }}
-                  /> */}
-
+                <div className="aspect-[4/5] overflow-hidden border border-dark/10 rounded-xl relative bg-transparent">
+                  
                   {/* 2. Subject Image with CSS "Retouching" */}
                   <img
                     src={AboutImg}
                     alt="Ruchi Dorlikar"
                     className="relative z-10 w-full h-full object-cover transition-all duration-700 transform hover:scale-105"
                     style={{
-                      brightness: 1.1, // slight lift
-                      filter:
-                        "brightness(1.1) contrast(1.05) saturate(1.1) drop-shadow(0 10px 20px rgba(0,0,0,0.4))",
+                      filter: "brightness(1.08) contrast(1.02) saturate(1.1)",
                     }}
                   />
 
                   {/* 3. Lighting Overlay: Simulating a soft studio light from the top-left */}
-                  <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-br from-white/10 via-transparent to-transparent" />
+                  {/* <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-br from-white/10 via-transparent to-transparent" /> */}
 
                   {/* 4. Vignette: Keeps the focus on the face */}
                   <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />

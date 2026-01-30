@@ -17,6 +17,7 @@ export default function FAQItem({
         onClick={onToggle}
         className={`w-full flex items-center justify-between gap-6
         px-5 md:px-6 py-3 md:py-4 text-left transition-all duration-300
+        min-h-[64px] md:min-h-[72px]
         bg-[#E9E4DD] text-dark ${
           isOpen ? "rounded-t-xl" : "rounded-xl hover:bg-[#DED7CF]"
         }`}
