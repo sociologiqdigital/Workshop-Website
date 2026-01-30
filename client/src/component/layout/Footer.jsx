@@ -51,7 +51,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-24">
           <div>
             <h2 className="text-4xl md:text-6xl font-heading leading-tight tracking-tighter mb-8">
-              Let's build your <br />
+              Let's work together <br />
               <span className="text-primary italic text-3xl md:text-5xl">
                 thriving online business
               </span>

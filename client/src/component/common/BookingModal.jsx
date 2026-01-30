@@ -228,7 +228,7 @@ export default function BookingModal({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-8 pb-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -331,7 +331,9 @@ export default function BookingModal({ isOpen, onClose }) {
                     <div className="space-y-6 my-auto">
                       <h2 className="text-4xl font-serif text-slate-900 leading-tight">
                         How can we{" "}
-                        <span className="italic text-[#7A1E2D]">reach you?</span>
+                        <span className="italic text-[#7A1E2D]">
+                          reach you?
+                        </span>
                       </h2>
                       <input
                         autoFocus
@@ -361,7 +363,7 @@ export default function BookingModal({ isOpen, onClose }) {
                         onChange={(e) =>
                           updateField(
                             "phone",
-                            e.target.value.replace(/\D/g, "")
+                            e.target.value.replace(/\D/g, ""),
                           )
                         }
                         onBlur={() => handleBlur("phone")}
@@ -438,16 +440,14 @@ export default function BookingModal({ isOpen, onClose }) {
                       <div className="space-y-1 text-center">
                         <h2 className="text-3xl font-serif text-slate-900 leading-tight">
                           Service{" "}
-                          <span className="italic text-primary">
-                            Portfolio
-                          </span>
+                          <span className="italic text-primary">Portfolio</span>
                         </h2>
                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.25em]">
                           Choose the focus of our dialogue
                         </p>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-2 max-w-[390px] mx-auto">
+                      <div className="grid grid-cols-3 gap-3 max-w-[420px] mx-auto">
                         {SERVICES.map((service) => {
                           const isSelected = data.topic === service;
                           return (
@@ -460,9 +460,7 @@ export default function BookingModal({ isOpen, onClose }) {
                                   ...data,
                                   topic: service,
                                   customTopic:
-                                    service === "Other"
-                                      ? data.customTopic
-                                      : "",
+                                    service === "Other" ? data.customTopic : "",
                                 };
                                 setData(nextData);
                                 setTouched((prev) => ({
@@ -477,11 +475,11 @@ export default function BookingModal({ isOpen, onClose }) {
                                   const nextErrors = { ...prev };
                                   const topicError = validateField(
                                     "topic",
-                                    nextData
+                                    nextData,
                                   );
                                   const customError = validateField(
                                     "customTopic",
-                                    nextData
+                                    nextData,
                                   );
                                   if (topicError) {
                                     nextErrors.topic = topicError;
@@ -496,10 +494,10 @@ export default function BookingModal({ isOpen, onClose }) {
                                   return nextErrors;
                                 });
                               }}
-                              className={`px-2 py-2 rounded-full border text-[16px] font-semibold leading-tight tracking-wide transition-all duration-300 ${
+                              className={`px-4 py-2.5 rounded-full border text-[14px] font-semibold leading-none tracking-wide transition-all duration-300 whitespace-nowrap w-full min-h-[44px] ${
                                 isSelected
                                   ? "bg-[#7A1E2D] border-[#7A1E2D] text-white shadow-lg shadow-red-900/20"
-                                  : "bg-white border-slate-100 text-slate-600 hover:border-[#7A1E2D]/30"
+                                  : "bg-white border-slate-200 text-slate-600 hover:border-[#7A1E2D]/30"
                               }`}
                             >
                               <div className="flex items-center justify-center gap-2">
@@ -630,43 +628,105 @@ export default function BookingModal({ isOpen, onClose }) {
 
                   {/* STEP 5: FINAL */}
                   {step === 6 && (
-                    <div className="space-y-6 text-center my-auto">
-                      <Sparkles className="mx-auto text-[#7A1E2D]" size={32} />
-                      <div className="p-6 bg-slate-50 border border-slate-100 text-left space-y-4">
-                        <div className="flex justify-between border-b pb-2 border-slate-200">
-                          <span className="text-[10px] uppercase font-black text-slate-400">
-                            Total
-                          </span>
-                          <span className="text-2xl font-black text-slate-900">
-                            ₹99
-                          </span>
-                        </div>
-                        <p className="text-sm text-slate-600 leading-relaxed">
-                          <strong>{data.name}</strong> • {data.city}
-                          <br />
-                          <span className="text-[#7A1E2D] font-bold">
-                            {data.topic === "Other"
-                              ? data.customTopic
-                              : data.topic}
-                          </span>
-                          <br />
-                          Scheduled:{" "}
-                          {new Date(data.date).toLocaleDateString("en-US", {
-                            month: "long",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </p>
+                    <div className="flex flex-col items-center justify-start pt-0 pb-3">
+                      {/* 1. THE PRINTER MACHINE HEAD */}
+                      <div className="relative z-20 w-64 h-8 -mt-4 printer-top printer-glow rounded-t-xl border-b-4 printer-glow">
+                        {/* The actual slot hole */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90%] h-1 bg-printer-glow/40 rounded-full blur-[1px]" />
                       </div>
-                      <button className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all shadow-xl shadow-[#7A1E2D]/25">
-                        SECURE PAYMENT
+
+                      {/* 2. THE RECEIPT CONTAINER */}
+                      <div className="overflow-hidden w-64 flex flex-col items-center receipt-glow">
                         <motion.div
-                          animate={{ x: [0, 5, 0] }}
-                          transition={{ repeat: Infinity, duration: 1.5 }}
+                          initial={{ y: "-100%", opacity: 0.5 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 40,
+                            damping: 12,
+                            mass: 1,
+                            restDelta: 0.001,
+                          }}
+                          className="receipt-paper w-56 shadow-2xl relative p-5 pt-8"
                         >
-                          <CreditCard size={16} />
+                          {/* Receipt Header */}
+                          <div className="flex justify-between items-start mb-6">
+                            <div className="space-y-1">
+                              <p className="text-[10px] font-black text-emerald-600 uppercase tracking-tighter">
+                                ● Confirm your Slot
+                              </p>
+                              <p className="text-2xl font-black text-slate-800">
+                                ₹{data.price || "99.00"}
+                              </p>
+                              <p className="text-[8px] text-slate-400 font-mono">
+                                {new Date().toLocaleString()}
+                              </p>
+                            </div>
+                            {/* Mock Logo like the Chaayos one */}
+                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                              <div className="w-6 h-6 rounded-full bg-[#7A1E2D]/20" />
+                            </div>
+                          </div>
+
+                          {/* Dynamic Details from your code */}
+                          <div className="space-y-3 border-t border-dashed border-slate-300 pt-4">
+                            <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                              <span>Name</span>
+                              <span className="text-slate-900 font-bold">
+                                {data.name}
+                              </span>
+                            </div>
+                            <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                              <span>TOPIC</span>
+                              <span className="text-slate-900 font-bold">
+                                {data.topic}
+                              </span>
+                            </div>
+                            <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                              <span>SLOT</span>
+                              <span className="text-slate-900 font-bold">
+                                {data.date}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Footer */}
+                          <div className="mt-8 pt-4 border-t border-slate-100 text-center">
+                            <p className="text-[9px] font-serif italic text-slate-400 tracking-widest">
+                              HAVE A NICE DAY!
+                            </p>
+                            {/* Barcode effect */}
+                            <div className="mt-4 h-6 w-full opacity-20 flex gap-[2px]">
+                              {[...Array(20)].map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="bg-black flex-1"
+                                  style={{ height: `${Math.random() * 100}%` }}
+                                />
+                              ))}
+                            </div>
+                          </div>
                         </motion.div>
-                      </button>
+                      </div>
+
+                      {/* 3. POST-ANIMATION ACTIONS */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.8 }}
+                        className="mt-1 flex flex-col gap-3 w-full max-w-[220px]"
+                      >
+                        <button className="py-3 px-6 bg-primary text-white rounded-xl text-xs font-bold shadow-lg hover:bg-primary/90 transition-all">
+                          Make Payment{" "}
+                          <span className="ml-2">₹{data.price || "99.00"}</span>
+                        </button>
+                        {/* <button
+                          onClick={onClose}
+                          className="text-[10px] font-bold text-slate-400 uppercase tracking-widest"
+                        >
+                          Dismiss
+                        </button> */}
+                      </motion.div>
                     </div>
                   )}
                 </motion.div>
