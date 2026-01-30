@@ -11,18 +11,18 @@ export default function FAQItem({
 }) {
   const hasAnswer = Boolean(answer);
   return (
-    <div className="mb-4">
+    <div>
       {/* QUESTION */}
       <button
         onClick={onToggle}
         className={`w-full flex items-center justify-between gap-6
-        px-6 md:px-8 py-4 md:py-5 text-left transition-all duration-300
+        px-5 md:px-6 py-3 md:py-4 text-left transition-all duration-300
         bg-[#E9E4DD] text-dark ${
-          isOpen ? "rounded-t-2xl" : "rounded-2xl hover:bg-[#DED7CF]"
+          isOpen ? "rounded-t-xl" : "rounded-xl hover:bg-[#DED7CF]"
         }`}
       >
         <div className="flex items-start gap-4">
-          <h3 className="text-base md:text-lg font-medium leading-snug">
+          <h3 className="text-sm md:text-base font-medium leading-snug">
             {question}
           </h3>
         </div>
@@ -48,9 +48,11 @@ export default function FAQItem({
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <div className="px-7 md:px-10 pt-4 pb-5 bg-[#E9E4DD] text-muted rounded-b-3xl">
-              <div className="mb-3 h-[4px] bg-primary/5" />
-              <p className="max-w-5xl leading-relaxed text-primary">{answer}</p>
+            <div className="px-6 md:px-8 pt-3 pb-4 bg-[#E9E4DD] text-muted rounded-b-xl">
+              <div className="mb-2 h-[3px] bg-primary/5" />
+              <p className="max-w-5xl leading-relaxed text-primary text-sm md:text-base">
+                {answer}
+              </p>
             </div>
           </motion.div>
         )}

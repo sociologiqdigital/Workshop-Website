@@ -12,12 +12,23 @@ const FoundersMessage = () => {
   };
 
   const letterVariants = {
-    closed: { y: 70, opacity: 0 },
-    open: { 
-      y: -220, 
-      opacity: 1, 
-      transition: { delay: 0.4, duration: 0.8, ease: "easeOut" } 
-    }
+    closed: {
+      y: 130,
+      opacity: 0,
+      transition: {
+        y: { delay: 0.1, duration: 0.6, ease: "easeInOut" },
+        opacity: { duration: 0.1 },
+      },
+    },
+    open: {
+      y: -220,
+      opacity: 1,
+      transition: {
+        delay: 0.6,
+        y: { duration: 0.8, ease: "easeOut" },
+        opacity: { delay: 0.6, duration: 0.2 },
+      },
+    },
   };
 
   const sealVariants = {
@@ -31,7 +42,7 @@ const FoundersMessage = () => {
 
   return (
     <section
-      className="relative pt-12 pb-12 bg-surface flex flex-col items-center"
+      className="relative pt-12 pb-6 bg-surface flex flex-col items-center"
       style={{
         backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
       }}
@@ -44,17 +55,17 @@ const FoundersMessage = () => {
       >
         Note from Ruchi
       </motion.h1>
-      {/* 3D Wrapper - Hover target */}
+      {/* 3D envelope Wrapper - Hover target */}
       <motion.div
         initial="closed"
         whileHover="open"
-        className="relative w-[520px] h-[300px] cursor-pointer mt-2"
+        className="relative w-[520px] h-[260px] cursor-pointer mt-2"
         style={{ perspective: "1500px" }}
       >
         {/* 1. THE LETTER (RD Wreath Logo at Top) */}
         <motion.div
           variants={letterVariants}
-          className="absolute left-[5%] w-[90%] bg-white shadow-2xl border border-gray-100 rounded-sm z-10 p-10"
+          className="absolute left-[5%] w-[90%] bg-white shadow-2xl border border-gray-100 rounded-sm z-10 p-8 h-85"
           style={{
             backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
           }}
@@ -92,8 +103,9 @@ const FoundersMessage = () => {
             <div className="pb-24">
               <p className="font-handwriting text-xl text-primary">
                 — Ruchi Dorlikar
-                <p>Founder & CEO</p>
-
+              </p>
+              <p className="font-handwriting text-base text-primary">
+                Founder & CEO
               </p>
             </div>
           </div>
@@ -119,6 +131,7 @@ const FoundersMessage = () => {
           style={{
             transformOrigin: "top center",
             clipPath: "polygon(0 0, 100% 0, 50% 50%)",
+            backfaceVisibility: "hidden",
           }}
         >
           {/* THE CIRCULAR WREATH SEAL */}

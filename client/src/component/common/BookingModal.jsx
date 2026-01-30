@@ -566,7 +566,7 @@ export default function BookingModal({ isOpen, onClose }) {
                             !data.topic ||
                             (data.topic === "Other" && !data.customTopic)
                           }
-                          className="group w-full py-5 rounded-full bg-[#7A1E2D] text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
+                          className="group w-full py-5 rounded-full bg-primary text-white flex items-center justify-center gap-6 text-xs font-black tracking-[0.3em] uppercase hover:bg-[#5F1623] transition-all disabled:opacity-20 shadow-xl shadow-[#7A1E2D]/25"
                         >
                           Select Date
                           <motion.div

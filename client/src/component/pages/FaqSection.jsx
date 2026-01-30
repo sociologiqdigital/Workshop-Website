@@ -9,31 +9,37 @@ export default function FAQSection({
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section id="faq" className= {className}  >
-      <div className="max-w-4xl mx-auto px-6">
-        <h2 className="font-heading text-3xl md:text-4xl text-dark mb-8 text-center tracking-tight">
-          Frequently Asked Questions
-        </h2>
+    <section id="faq" className={className}>
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="grid gap-10 md:grid-cols-[1fr,1.4fr] items-start">
+          <div className="md:sticky md:top-24">
+            <h2 className="font-heading text-3xl md:text-4xl text-dark tracking-tight text-left">
+              Frequently Asked Questions
+            </h2>
+          </div>
 
-        {faqData.map((faq, index) => {
-          const isBookingAction = faq.action === "booking";
-          return (
-            <FAQItem
-              key={index}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={!isBookingAction && openIndex === index}
-              isAction={isBookingAction}
-              onToggle={() => {
-                if (isBookingAction) {
-                  onBookClick?.();
-                  return;
-                }
-                setOpenIndex(openIndex === index ? null : index);
-              }}
-            />
-          );
-        })}
+          <div className="space-y-3">
+            {faqData.map((faq, index) => {
+              const isBookingAction = faq.action === "booking";
+              return (
+                <FAQItem
+                  key={index}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={!isBookingAction && openIndex === index}
+                  isAction={isBookingAction}
+                  onToggle={() => {
+                    if (isBookingAction) {
+                      onBookClick?.();
+                      return;
+                    }
+                    setOpenIndex(openIndex === index ? null : index);
+                  }}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
