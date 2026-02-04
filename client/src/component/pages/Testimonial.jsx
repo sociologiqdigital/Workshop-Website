@@ -22,6 +22,7 @@ export const Testimonial = () => {
     <section className="py-3 md:py-5 bg-background" id="testimonial">
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-primary/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+         
           {/* LEFT SLIDER */}
           <div className="relative h-[260px] md:h-[300px] flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
@@ -42,7 +43,7 @@ export const Testimonial = () => {
                 <span className="absolute top-2 left-2 text-7xl font-heading text-primary/30">
                   &ldquo;
                 </span>
-                <p className="font-heading text-lg md:text-xl text-dark leading-relaxed mb-5">
+                <p className="mt-8 font-heading text-lg md:text-xl text-dark leading-relaxed mb-5">
                   {activeTestimonial.quote}
                 </p>
                 <div className="text-right">

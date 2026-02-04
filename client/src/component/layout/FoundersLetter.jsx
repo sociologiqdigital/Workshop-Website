@@ -4,11 +4,11 @@ const FoundersMessage = () => {
   // Animation triggered on Hover
   const flapVariants = {
     closed: { rotateX: 0, zIndex: 30 },
-    open: { 
-      rotateX: 180, 
-      zIndex: 0, 
-      transition: { duration: 0.6, ease: "easeInOut" } 
-    }
+    open: {
+      rotateX: 180,
+      zIndex: 0,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
   };
 
   const letterVariants = {
@@ -19,8 +19,8 @@ const FoundersMessage = () => {
       display: "block",
       transitionEnd: { display: "none" },
       transition: {
-        y: { delay: 0.1, duration: 0.6, ease: "easeInOut" },
-        opacity: { duration: 0 },
+        y: { delay: 0.45, duration: 0.5, ease: "easeInOut" },
+        opacity: { delay: 0, duration: 0.12, ease: "easeOut" },
       },
     },
     open: {
@@ -38,16 +38,16 @@ const FoundersMessage = () => {
 
   const sealVariants = {
     closed: { opacity: 1, scale: 1 },
-    open: { 
-      opacity: 0, 
-      scale: 1.2, 
-      transition: { duration: 0.3 } 
-    }
+    open: {
+      opacity: 0,
+      scale: 1.2,
+      transition: { duration: 0.3 },
+    },
   };
 
   return (
     <section
-      className="relative pt-12 pb-6 bg-surface flex flex-col items-center"
+      className="relative pt-10 pb-6 bg-surface flex flex-col items-center"
       style={{
         backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
       }}
@@ -64,13 +64,17 @@ const FoundersMessage = () => {
       <motion.div
         initial="closed"
         whileHover="open"
-        className="relative w-[520px] h-[260px] cursor-pointer mt-2"
-        style={{ perspective: "1500px" }}
+        className="relative w-full max-w-[520px] h-[260px] cursor-pointer mt-2 mx-auto"
+        style={{
+          perspective: "1500px",
+          clipPath: "inset(-700px 0px 0px 0px)",
+          WebkitClipPath: "inset(-700px 0px 0px 0px)",
+        }}
       >
-        {/* 1. THE LETTER (RD Wreath Logo at Top) */}
+        {/* 1. THE LETTER  */}
         <motion.div
           variants={letterVariants}
-          className="absolute left-[5%] w-[90%] bg-white shadow-2xl border border-gray-100 rounded-sm p-8 h-85"
+          className="absolute left-[5%] w-[90%] bg-white  rounded-sm p-8 h-85"
           style={{
             backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
           }}
@@ -105,7 +109,7 @@ const FoundersMessage = () => {
               understanding people, solving real problems, and staying
               consistent with purpose.”
             </p>
-            <div className="pb-24">
+            <div className="pb-4">
               <p className="font-handwriting text-xl text-primary">
                 — Ruchi Dorlikar
               </p>
@@ -118,7 +122,7 @@ const FoundersMessage = () => {
 
         {/* 2. ENVELOPE FRONT FLAP */}
         <div
-          className="absolute inset-0 bg-[#F8F1EA] rounded-b-xl z-20 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+          className="absolute inset-0 bg-[#F8F1EA] rounded-b-xl z-20 border border-[#DCCBBA] shadow-[0_20px_50px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.75),inset_0_-14px_18px_rgba(199,163,127,0.18)]"
           style={{
             clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%)",
           }}
@@ -129,26 +133,29 @@ const FoundersMessage = () => {
           </div>
         </div>
 
-        {/* 3. TOP FLAP WITH CUSTOM SEAL */}
+        {/* 3. TOP FLAP */}
         <motion.div
           variants={flapVariants}
-          className="absolute inset-0 bg-[#F8F1EA] z-30 flex justify-center items-center"
+          className="absolute inset-0 bg-[#F3E8DC] z-30 flex justify-center items-center border-x border-t border-[#D3BEA9] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]"
           style={{
             transformOrigin: "top center",
             clipPath: "polygon(0 0, 100% 0, 50% 50%)",
             backfaceVisibility: "hidden",
           }}
-        >
-          {/* THE CIRCULAR WREATH SEAL */}
+        />
+
+        {/* 4. WAX SEAL */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
           <motion.div
             variants={sealVariants}
-            className="absolute top-[35%] w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-100"
+            className="w-16 h-16 rounded-full border border-[#D4C3B1] bg-white shadow-[0_6px_16px_rgba(0,0,0,0.18)] flex items-center justify-center"
           >
-            <div className="text-primary scale-50">
+            <div className="w-9 h-9 text-primary">
               <svg viewBox="0 0 100 100" fill="none" stroke="currentColor">
                 <path
                   d="M30 70 C 10 50, 10 20, 50 15 C 90 20, 90 50, 70 70"
                   strokeWidth="4"
+                  strokeLinecap="round"
                 />
                 <text
                   x="50"
@@ -162,11 +169,39 @@ const FoundersMessage = () => {
               </svg>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* 4. ENVELOPE INTERIOR */}
-        <div className="absolute inset-0 bg-[#F8F1EA] rounded-b-xl z-0" />
+        {/* 5. EDGE/FOLD STROKES */}
+        <svg
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 25 }}
+          viewBox="0 0 520 260"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M1 1 L1 259 L519 259 L519 1 L260 130 Z"
+            fill="none"
+            stroke="#CFB8A0"
+            strokeWidth="2"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            d="M1 259 L260 130 L519 259"
+            fill="none"
+            stroke="#D9C6B3"
+            strokeWidth="1.6"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        {/* 6. ENVELOPE INTERIOR */}
+        <div className="absolute inset-0 bg-[#F1E4D6] rounded-b-xl z-0 border border-[#E6D6C6]" />
       </motion.div>
+      <p className="mt-6 text-muted text-sm font-medium tracking-widest uppercase animate-pulse">
+        <span className="text-primary">---</span>{" "}Hover to open the message{" "}
+        <span className="text-primary">---</span>
+      </p>
     </section>
   );
 };
